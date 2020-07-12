@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Show account name on header on AWS Management Console
 // @namespace    https://github.com/munierujp/
-// @version      0.1.0
+// @version      0.1.1
 // @description  Show account name on header on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -15,25 +15,39 @@
 (function () {
   'use strict'
 
-  const usernameMenuElement = document.getElementById('nav-usernameMenu')
+  const getAccountName = () => {
+    const accountNameElement = document.getElementById('awsc-login-display-name-account')
 
-  if (!usernameMenuElement) {
-    return
+    if (!accountNameElement) {
+      return
+    }
+
+    const accountName = accountNameElement.textContent
+
+    if (!accountName) {
+      return
+    }
+
+    return accountName
   }
 
-  const usernameMenuLabelElement = usernameMenuElement.querySelector('.nav-elt-label')
+  const getUsernameMenuLabelElement = () => {
+    const usernameMenuElement = document.getElementById('nav-usernameMenu')
+
+    if (!usernameMenuElement) {
+      return
+    }
+
+    return usernameMenuElement.querySelector('.nav-elt-label')
+  }
+
+  const usernameMenuLabelElement = getUsernameMenuLabelElement()
 
   if (!usernameMenuLabelElement) {
     return
   }
 
-  const accountNameElement = document.getElementById('awsc-login-display-name-account')
-
-  if (!accountNameElement) {
-    return
-  }
-
-  const accountName = accountNameElement.textContent
+  const accountName = getAccountName()
 
   if (!accountName) {
     return
