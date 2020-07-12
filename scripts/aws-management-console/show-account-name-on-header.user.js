@@ -5,8 +5,8 @@
 // @description  Show account name on header on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
-// @updateURL    https://raw.githubusercontent.com/munierujp/userscripts/master/scripts/aws-management-console/show-account-name-on-header.user.js
-// @downloadURL  https://raw.githubusercontent.com/munierujp/userscripts/master/scripts/aws-management-console/show-account-name-on-header.user.js
+// @updateURL    https://munierujp.github.io/userscripts/scripts/aws-management-console/show-account-name-on-header.user.js
+// @downloadURL  https://munierujp.github.io/userscripts/scripts/aws-management-console/show-account-name-on-header.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        https://*.console.aws.amazon.com/*
 // @grant        none
