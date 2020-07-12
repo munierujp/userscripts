@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Show account name on header on AWS Management Console
 // @namespace    https://github.com/munierujp/
-// @version      0.1.2
+// @version      1.0.0
 // @description  Show account name on header on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
