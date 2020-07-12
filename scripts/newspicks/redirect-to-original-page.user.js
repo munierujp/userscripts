@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Redirect to original page on NewsPicks
 // @namespace    https://github.com/munierujp/
-// @version      0.1.0
+// @version      1.0.0
 // @description  Redirect to original page on NewsPicks
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
