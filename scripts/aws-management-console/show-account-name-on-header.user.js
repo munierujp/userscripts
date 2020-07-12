@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Show account name on header on AWS Management Console
 // @namespace    https://github.com/munierujp/
-// @version      0.1.1
+// @version      0.1.2
 // @description  Show account name on header on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -44,12 +44,14 @@
   const usernameMenuLabelElement = getUsernameMenuLabelElement()
 
   if (!usernameMenuLabelElement) {
+    console.warn('Failed to get label element.')
     return
   }
 
   const accountName = getAccountName()
 
   if (!accountName) {
+    console.warn('Failed to get account name.')
     return
   }
 
