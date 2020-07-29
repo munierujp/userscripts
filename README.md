@@ -12,3 +12,7 @@ My User Scripts
 ### NewsPicks
 
 - [redirect-to-original-page.user.js](https://munierujp.github.io/userscripts/scripts/newspicks/redirect-to-original-page.user.js)
+
+### Vue.js
+
+- [redirect-to-latest-page.user.js](https://munierujp.github.io/userscripts/scripts/vuejs/redirect-to-latest-page.user.js)
