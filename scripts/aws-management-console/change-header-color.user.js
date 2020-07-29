@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Change header color on AWS Management Console
+// @name         Change header color
 // @namespace    https://github.com/munierujp/
-// @version      1.0.0
+// @version      1.1.0
 // @description  Change header color on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
