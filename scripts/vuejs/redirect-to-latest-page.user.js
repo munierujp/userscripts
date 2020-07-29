@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Redirect to latest page on Vue.js  document
+// @name         Redirect to latest page
 // @namespace    https://github.com/munierujp/
-// @version      1.0.0
-// @description   Redirect to latest page on Vue.js  document
+// @version      1.1.0
+// @description   Redirect to latest page on Vue.js document
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://munierujp.github.io/userscripts/scripts/vuejs/redirect-to-latest-page.user.js
