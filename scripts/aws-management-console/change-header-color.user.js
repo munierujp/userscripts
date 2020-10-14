@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Change header color
 // @namespace    https://github.com/munierujp/
-// @version      1.1.0
+// @version      1.2.0
 // @description  Change header color on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -15,7 +15,7 @@
 (function () {
   'use strict'
 
-  const getAccountName = () => {
+  const createStyleElementByPatternA = () => {
     const accountNameElement = document.getElementById('awsc-login-display-name-account')
 
     if (!accountNameElement) {
@@ -28,10 +28,6 @@
       return
     }
 
-    return accountName
-  }
-
-  const toColor = (accountName) => {
     const matched = accountName.match(/-([^-]+)$/)
 
     if (!matched) {
@@ -39,41 +35,88 @@
     }
 
     const suffix = matched[1]
+    let color
+
     switch (suffix) {
       case 'develop':
       case 'dev':
-        return '#0D47A1'
+        color = '#0D47A1'
+        break
       case 'staging':
       case 'stage':
       case 'stg':
-        return '#1B5E20'
+        color = '#1B5E20'
+        break
       case 'production':
       case 'prod':
       case 'prd':
-        return '#B71C1C'
+        color = '#B71C1C'
+        break
     }
-  }
 
-  const createStyleElement = (color) => {
+    if (!color) {
+      return
+    }
+
     const styleElement = document.createElement('style')
     styleElement.type = 'text/css'
     styleElement.textContent = `
 body #awsgnav #nav-menubar,
 body #awsgnav #nav-menubar .nav-menu,
 #nav-menu-right {
-  background-color: ${color};
+background-color: ${color};
 }
 `
     return styleElement
   }
 
-  const accountName = getAccountName()
-  const color = toColor(accountName)
+  const createStyleElementByPatternB = () => {
+    const accountIdElement = document.querySelector('[data-testid="aws-my-account-details"]')
 
-  if (!color) {
+    if (!accountIdElement) {
+      return
+    }
+
+    const accountId = accountIdElement.textContent
+
+    if (!accountId) {
+      return
+    }
+
+    let color
+
+    switch (accountId) {
+      case '264691882649':
+        color = '#0D47A1'
+        break
+      case '273955500657':
+        color = '#1B5E20'
+        break
+      case '006841978030':
+        color = '#B71C1C'
+        break
+    }
+
+    if (!color) {
+      return
+    }
+
+    const styleElement = document.createElement('style')
+    styleElement.type = 'text/css'
+    styleElement.textContent = `
+[data-testid="awsc-nav-header-viewport-shelf-inner"] {
+background-color: ${color};
+}
+`
+    return styleElement
+  }
+
+  const styleElement = createStyleElementByPatternA() || createStyleElementByPatternB()
+
+  if (!styleElement) {
+    console.error('Failed to create style element')
     return
   }
 
-  const styleElement = createStyleElement(color)
   document.head.appendChild(styleElement)
 })()
