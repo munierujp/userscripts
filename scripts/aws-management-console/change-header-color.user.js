@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Change header color
 // @namespace    https://github.com/munierujp/
-// @version      1.2.2
+// @version      1.2.3
 // @description  Change header color on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -58,14 +58,14 @@
    * @param {() => Env} params.envGetter
    * @param {(color: string) => string} params.cssCreator
    */
-  const createStyleElement = ({
+  const changeHeaderColor = ({
     envGetter,
     cssCreator
   }) => {
     const env = envGetter()
 
     if (!env) {
-      return
+      throw new Error('Failed to get env.')
     }
 
     const color = COLORS[env]
@@ -73,27 +73,27 @@
     const styleElement = document.createElement('style')
     styleElement.type = 'text/css'
     styleElement.textContent = css
-    return styleElement
+    document.head.appendChild(styleElement)
   }
 
-  const createStyleElementByPatternA = () => {
+  const changeHeaderColorA = () => {
     const envGetter = () => {
       const accountNameElement = document.getElementById('awsc-login-display-name-account')
 
       if (!accountNameElement) {
-        return
+        throw new Error('Failed to get account name element.')
       }
 
       const accountName = accountNameElement.textContent
 
       if (!accountName) {
-        return
+        throw new Error('Failed to get account name from account name element.')
       }
 
       const matched = accountName.match(/-([^-]+)$/)
 
       if (!matched) {
-        return
+        throw new Error('Failed to get env from account name.')
       }
 
       const suffix = matched[1]
@@ -106,25 +106,24 @@ body #awsgnav #nav-menubar .nav-menu,
   background-color: ${color};
 }
 `
-    const styleElement = createStyleElement({
+    changeHeaderColor({
       envGetter,
       cssCreator
     })
-    return styleElement
   }
 
-  const createStyleElementByPatternB = () => {
+  const changeHeaderColorB = () => {
     const envGetter = () => {
       const accountIdElement = document.querySelector('[data-testid="aws-my-account-details"]')
 
       if (!accountIdElement) {
-        return
+        throw new Error('Failed to get account id element.')
       }
 
       const accountId = accountIdElement.textContent
 
       if (!accountId) {
-        return
+        throw new Error('Failed to get account id from account id element.')
       }
 
       return ACCOUNTS[accountId]
@@ -134,19 +133,23 @@ body #awsgnav #nav-menubar .nav-menu,
   background-color: ${color};
 }
 `
-    const styleElement = createStyleElement({
+    changeHeaderColor({
       envGetter,
       cssCreator
     })
-    return styleElement
   }
 
-  const styleElement = createStyleElementByPatternA() || createStyleElementByPatternB()
+  try {
+    changeHeaderColorA()
+  } catch (e) {
+    console.warn(e)
+    console.warn('Failed to change header color by pattern A.')
 
-  if (!styleElement) {
-    console.error('Failed to create style element')
-    return
+    try {
+      changeHeaderColorB()
+    } catch (e) {
+      console.error(e)
+      console.error('Failed to change header color by pattern B.')
+    }
   }
-
-  document.head.appendChild(styleElement)
 })()
