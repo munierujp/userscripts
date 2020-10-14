@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Change header color
 // @namespace    https://github.com/munierujp/
-// @version      1.2.1
+// @version      1.2.2
 // @description  Change header color on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -53,7 +53,23 @@
     }
   }
 
-  const createStyleElement = (css) => {
+  /**
+   * @param {Object} params
+   * @param {() => Env} params.envGetter
+   * @param {(color: string) => string} params.cssCreator
+   */
+  const createStyleElement = ({
+    envGetter,
+    cssCreator
+  }) => {
+    const env = envGetter()
+
+    if (!env) {
+      return
+    }
+
+    const color = COLORS[env]
+    const css = cssCreator(color)
     const styleElement = document.createElement('style')
     styleElement.type = 'text/css'
     styleElement.textContent = css
@@ -61,69 +77,67 @@
   }
 
   const createStyleElementByPatternA = () => {
-    const accountNameElement = document.getElementById('awsc-login-display-name-account')
+    const envGetter = () => {
+      const accountNameElement = document.getElementById('awsc-login-display-name-account')
 
-    if (!accountNameElement) {
-      return
+      if (!accountNameElement) {
+        return
+      }
+
+      const accountName = accountNameElement.textContent
+
+      if (!accountName) {
+        return
+      }
+
+      const matched = accountName.match(/-([^-]+)$/)
+
+      if (!matched) {
+        return
+      }
+
+      const suffix = matched[1]
+      return normalizeEnv(suffix)
     }
-
-    const accountName = accountNameElement.textContent
-
-    if (!accountName) {
-      return
-    }
-
-    const matched = accountName.match(/-([^-]+)$/)
-
-    if (!matched) {
-      return
-    }
-
-    const suffix = matched[1]
-    const env = normalizeEnv(suffix)
-
-    if (!env) {
-      return
-    }
-
-    const color = COLORS[env]
-
-    const styleElement = createStyleElement(`
+    const cssCreator = (color) => `
 body #awsgnav #nav-menubar,
 body #awsgnav #nav-menubar .nav-menu,
 #nav-menu-right {
   background-color: ${color};
 }
-`)
+`
+    const styleElement = createStyleElement({
+      envGetter,
+      cssCreator
+    })
     return styleElement
   }
 
   const createStyleElementByPatternB = () => {
-    const accountIdElement = document.querySelector('[data-testid="aws-my-account-details"]')
+    const envGetter = () => {
+      const accountIdElement = document.querySelector('[data-testid="aws-my-account-details"]')
 
-    if (!accountIdElement) {
-      return
+      if (!accountIdElement) {
+        return
+      }
+
+      const accountId = accountIdElement.textContent
+
+      if (!accountId) {
+        return
+      }
+
+      return ACCOUNTS[accountId]
     }
-
-    const accountId = accountIdElement.textContent
-
-    if (!accountId) {
-      return
-    }
-
-    const env = ACCOUNTS[accountId]
-
-    if (!env) {
-      return
-    }
-
-    const color = COLORS[env]
-
-    const styleElement = createStyleElement(`
+    const cssCreator = (color) => `
 [data-testid="awsc-nav-header-viewport-shelf-inner"] {
   background-color: ${color};
 }
-`)
+`
+    const styleElement = createStyleElement({
+      envGetter,
+      cssCreator
+    })
     return styleElement
   }
 
