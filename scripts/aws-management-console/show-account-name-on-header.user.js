@@ -1,7 +1,9 @@
+// @ts-check
+
 // ==UserScript==
 // @name         Show account name on header
 // @namespace    https://github.com/munierujp/
-// @version      1.2.0
+// @version      1.2.1
 // @description  Show account name on header on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -15,12 +17,18 @@
 (function () {
   'use strict'
 
+  /** @type {Record<string, string>} */
   const ACCOUNT_NAMES = {
     '264691882649': 'enetdev',
     '273955500657': 'enet-staging',
     '006841978030': 'enet-prod'
   }
 
+  /**
+   * @param {Object} params
+   * @param {() => string} params.accountNameGetter
+   * @param {() => Element} params.labelElementGetter
+   */
   const showAccountName = ({
     accountNameGetter,
     labelElementGetter
