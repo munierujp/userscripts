@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Show account name on header
 // @namespace    https://github.com/munierujp/
-// @version      1.1.0
+// @version      1.2.0
 // @description  Show account name on header on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -15,45 +15,98 @@
 (function () {
   'use strict'
 
-  const getAccountName = () => {
-    const accountNameElement = document.getElementById('awsc-login-display-name-account')
+  const ACCOUNT_NAMES = {
+    '264691882649': 'enetdev',
+    '273955500657': 'enet-staging',
+    '006841978030': 'enet-prod'
+  }
 
-    if (!accountNameElement) {
-      return
-    }
-
-    const accountName = accountNameElement.textContent
+  const showAccountName = ({
+    accountNameGetter,
+    labelElementGetter
+  }) => {
+    const accountName = accountNameGetter()
 
     if (!accountName) {
-      return
+      throw new Error('Failed to get account name.')
     }
 
-    return accountName
-  }
+    const labelElement = labelElementGetter()
 
-  const getUsernameMenuLabelElement = () => {
-    const usernameMenuElement = document.getElementById('nav-usernameMenu')
-
-    if (!usernameMenuElement) {
-      return
+    if (!labelElement) {
+      throw new Error('Failed to get label element.')
     }
 
-    return usernameMenuElement.querySelector('.nav-elt-label')
+    labelElement.textContent = accountName
   }
 
-  const usernameMenuLabelElement = getUsernameMenuLabelElement()
+  const showAccountNameByPatternA = () => {
+    const accountNameGetter = () => {
+      const accountNameElement = document.getElementById('awsc-login-display-name-account')
 
-  if (!usernameMenuLabelElement) {
-    console.warn('Failed to get label element.')
-    return
+      if (!accountNameElement) {
+        throw new Error('Failed to get account name element.')
+      }
+
+      return accountNameElement.textContent
+    }
+    const labelElementGetter = () => {
+      const usernameMenuElement = document.getElementById('nav-usernameMenu')
+
+      if (!usernameMenuElement) {
+        throw new Error('Failed to get username menu element.')
+      }
+
+      return usernameMenuElement.querySelector('.nav-elt-label')
+    }
+    showAccountName({
+      accountNameGetter,
+      labelElementGetter
+    })
   }
 
-  const accountName = getAccountName()
+  const showAccountNameByPatternB = () => {
+    const accountNameGetter = () => {
+      const accountIdElement = document.querySelector('[data-testid="aws-my-account-details"]')
 
-  if (!accountName) {
-    console.warn('Failed to get account name.')
-    return
+      if (!accountIdElement) {
+        throw new Error('Failed to get account id element.')
+      }
+
+      const accountId = accountIdElement.textContent
+
+      if (!accountId) {
+        throw new Error('Failed to get account id from account id element.')
+      }
+
+      return ACCOUNT_NAMES[accountId]
+    }
+    const labelElementGetter = () => {
+      const usernameMenuElement = document.getElementById('nav-usernameMenu')
+
+      if (!usernameMenuElement) {
+        throw new Error('Failed to get username menu element.')
+      }
+
+      return usernameMenuElement.querySelector('[data-testid="awsc-nav-account-menu-button"] > span:first-child')
+    }
+    showAccountName({
+      accountNameGetter,
+      labelElementGetter
+    })
   }
 
-  usernameMenuLabelElement.textContent = accountName
+  try {
+    showAccountNameByPatternA()
+  } catch (e) {
+    console.warn(e)
+    console.warn('Failed to show account name by pattern A.')
+
+    try {
+      showAccountNameByPatternB()
+    } catch (e) {
+      console.error(e)
+      console.error('Failed to show account name by pattern B.')
+    }
+  }
 })()
