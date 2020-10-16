@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Show account name on header
 // @namespace    https://github.com/munierujp/
-// @version      1.2.2
+// @version      1.2.3
 // @description  Show account name on header on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -19,6 +19,7 @@
 
   /** @type {Record<string, string>} */
   const ACCOUNT_NAMES = {
+    '218392338430': 'enet-manage',
     '264691882649': 'enet-dev',
     '273955500657': 'enet-staging',
     '006841978030': 'enet-prod'
