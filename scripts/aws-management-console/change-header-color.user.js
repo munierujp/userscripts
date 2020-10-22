@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Change header color
 // @namespace    https://github.com/munierujp/
-// @version      1.3.1
+// @version      1.3.2
 // @description  Change header color on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -76,7 +76,7 @@
     document.head.appendChild(styleElement)
   }
 
-  const changeHeaderColorA = () => {
+  const changeHeaderColorByPatternA = () => {
     const envGetter = () => {
       const accountNameElement = document.getElementById('awsc-login-display-name-account')
 
@@ -112,7 +112,7 @@ body #awsgnav #nav-menubar .nav-menu,
     })
   }
 
-  const changeHeaderColorB = () => {
+  const changeHeaderColorByPatternB = () => {
     const envGetter = () => {
       const accountIdElement = document.querySelector('[data-testid="aws-my-account-details"]')
 
@@ -141,13 +141,13 @@ body #awsgnav #nav-menubar .nav-menu,
   }
 
   try {
-    changeHeaderColorA()
+    changeHeaderColorByPatternA()
   } catch (e) {
     console.warn(e)
     console.warn('Failed to change header color by pattern A.')
 
     try {
-      changeHeaderColorB()
+      changeHeaderColorByPatternB()
     } catch (e) {
       console.error(e)
       console.error('Failed to change header color by pattern B.')
