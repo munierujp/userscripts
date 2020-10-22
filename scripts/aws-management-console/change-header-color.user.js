@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Change header color
 // @namespace    https://github.com/munierujp/
-// @version      1.2.3
+// @version      1.3.0
 // @description  Change header color on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -129,7 +129,8 @@ body #awsgnav #nav-menubar .nav-menu,
       return ACCOUNTS[accountId]
     }
     const cssCreator = (color) => `
-[data-testid="awsc-nav-header-viewport-shelf-inner"] {
+[data-testid="awsc-nav-header-viewport-shelf-inner"],
+#console-nav-footer-inner {
   background-color: ${color};
 }
 `
