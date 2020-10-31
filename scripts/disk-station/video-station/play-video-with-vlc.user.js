@@ -39,7 +39,7 @@
    * @param {(element: Element) => boolean} filter
    * @returns {ElementFinder}
    */
-  const getElementFinder = (filter) => {
+  const createElementFinder = (filter) => {
     /** @type ElementFinder */
     const finder = (records) => {
       const element = records
@@ -125,7 +125,7 @@
   const fetchFilePath = () => {
     return new Promise((resolve) => {
       const observer = new MutationObserver((records, observer) => {
-        const findVideoInfoDialogElement = getElementFinder(isVideoInfoDialogElement)
+        const findVideoInfoDialogElement = createElementFinder(isVideoInfoDialogElement)
         const dialog = findVideoInfoDialogElement(records)
 
         if (!dialog) {
@@ -172,7 +172,7 @@
   const main = () => {
     console.debug('start')
     const observer = new MutationObserver((records, observer) => {
-      const findPlayButtonElement = getElementFinder(isPlayButtonElement)
+      const findPlayButtonElement = createElementFinder(isPlayButtonElement)
       const playButton = findPlayButtonElement(records)
 
       if (!playButton) {
