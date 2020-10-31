@@ -57,14 +57,10 @@
     return element.classList.contains('video-info-dialog')
   })
 
-  /**
-   * @param {Element} element
-   * @returns {boolean}
-   */
-  const isPlayButtonElement = (element) => {
+  const findPlayButtonElement = createElementFinder((element) => {
     const { classList } = element
     return classList.contains('x-btn') && classList.contains('play')
-  }
+  })
 
   /**
    * @param {Node} node
@@ -167,7 +163,6 @@
   const main = () => {
     console.debug('start')
     const observer = new MutationObserver((records, observer) => {
-      const findPlayButtonElement = createElementFinder(isPlayButtonElement)
       const playButton = findPlayButtonElement(records)
 
       if (!playButton) {
