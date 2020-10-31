@@ -126,14 +126,12 @@
 
         const filePath = findFilePath(dialog)
         resolve(filePath)
-        console.debug('close video info dialog')
         closeVideoInfoDialog(dialog)
         observer.disconnect()
       })
       observer.observe(document.getElementById('sds-desktop'), {
         childList: true
       })
-      console.debug('open video info dialog')
       openVideoInfoDialog()
     })
   }
