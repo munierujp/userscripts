@@ -120,14 +120,12 @@
       const observer = new MutationObserver((records, observer) => {
         const dialog = findVideoInfoDialogElement(records)
 
-        if (!dialog) {
-          return
+        if (dialog) {
+          const filePath = findFilePath(dialog)
+          resolve(filePath)
+          closeVideoInfoDialog(dialog)
+          observer.disconnect()
         }
-
-        const filePath = findFilePath(dialog)
-        resolve(filePath)
-        closeVideoInfoDialog(dialog)
-        observer.disconnect()
       })
       observer.observe(document.getElementById('sds-desktop'), {
         childList: true
