@@ -25,17 +25,6 @@
   /** @typedef {(records: MutationRecord[]) => Element} ElementFinder */
 
   /**
-   * @param {NodeList} nodeList
-   * @returns {Element[]}
-   */
-  const toElements = (nodeList) => {
-    /** @type {Element[]} */
-    // @ts-expect-error
-    const addedElements = Array.from(nodeList).filter(node => node instanceof Element)
-    return addedElements
-  }
-
-  /**
    * @param {(element: Element) => boolean} filter
    * @returns {ElementFinder}
    */
@@ -44,7 +33,12 @@
     const finder = (records) => {
       const element = records
         .filter(({ addedNodes }) => addedNodes)
-        .map(({ addedNodes }) => toElements(addedNodes))
+        .map(({ addedNodes }) => {
+          /** @type {Element[]} */
+          // @ts-expect-error
+          const elements = Array.from(addedNodes).filter(node => node instanceof Element)
+          return elements
+        })
         .map(elements => elements.filter(filter))
         .reduce((elements, element) => elements.concat(element), [])
         .find(element => element)
