@@ -57,7 +57,7 @@
     return element.classList.contains('video-info-dialog')
   })
 
-  const findPlayButtonElement = createElementFinder((element) => {
+  const findPlayButtonElement = createElementFinder(element => {
     const { classList } = element
     return classList.contains('x-btn') && classList.contains('play')
   })
