@@ -20,9 +20,9 @@
   /** @type {Record<string, string>} */
   const ACCOUNT_NAMES = {
     '006841978030': 'enet-prod',
-    '218392338430': 'enet-manage',
-    '264691882649': 'enet-dev',
-    '273955500657': 'enet-staging'
+    218392338430: 'enet-manage',
+    264691882649: 'enet-dev',
+    273955500657: 'enet-staging'
   }
 
   /**
