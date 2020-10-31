@@ -164,14 +164,15 @@
     const observer = new MutationObserver((records, observer) => {
       const playButton = findPlayButtonElement(records)
 
-      if (!playButton) {
-        return
+      if (playButton) {
+        console.debug('playButton', playButton)
+        console.debug('replace play button')
+        replacePlayButton(playButton)
+        console.debug('end observing document.body')
+        observer.disconnect()
       }
-
-      console.debug('replace play button')
-      replacePlayButton(playButton)
-      observer.disconnect()
     })
+    console.debug('start observing document.body')
     observer.observe(document.body, {
       childList: true,
       subtree: true
