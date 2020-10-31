@@ -1,7 +1,9 @@
+// @ts-check
+
 // ==UserScript==
 // @name         Redirect to latest page
 // @namespace    https://github.com/munierujp/
-// @version      1.1.0
+// @version      1.1.1
 // @description   Redirect to latest page on Vue.js document
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -21,20 +23,22 @@
 (function () {
   'use strict'
 
-  const toLatestHost = (oldHost) => {
-    switch (oldHost) {
-      case '011.vuejs.org':
-      case '012.vuejs.org':
-      case 'v1.vuejs.org':
-        return 'vuejs.org'
-      case '012-cn.vuejs.org':
-      case 'v1-cn.vuejs.org':
-        return 'cn.vuejs.org'
-      case '012-jp.vuejs.org':
-      case 'v1-jp.vuejs.org':
-        return 'jp.vuejs.org'
-    }
+  /** @typedef {'vuejs.org' | 'cn.vuejs.org' | 'jp.vuejs.org'} Host */
+
+  /** @type {Record<string, Host>} */
+  const HOSTS = {
+    '011.vuejs.org': 'vuejs.org',
+    '012-cn.vuejs.org': 'cn.vuejs.org',
+    '012-jp.vuejs.org': 'jp.vuejs.org',
+    '012.vuejs.org': 'vuejs.org',
+    'v1-cn.vuejs.org': 'cn.vuejs.org',
+    'v1-jp.vuejs.org': 'jp.vuejs.org',
+    'v1.vuejs.org': 'vuejs.org'
   }
 
-  location.host = toLatestHost(location.host)
+  const host = HOSTS[location.host]
+
+  if (host) {
+    location.host = host
+  }
 })()
