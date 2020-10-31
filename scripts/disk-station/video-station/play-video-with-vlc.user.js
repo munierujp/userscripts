@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Play video with VLC
 // @namespace    https://github.com/munierujp/
-// @version      0.1.0
+// @version      0.1.1
 // @description  Play video with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -22,6 +22,8 @@
   const URL_SCHEME = 'vlc'
   const ROOT_DIR = '/Volumes'
 
+  /** @typedef {(records: MutationRecord[]) => Element} ElementFinder */
+
   /**
    * @param {NodeList} nodeList
    * @returns {Element[]}
@@ -34,13 +36,31 @@
   }
 
   /**
-   * @param {Element} element
-   * @returns {boolean}
+   * @param {(element: Element) => boolean} filter
+   * @returns {ElementFinder}
    */
-  const isPlayButtonElement = (element) => {
+  const createElementFinder = (filter) => {
+    /** @type ElementFinder */
+    const finder = (records) => {
+      const element = records
+        .filter(({ addedNodes }) => addedNodes)
+        .map(({ addedNodes }) => toElements(addedNodes))
+        .map(elements => elements.filter(filter))
+        .reduce((elements, element) => elements.concat(element), [])
+        .find(element => element)
+      return element
+    }
+    return finder
+  }
+
+  const findVideoInfoDialogElement = createElementFinder(element => {
+    return element.classList.contains('video-info-dialog')
+  })
+
+  const findPlayButtonElement = createElementFinder(element => {
     const { classList } = element
     return classList.contains('x-btn') && classList.contains('play')
-  }
+  })
 
   /**
    * @param {Node} node
@@ -48,14 +68,6 @@
    */
   const deepCloneNode = (node) => {
     return node.cloneNode(true)
-  }
-
-  /**
-   * @param {Element} element
-   * @returns {boolean}
-   */
-  const isVideoInfoDialogElement = (element) => {
-    return element.classList.contains('video-info-dialog')
   }
 
   /**
@@ -105,20 +117,17 @@
   const fetchFilePath = () => {
     return new Promise((resolve) => {
       const observer = new MutationObserver((records, observer) => {
-        records
-          .filter(({ addedNodes }) => addedNodes)
-          .map(({ addedNodes }) => toElements(addedNodes))
-          .map(elements => elements.filter(isVideoInfoDialogElement))
-          .filter(dialogs => dialogs.length)
-          .forEach(dialogs => {
-            dialogs.forEach(dialog => {
-              const filePath = findFilePath(dialog)
-              resolve(filePath)
-              console.debug('close video info dialog')
-              closeVideoInfoDialog(dialog)
-            })
-            observer.disconnect()
-          })
+        const dialog = findVideoInfoDialogElement(records)
+
+        if (!dialog) {
+          return
+        }
+
+        const filePath = findFilePath(dialog)
+        resolve(filePath)
+        console.debug('close video info dialog')
+        closeVideoInfoDialog(dialog)
+        observer.disconnect()
       })
       observer.observe(document.getElementById('sds-desktop'), {
         childList: true
@@ -154,18 +163,15 @@
   const main = () => {
     console.debug('start')
     const observer = new MutationObserver((records, observer) => {
-      records
-        .filter(({ addedNodes }) => addedNodes)
-        .map(({ addedNodes }) => toElements(addedNodes))
-        .map(elements => elements.filter(isPlayButtonElement))
-        .filter(playButtons => playButtons.length)
-        .forEach(playButtons => {
-          playButtons.forEach(playButton => {
-            console.debug('replace play button')
-            replacePlayButton(playButton)
-          })
-          observer.disconnect()
-        })
+      const playButton = findPlayButtonElement(records)
+
+      if (!playButton) {
+        return
+      }
+
+      console.debug('replace play button')
+      replacePlayButton(playButton)
+      observer.disconnect()
     })
     observer.observe(document.body, {
       childList: true,
