@@ -14,6 +14,13 @@
 // @grant        none
 // ==/UserScript==
 
+/*
+* ## Requirements
+* - `diskstation.local` is assigned to DiskStation Manager by hosts file
+* - URL Scheme for VLC (`vlc://<file-path>`) is available
+* - DiskStation's video directory is mounted on local disk
+*/
+
 // TODO: サムネイル上の小さい再生ボタンも書き換える
 
 (function () {
