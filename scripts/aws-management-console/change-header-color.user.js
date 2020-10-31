@@ -22,15 +22,15 @@
   /** @type {Record<string, Env>} */
   const ACCOUNTS = {
     '006841978030': 'production',
-    '264691882649': 'develop',
-    '273955500657': 'staging'
+    264691882649: 'develop',
+    273955500657: 'staging'
   }
 
   /** @type {Record<Env, string>} */
   const COLORS = {
-    'develop': '#0D47A1',
-    'staging': '#1B5E20',
-    'production': '#B71C1C'
+    develop: '#0D47A1',
+    staging: '#1B5E20',
+    production: '#B71C1C'
   }
 
   /**

@@ -18,7 +18,7 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
   'use strict'
 
   const toLatestHost = (oldHost) => {
