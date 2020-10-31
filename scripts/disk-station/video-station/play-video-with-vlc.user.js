@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Play video with VLC
 // @namespace    https://github.com/munierujp/
-// @version      0.1.2
+// @version      0.1.3
 // @description  Play video with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -13,6 +13,13 @@
 // @match        https://diskstation.local:*/?launchApp=SYNO.SDS.VideoStation.AppInstance&SynoToken=*
 // @grant        none
 // ==/UserScript==
+
+/*
+* ## Requirements
+* - `diskstation.local` is assigned to DiskStation Manager by hosts file
+* - URL Scheme for VLC (`vlc://<file-path>`) is available
+* - DiskStation's video directory is mounted on local disk
+*/
 
 // TODO: サムネイル上の小さい再生ボタンも書き換える
 
@@ -113,20 +120,16 @@
       const observer = new MutationObserver((records, observer) => {
         const dialog = findVideoInfoDialogElement(records)
 
-        if (!dialog) {
-          return
+        if (dialog) {
+          const filePath = findFilePath(dialog)
+          resolve(filePath)
+          closeVideoInfoDialog(dialog)
+          observer.disconnect()
         }
-
-        const filePath = findFilePath(dialog)
-        resolve(filePath)
-        console.debug('close video info dialog')
-        closeVideoInfoDialog(dialog)
-        observer.disconnect()
       })
       observer.observe(document.getElementById('sds-desktop'), {
         childList: true
       })
-      console.debug('open video info dialog')
       openVideoInfoDialog()
     })
   }
@@ -159,14 +162,15 @@
     const observer = new MutationObserver((records, observer) => {
       const playButton = findPlayButtonElement(records)
 
-      if (!playButton) {
-        return
+      if (playButton) {
+        console.debug('playButton', playButton)
+        console.debug('replace play button')
+        replacePlayButton(playButton)
+        console.debug('end observing document.body')
+        observer.disconnect()
       }
-
-      console.debug('replace play button')
-      replacePlayButton(playButton)
-      observer.disconnect()
     })
+    console.debug('start observing document.body')
     observer.observe(document.body, {
       childList: true,
       subtree: true
