@@ -53,6 +53,10 @@
     return finder
   }
 
+  const findVideoInfoDialogElement = createElementFinder(element => {
+    return element.classList.contains('video-info-dialog')
+  })
+
   /**
    * @param {Element} element
    * @returns {boolean}
@@ -68,14 +72,6 @@
    */
   const deepCloneNode = (node) => {
     return node.cloneNode(true)
-  }
-
-  /**
-   * @param {Element} element
-   * @returns {boolean}
-   */
-  const isVideoInfoDialogElement = (element) => {
-    return element.classList.contains('video-info-dialog')
   }
 
   /**
@@ -125,7 +121,6 @@
   const fetchFilePath = () => {
     return new Promise((resolve) => {
       const observer = new MutationObserver((records, observer) => {
-        const findVideoInfoDialogElement = createElementFinder(isVideoInfoDialogElement)
         const dialog = findVideoInfoDialogElement(records)
 
         if (!dialog) {
