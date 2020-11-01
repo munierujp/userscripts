@@ -46,8 +46,8 @@
           const elements = Array.from(addedNodes).filter(node => node instanceof Element)
           return elements
         })
-        .map(elements => elements.filter(filter))
-        .reduce((elements, element) => elements.concat(element), [])
+        .reduce((a, b) => a.concat(b), [])
+        .filter(filter)
         .find(element => element)
       return element
     }
