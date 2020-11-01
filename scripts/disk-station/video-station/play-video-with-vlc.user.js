@@ -10,7 +10,7 @@
 // @updateURL    https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-video-with-vlc.user.js
 // @downloadURL  https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-video-with-vlc.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
-// @match        https://diskstation.local:*/?launchApp=SYNO.SDS.VideoStation.AppInstance&SynoToken=*
+// @match        *://diskstation.local/*
 // @grant        none
 // ==/UserScript==
 
@@ -203,5 +203,7 @@
     })
   }
 
-  main()
+  if (isVideoStationPage(location.href)) {
+    main()
+  }
 })()
