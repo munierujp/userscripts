@@ -52,17 +52,12 @@
    * @returns {ElementFinder}
    */
   const createElementFinder = (filter) => {
-    /** @type {ElementFinder} */
-    const finder = (records) => {
-      const elements = records
+    return (records) => {
+      return records
         .map(toAddedElements)
         .reduce((a, b) => a.concat(b), [])
-      const element = elements
-        .filter(filter)
-        .find(element => element)
-      return element
+        .find(filter)
     }
-    return finder
   }
 
   const findPlayButtonElement = createElementFinder(element => {
