@@ -189,10 +189,8 @@
    */
   const replacePlayButton = (playButton) => {
     const playWithVlcButton = createPlayWithVlcButton(playButton)
-    const { parentElement } = playButton
     playButton.style.display = 'none'
-    playButton.remove()
-    parentElement.appendChild(playWithVlcButton)
+    playButton.parentElement.appendChild(playWithVlcButton)
   }
 
   const main = () => {
