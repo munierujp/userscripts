@@ -86,12 +86,20 @@
   }
 
   /**
+   * @param {HTMLTableRowElement} row
+   * @returns {HTMLTableDataCellElement[]}
+   */
+  const toHTMLTableDataCellElements = (row) => {
+    return Array.from(row.querySelectorAll('td'))
+  }
+
+  /**
    * @param {Element} dialog
    * @returns {string}
    */
   const findFilePath = (dialog) => {
     return Array.from(dialog.querySelectorAll('tr'))
-      .map(row => Array.from(row.querySelectorAll('td')))
+      .map(toHTMLTableDataCellElements)
       .filter(cells => cells.length >= 2)
       .map(cells => cells.map(({ textContent }) => textContent))
       .map(([label, value]) => ({
