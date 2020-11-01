@@ -32,13 +32,21 @@
   /** @typedef {(records: MutationRecord[]) => Element} ElementFinder */
 
   /**
+   * @param {any} value
+   * @returns {boolean}
+   */
+  const isElement = (value) => {
+    return value instanceof Element
+  }
+
+  /**
    * @param {MutationRecord} record
    * @returns {Element[]}
    */
   const toAddedElements = (record) => {
     const addedNodes = record.addedNodes ? Array.from(record.addedNodes) : []
     return addedNodes
-      .filter(node => node instanceof Element)
+      .filter(isElement)
       .map(node => {
         /** @type {Element} */
         // @ts-expect-error
