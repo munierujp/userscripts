@@ -52,7 +52,7 @@
    * @returns {ElementFinder}
    */
   const createElementFinder = (filter) => {
-    /** @type ElementFinder */
+    /** @type {ElementFinder} */
     const finder = (records) => {
       const elements = records
         .map(toAddedElements)
