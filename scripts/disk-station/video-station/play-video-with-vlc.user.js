@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Play video with VLC
 // @namespace    https://github.com/munierujp/
-// @version      0.1.4
+// @version      0.1.5
 // @description  Play video with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -29,18 +29,18 @@
   const URL_SCHEME = 'vlc'
   const ROOT_DIR = '/Volumes'
 
-  /** @typedef {(records: MutationRecord[]) => Element} ElementFinder */
+  /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
 
   /**
    * @param {MutationRecord} record
-   * @returns {Element[]}
+   * @returns {HTMLElement[]}
    */
-  const toAddedElements = (record) => {
+  const toAddedHTMLElements = (record) => {
     const addedNodes = record.addedNodes ? Array.from(record.addedNodes) : []
     return addedNodes
-      .filter(node => node instanceof Element)
+      .filter(node => node instanceof HTMLElement)
       .map(node => {
-        /** @type {Element} */
+        /** @type {HTMLElement} */
         // @ts-expect-error
         const element = node
         return element
@@ -48,24 +48,24 @@
   }
 
   /**
-   * @param {(element: Element) => boolean} filter
-   * @returns {ElementFinder}
+   * @param {(element: HTMLElement) => boolean} filter
+   * @returns {HTMLElementFinder}
    */
-  const createElementFinder = (filter) => {
+  const createHTMLElementFinder = (filter) => {
     return (records) => {
       return records
-        .map(toAddedElements)
+        .map(toAddedHTMLElements)
         .reduce((a, b) => a.concat(b), [])
         .find(filter)
     }
   }
 
-  const findPlayButtonElement = createElementFinder(element => {
+  const findPlayButtonElement = createHTMLElementFinder(element => {
     const { classList } = element
     return classList.contains('x-btn') && classList.contains('play')
   })
 
-  const findVideoInfoDialogElement = createElementFinder(element => {
+  const findVideoInfoDialogElement = createHTMLElementFinder(element => {
     return element.classList.contains('video-info-dialog')
   })
 
@@ -78,7 +78,7 @@
   }
 
   /**
-   * @param {Element} dialog
+   * @param {HTMLElement} dialog
    * @returns {string}
    */
   const findFilePath = (dialog) => {
@@ -96,7 +96,7 @@
   }
 
   /**
-   * @param {Element} dialog
+   * @param {HTMLElement} dialog
    */
   const closeVideoInfoDialog = (dialog) => {
     /** @type {HTMLButtonElement} */
@@ -105,7 +105,7 @@
   }
 
   /**
-   * @param {Element} element
+   * @param {HTMLElement} element
    * @returns {boolean}
    */
   const isVideoInfoDialogLinkElement = (element) => {
@@ -149,7 +149,7 @@
   }
 
   /**
-   * @param {Element} playButton
+   * @param {HTMLElement} playButton
    */
   const replacePlayButton = (playButton) => {
     const playWithVlcButton = deepCloneNode(playButton)
@@ -168,7 +168,8 @@
         })
     })
     playButton.parentElement.appendChild(playWithVlcButton)
-    playButton.parentElement.removeChild(playButton)
+    playButton.style.display = 'none'
+    playButton.remove()
   }
 
   const main = () => {
