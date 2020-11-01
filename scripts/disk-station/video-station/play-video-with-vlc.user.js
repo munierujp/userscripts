@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Play video with VLC
 // @namespace    https://github.com/munierujp/
-// @version      0.1.3
+// @version      0.1.4
 // @description  Play video with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -32,35 +32,41 @@
   /** @typedef {(records: MutationRecord[]) => Element} ElementFinder */
 
   /**
+   * @param {MutationRecord} record
+   * @returns {Element[]}
+   */
+  const toAddedElements = (record) => {
+    const addedNodes = record.addedNodes ? Array.from(record.addedNodes) : []
+    return addedNodes
+      .filter(node => node instanceof Element)
+      .map(node => {
+        /** @type {Element} */
+        // @ts-expect-error
+        const element = node
+        return element
+      })
+  }
+
+  /**
    * @param {(element: Element) => boolean} filter
    * @returns {ElementFinder}
    */
   const createElementFinder = (filter) => {
-    /** @type ElementFinder */
-    const finder = (records) => {
-      const element = records
-        .filter(({ addedNodes }) => addedNodes)
-        .map(({ addedNodes }) => {
-          /** @type {Element[]} */
-          // @ts-expect-error
-          const elements = Array.from(addedNodes).filter(node => node instanceof Element)
-          return elements
-        })
-        .map(elements => elements.filter(filter))
-        .reduce((elements, element) => elements.concat(element), [])
-        .find(element => element)
-      return element
+    return (records) => {
+      return records
+        .map(toAddedElements)
+        .reduce((a, b) => a.concat(b), [])
+        .find(filter)
     }
-    return finder
   }
-
-  const findVideoInfoDialogElement = createElementFinder(element => {
-    return element.classList.contains('video-info-dialog')
-  })
 
   const findPlayButtonElement = createElementFinder(element => {
     const { classList } = element
     return classList.contains('x-btn') && classList.contains('play')
+  })
+
+  const findVideoInfoDialogElement = createElementFinder(element => {
+    return element.classList.contains('video-info-dialog')
   })
 
   /**
@@ -78,7 +84,7 @@
   const findFilePath = (dialog) => {
     return Array.from(dialog.querySelectorAll('tr'))
       .map(row => Array.from(row.querySelectorAll('td')))
-      .filter(cells => cells.length >= 2)
+      .filter(({ length }) => length >= 2)
       .map(cells => cells.map(({ textContent }) => textContent))
       .map(([label, value]) => ({
         label,
@@ -98,6 +104,14 @@
     closeButton.click()
   }
 
+  /**
+   * @param {Element} element
+   * @returns {boolean}
+   */
+  const isVideoInfoDialogLinkElement = (element) => {
+    return element.textContent === 'メディア情報を表示'
+  }
+
   // TODO: チラつきを防ぐために事前にmenuをCSSで非表示化してから実行し、実行後に非表示化を解除する
   const openVideoInfoDialog = () => {
     /** @type {HTMLButtonElement} */
@@ -107,7 +121,7 @@
     const menu = document.querySelector('.syno-vs2-dropdown-menu')
     /** @type {HTMLAnchorElement[]} */
     const links = Array.from(menu.querySelectorAll('a.x-menu-list-item'))
-    const link = links.find(({ textContent }) => textContent === 'メディア情報を表示')
+    const link = links.find(isVideoInfoDialogLinkElement)
     link.click()
   }
 
