@@ -36,16 +36,15 @@
    * @returns {Element[]}
    */
   const toAddedElements = (record) => {
-    const { addedNodes } = record
-
-    if (addedNodes) {
-      /** @type {Element[]} */
-      // @ts-expect-error
-      const elements = Array.from(addedNodes).filter(node => node instanceof Element)
-      return elements
-    } else {
-      return []
-    }
+    const addedNodes = record.addedNodes ? Array.from(record.addedNodes) : []
+    return addedNodes
+      .filter(node => node instanceof Element)
+      .map(node => {
+        /** @type {Element} */
+        // @ts-expect-error
+        const element = node
+        return element
+      })
   }
 
   /**
