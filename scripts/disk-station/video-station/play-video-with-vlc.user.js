@@ -100,7 +100,7 @@
   const findFilePath = (dialog) => {
     return Array.from(dialog.querySelectorAll('tr'))
       .map(toHTMLTableDataCellElements)
-      .filter(cells => cells.length >= 2)
+      .filter(({ length }) => length >= 2)
       .map(cells => cells.map(({ textContent }) => textContent))
       .map(([label, value]) => ({
         label,
