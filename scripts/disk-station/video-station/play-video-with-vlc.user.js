@@ -161,8 +161,11 @@
 
   /**
    * @param {HTMLElement} playButton
+   * @returns {HTMLElement}
    */
-  const replacePlayButton = (playButton) => {
+  const createPlayWithVlcButton = (playButton) => {
+    /** @type {HTMLElement} */
+    // @ts-expect-error
     const playWithVlcButton = deepCloneNode(playButton)
     playWithVlcButton.addEventListener('click', () => {
       console.debug('fetch file path')
@@ -178,6 +181,14 @@
           window.open(url)
         })
     })
+    return playWithVlcButton
+  }
+
+  /**
+   * @param {HTMLElement} playButton
+   */
+  const replacePlayButton = (playButton) => {
+    const playWithVlcButton = createPlayWithVlcButton(playButton)
     playButton.parentElement.appendChild(playWithVlcButton)
     playButton.style.display = 'none'
     playButton.remove()
