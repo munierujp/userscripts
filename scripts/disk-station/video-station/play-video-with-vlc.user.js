@@ -26,10 +26,21 @@
 (function () {
   'use strict'
 
+  const APP_ID = 'SYNO.SDS.VideoStation.AppInstance'
   const URL_SCHEME = 'vlc'
   const ROOT_DIR = '/Volumes'
 
   /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
+
+  /**
+   * @param {string | URL} url
+   * @returns {boolean}
+   */
+  const isVideoStationPage = (url) => {
+    url = url instanceof URL ? url : new URL(url)
+    const appId = url.searchParams.get('launchApp')
+    return appId === APP_ID
+  }
 
   /**
    * @param {MutationRecord} record
