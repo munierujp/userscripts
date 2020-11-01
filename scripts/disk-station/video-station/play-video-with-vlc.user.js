@@ -104,6 +104,14 @@
     closeButton.click()
   }
 
+  /**
+   * @param {Element} element
+   * @returns {boolean}
+   */
+  const isVideoInfoDialogLinkElement = (element) => {
+    return element.textContent === 'メディア情報を表示'
+  }
+
   // TODO: チラつきを防ぐために事前にmenuをCSSで非表示化してから実行し、実行後に非表示化を解除する
   const openVideoInfoDialog = () => {
     /** @type {HTMLButtonElement} */
@@ -113,7 +121,7 @@
     const menu = document.querySelector('.syno-vs2-dropdown-menu')
     /** @type {HTMLAnchorElement[]} */
     const links = Array.from(menu.querySelectorAll('a.x-menu-list-item'))
-    const link = links.find(({ textContent }) => textContent === 'メディア情報を表示')
+    const link = links.find(isVideoInfoDialogLinkElement)
     link.click()
   }
 
