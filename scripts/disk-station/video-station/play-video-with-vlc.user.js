@@ -3,14 +3,14 @@
 // ==UserScript==
 // @name         Play video with VLC
 // @namespace    https://github.com/munierujp/
-// @version      0.1.5
+// @version      0.1.6
 // @description  Play video with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-video-with-vlc.user.js
 // @downloadURL  https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-video-with-vlc.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
-// @match        https://diskstation.local:*/?launchApp=SYNO.SDS.VideoStation.AppInstance&SynoToken=*
+// @match        *://diskstation.local/*
 // @grant        none
 // ==/UserScript==
 
@@ -26,10 +26,21 @@
 (function () {
   'use strict'
 
+  const APP_ID = 'SYNO.SDS.VideoStation.AppInstance'
   const URL_SCHEME = 'vlc'
   const ROOT_DIR = '/Volumes'
 
   /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
+
+  /**
+   * @param {string | URL} url
+   * @returns {boolean}
+   */
+  const isVideoStationPage = (url) => {
+    url = url instanceof URL ? url : new URL(url)
+    const appId = url.searchParams.get('launchApp')
+    return appId === APP_ID
+  }
 
   /**
    * @param {MutationRecord} record
@@ -150,8 +161,11 @@
 
   /**
    * @param {HTMLElement} playButton
+   * @returns {HTMLElement}
    */
-  const replacePlayButton = (playButton) => {
+  const createPlayWithVlcButton = (playButton) => {
+    /** @type {HTMLElement} */
+    // @ts-expect-error
     const playWithVlcButton = deepCloneNode(playButton)
     playWithVlcButton.addEventListener('click', () => {
       console.debug('fetch file path')
@@ -167,18 +181,24 @@
           window.open(url)
         })
     })
+    return playWithVlcButton
+  }
+
+  /**
+   * @param {HTMLElement} playButton
+   */
+  const replacePlayButton = (playButton) => {
+    const playWithVlcButton = createPlayWithVlcButton(playButton)
     playButton.parentElement.appendChild(playWithVlcButton)
     playButton.style.display = 'none'
     playButton.remove()
   }
 
   const main = () => {
-    console.debug('start')
     const observer = new MutationObserver((records, observer) => {
       const playButton = findPlayButtonElement(records)
 
       if (playButton) {
-        console.debug('playButton', playButton)
         console.debug('replace play button')
         replacePlayButton(playButton)
         console.debug('end observing document.body')
@@ -192,5 +212,8 @@
     })
   }
 
-  main()
+  if (isVideoStationPage(location.href)) {
+    console.debug('start')
+    main()
+  }
 })()
