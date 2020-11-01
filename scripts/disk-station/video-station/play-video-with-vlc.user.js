@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Play video with VLC
 // @namespace    https://github.com/munierujp/
-// @version      0.1.6
+// @version      0.1.7
 // @description  Play video with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -189,9 +189,9 @@
    */
   const replacePlayButton = (playButton) => {
     const playWithVlcButton = createPlayWithVlcButton(playButton)
-    playButton.parentElement.appendChild(playWithVlcButton)
     playButton.style.display = 'none'
     playButton.remove()
+    playButton.parentElement.appendChild(playWithVlcButton)
   }
 
   const main = () => {
