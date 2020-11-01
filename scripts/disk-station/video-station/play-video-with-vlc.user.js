@@ -32,21 +32,33 @@
   /** @typedef {(records: MutationRecord[]) => Element} ElementFinder */
 
   /**
+   * @param {MutationRecord} record
+   * @returns {Element[]}
+   */
+  const toAddedElements = (record) => {
+    const { addedNodes } = record
+
+    if (addedNodes) {
+      /** @type {Element[]} */
+      // @ts-expect-error
+      const elements = Array.from(addedNodes).filter(node => node instanceof Element)
+      return elements
+    } else {
+      return []
+    }
+  }
+
+  /**
    * @param {(element: Element) => boolean} filter
    * @returns {ElementFinder}
    */
   const createElementFinder = (filter) => {
     /** @type ElementFinder */
     const finder = (records) => {
-      const element = records
-        .filter(({ addedNodes }) => addedNodes)
-        .map(({ addedNodes }) => {
-          /** @type {Element[]} */
-          // @ts-expect-error
-          const elements = Array.from(addedNodes).filter(node => node instanceof Element)
-          return elements
-        })
+      const elements = records
+        .map(toAddedElements)
         .reduce((a, b) => a.concat(b), [])
+      const element = elements
         .filter(filter)
         .find(element => element)
       return element
