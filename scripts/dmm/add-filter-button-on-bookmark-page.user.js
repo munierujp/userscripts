@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name        Add filter button on bookmark page
 // @namespace    https://github.com/munierujp/
-// @version      1.0.0
+// @version      1.0.1
 // @description   Add filter button on bookmark page on DMM Books
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -16,6 +16,7 @@
 // ==/UserScript==
 
 // TODO: リスト表示に対応
+// TODO: アクティブな状態ではマウスカーソルをポインターにする
 
 (function () {
   'use strict'
@@ -77,12 +78,20 @@
     buttonList.appendChild(discountedButton)
 
     allButton.addEventListener('click', () => {
+      if (allButton.classList.contains(CLASS_ACTIVE_BUTTON)) {
+        return
+      }
+
       allButton.classList.toggle(CLASS_ACTIVE_BUTTON)
       discountedButton.classList.toggle(CLASS_ACTIVE_BUTTON)
       showAllItems()
     })
 
     discountedButton.addEventListener('click', () => {
+      if (discountedButton.classList.contains(CLASS_ACTIVE_BUTTON)) {
+        return
+      }
+
       discountedButton.classList.toggle(CLASS_ACTIVE_BUTTON)
       allButton.classList.toggle(CLASS_ACTIVE_BUTTON)
       showDiscountedItems()
