@@ -17,7 +17,6 @@
 
 // TODO: リスト表示に対応
 // TODO: アクティブな状態ではマウスカーソルをポインターにする
-// TODO: アクティブな状態ではボタンを無効にする
 
 (function () {
   'use strict'
@@ -79,12 +78,20 @@
     buttonList.appendChild(discountedButton)
 
     allButton.addEventListener('click', () => {
+      if (allButton.classList.contains(CLASS_ACTIVE_BUTTON)) {
+        return
+      }
+
       allButton.classList.toggle(CLASS_ACTIVE_BUTTON)
       discountedButton.classList.toggle(CLASS_ACTIVE_BUTTON)
       showAllItems()
     })
 
     discountedButton.addEventListener('click', () => {
+      if (discountedButton.classList.contains(CLASS_ACTIVE_BUTTON)) {
+        return
+      }
+
       discountedButton.classList.toggle(CLASS_ACTIVE_BUTTON)
       allButton.classList.toggle(CLASS_ACTIVE_BUTTON)
       showDiscountedItems()
