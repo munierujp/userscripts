@@ -15,6 +15,10 @@ My User Scripts
 
 - [play-video-with-vlc.user.js](https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-video-with-vlc.user.js)
 
+### DMM
+
+- [add-filter-button-on-bookmark-page.user.js](https://munierujp.github.io/userscripts/scripts/dmm/add-filter-button-on-bookmark-page.user.js)
+
 ### Vue.js
 
 - [redirect-to-latest-page.user.js](https://munierujp.github.io/userscripts/scripts/vuejs/redirect-to-latest-page.user.js)
