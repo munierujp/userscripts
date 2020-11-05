@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name        Add filter button on bookmark page
 // @namespace    https://github.com/munierujp/
-// @version      0.1.1
+// @version      1.0.0
 // @description   Add filter button on bookmark page on DMM Books
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
