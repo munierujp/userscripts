@@ -20,9 +20,9 @@
 (function () {
   'use strict'
 
-  const CLASS_ACTIVE_BUTTON = 'current'
-  const CURSOR_BUTTON_ACTIVE = 'auto'
-  const CURSOR_BUTTON_INACTIVE = 'pointer'
+  const CLASS_BUTTON_INACTIVE = 'current'
+  const CURSOR_BUTTON_ACTIVE = 'pointer'
+  const CURSOR_BUTTON_INACTIVE = 'auto'
 
   /**
    * @param {string} text
@@ -40,14 +40,19 @@
   }
 
   /**
-   * @param {HTMLElement[]} buttons
+   * @param {HTMLElement} button
    */
-  const toggleButton = (...buttons) => {
-    buttons.forEach(button => button.classList.toggle(CLASS_ACTIVE_BUTTON))
-    buttons.forEach(button => {
-      const cursor = button.style.cursor === CURSOR_BUTTON_INACTIVE ? CURSOR_BUTTON_ACTIVE : CURSOR_BUTTON_INACTIVE
-      button.style.cursor = cursor
-    })
+  const activateButton = (button) => {
+    button.classList.remove(CLASS_BUTTON_INACTIVE)
+    button.style.cursor = CURSOR_BUTTON_ACTIVE
+  }
+
+  /**
+   * @param {HTMLElement} button
+   */
+  const deactivateButton = (button) => {
+    button.classList.add(CLASS_BUTTON_INACTIVE)
+    button.style.cursor = CURSOR_BUTTON_INACTIVE
   }
 
   /**
@@ -87,25 +92,28 @@
    */
   const createButtonListElement = () => {
     const allButton = createButtonElement('すべて')
-    allButton.classList.add(CLASS_ACTIVE_BUTTON)
+    allButton.classList.add(CLASS_BUTTON_INACTIVE)
+    allButton.style.cursor = CURSOR_BUTTON_INACTIVE
     const discountedButton = createButtonElement('セール中')
-    discountedButton.style.cursor = CURSOR_BUTTON_INACTIVE
+    discountedButton.style.cursor = CURSOR_BUTTON_ACTIVE
 
     allButton.addEventListener('click', () => {
-      if (allButton.classList.contains(CLASS_ACTIVE_BUTTON)) {
+      if (allButton.classList.contains(CLASS_BUTTON_INACTIVE)) {
         return
       }
 
-      toggleButton(allButton, discountedButton)
+      deactivateButton(allButton)
+      activateButton(discountedButton)
       showAllItems()
     })
 
     discountedButton.addEventListener('click', () => {
-      if (discountedButton.classList.contains(CLASS_ACTIVE_BUTTON)) {
+      if (discountedButton.classList.contains(CLASS_BUTTON_INACTIVE)) {
         return
       }
 
-      toggleButton(discountedButton, allButton)
+      deactivateButton(discountedButton)
+      activateButton(allButton)
       showDiscountedItems()
     })
 
