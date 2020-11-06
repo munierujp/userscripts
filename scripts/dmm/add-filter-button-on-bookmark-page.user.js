@@ -61,6 +61,13 @@
   /**
    * @param {HTMLElement} button
    */
+  const isInactiveButton = (button) => {
+    return button.classList.contains(CLASS_BUTTON_INACTIVE)
+  }
+
+  /**
+   * @param {HTMLElement} button
+   */
   const activateButton = (button) => {
     button.classList.remove(CLASS_BUTTON_INACTIVE)
     button.style.cursor = CURSOR_BUTTON_ACTIVE
@@ -114,7 +121,7 @@
     const showDiscountedButton = createShowDiscountedButtonElement()
 
     showAllButton.addEventListener('click', () => {
-      if (showAllButton.classList.contains(CLASS_BUTTON_INACTIVE)) {
+      if (isInactiveButton(showAllButton)) {
         return
       }
 
@@ -124,7 +131,7 @@
     })
 
     showDiscountedButton.addEventListener('click', () => {
-      if (showDiscountedButton.classList.contains(CLASS_BUTTON_INACTIVE)) {
+      if (isInactiveButton(showDiscountedButton)) {
         return
       }
 
