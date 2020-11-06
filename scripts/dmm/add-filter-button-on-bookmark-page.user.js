@@ -25,6 +25,21 @@
   const CURSOR_INACTIVE = 'pointer'
 
   /**
+   * @param {string} text
+   * @returns {HTMLLIElement}
+   */
+  const createButtonElement = (text) => {
+    const button = document.createElement('li')
+    button.style.width = 'auto'
+    const label = document.createElement('span')
+    label.style['padding-left'] = '8px'
+    label.style['padding-right'] = '8px'
+    label.textContent = text
+    button.appendChild(label)
+    return button
+  }
+
+  /**
    * @param {HTMLElement} element
    */
   const toggleActiveClass = (element) => {
@@ -69,21 +84,6 @@
       const display = isDiscountedItem(item) ? 'list-item' : 'none'
       item.style.display = display
     })
-  }
-
-  /**
-   * @param {string} text
-   * @returns {HTMLLIElement}
-   */
-  const createButtonElement = (text) => {
-    const button = document.createElement('li')
-    button.style.width = 'auto'
-    const label = document.createElement('span')
-    label.style['padding-left'] = '8px'
-    label.style['padding-right'] = '8px'
-    label.textContent = text
-    button.appendChild(label)
-    return button
   }
 
   /**
