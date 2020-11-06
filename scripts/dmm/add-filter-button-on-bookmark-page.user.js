@@ -40,18 +40,14 @@
   }
 
   /**
-   * @param {HTMLElement} element
+   * @param {HTMLElement[]} buttons
    */
-  const toggleActiveClass = (element) => {
-    element.classList.toggle(CLASS_ACTIVE_BUTTON)
-  }
-
-  /**
-   * @param {HTMLElement} element
-   */
-  const toggleCursor = (element) => {
-    const cursor = element.style.cursor === CURSOR_INACTIVE ? CURSOR_ACTIVE : CURSOR_INACTIVE
-    element.style.cursor = cursor
+  const toggleButton = (...buttons) => {
+    buttons.forEach(button => button.classList.toggle(CLASS_ACTIVE_BUTTON))
+    buttons.forEach(button => {
+      const cursor = button.style.cursor === CURSOR_INACTIVE ? CURSOR_ACTIVE : CURSOR_INACTIVE
+      button.style.cursor = cursor
+    })
   }
 
   /**
@@ -105,10 +101,7 @@
         return
       }
 
-      toggleActiveClass(allButton)
-      toggleActiveClass(discountedButton)
-      toggleCursor(allButton)
-      toggleCursor(discountedButton)
+      toggleButton(allButton, discountedButton)
       showAllItems()
     })
 
@@ -117,10 +110,7 @@
         return
       }
 
-      toggleActiveClass(discountedButton)
-      toggleActiveClass(allButton)
-      toggleCursor(discountedButton)
-      toggleCursor(allButton)
+      toggleButton(discountedButton, allButton)
       showDiscountedItems()
     })
 
