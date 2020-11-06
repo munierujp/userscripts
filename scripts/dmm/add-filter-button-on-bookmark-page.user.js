@@ -39,6 +39,9 @@
     element.style.cursor = cursor
   }
 
+  /**
+   * @returns {HTMLLIElement[]}
+   */
   const getItemElements = () => {
     const list = document.getElementById('list')
     const items = Array.from(list.querySelectorAll('li'))
@@ -83,6 +86,9 @@
     return button
   }
 
+  /**
+   * @returns {HTMLUListElement}
+   */
   const createButtonListElement = () => {
     const buttonList = document.createElement('ul')
 
@@ -121,6 +127,9 @@
     return buttonList
   }
 
+  /**
+   * @returns {HTMLDivElement}
+   */
   const createFilterMenuElement = () => {
     const filterMenu = document.createElement('div')
 
