@@ -16,6 +16,7 @@
 // ==/UserScript==
 
 // TODO: リスト表示に対応
+// TODO: 割引率別のボタンを追加
 
 (function () {
   'use strict'
