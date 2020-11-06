@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name        Add filter button on bookmark page
 // @namespace    https://github.com/munierujp/
-// @version      1.0.2
+// @version      1.0.3
 // @description   Add filter button on bookmark page on DMM Books
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 // TODO: リスト表示に対応
-// TODO: 割引率別のボタンを追加
+// TODO: 価格で絞り込めるようにする？その場合価格はフォームで指定？固定（「500円以下」など）？
 
 (function () {
   'use strict'
@@ -41,20 +41,22 @@
   }
 
   /**
+   * @param {string} text
    * @returns {HTMLLIElement}
    */
-  const createShowAllButtonElement = () => {
-    const button = createButtonElement('すべて')
+  const createInactiveButtonElement = (text) => {
+    const button = createButtonElement(text)
     button.classList.add(CLASS_BUTTON_INACTIVE)
     button.style.cursor = CURSOR_BUTTON_INACTIVE
     return button
   }
 
   /**
+   * @param {string} text
    * @returns {HTMLLIElement}
    */
-  const createShowDiscountedButtonElement = () => {
-    const button = createButtonElement('セール中')
+  const createActiveButtonElement = (text) => {
+    const button = createButtonElement(text)
     button.style.cursor = CURSOR_BUTTON_ACTIVE
     return button
   }
@@ -99,17 +101,14 @@
   }
 
   /**
-   * @param {HTMLLIElement} item
-   * @returns {boolean}
+   * @param {number} [rate]
    */
-  const isDiscountedItem = (item) => {
-    return !!item.querySelector('.txtoff')
-  }
-
-  const showDiscountedItems = () => {
+  const showDiscountedItems = (rate) => {
     const items = getItemElements()
     items.forEach(item => {
-      const display = isDiscountedItem(item) ? 'list-item' : 'none'
+      const discount = item.querySelector('.txtoff')
+      const show = rate ? (discount && discount.textContent === `${rate}%OFF`) : discount
+      const display = show ? 'list-item' : 'none'
       item.style.display = display
     })
   }
@@ -118,8 +117,8 @@
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = () => {
-    const showAllButton = createShowAllButtonElement()
-    const showDiscountedButton = createShowDiscountedButtonElement()
+    const showAllButton = createInactiveButtonElement('すべて')
+    const showDiscountedButton = createActiveButtonElement('セール中')
 
     showAllButton.addEventListener('click', () => {
       if (isInactiveButton(showAllButton)) {
