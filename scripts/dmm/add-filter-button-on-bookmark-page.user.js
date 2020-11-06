@@ -42,7 +42,7 @@
   /**
    * @returns {HTMLLIElement}
    */
-  const createAllButtonElement = () => {
+  const createShowAllButtonElement = () => {
     const button = createButtonElement('すべて')
     button.classList.add(CLASS_BUTTON_INACTIVE)
     button.style.cursor = CURSOR_BUTTON_INACTIVE
@@ -52,7 +52,7 @@
   /**
    * @returns {HTMLLIElement}
    */
-  const createDiscountedButtonElement = () => {
+  const createShowDiscountedButtonElement = () => {
     const button = createButtonElement('セール中')
     button.style.cursor = CURSOR_BUTTON_ACTIVE
     return button
@@ -110,32 +110,32 @@
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = () => {
-    const allButton = createAllButtonElement()
-    const discountedButton = createDiscountedButtonElement()
+    const showAllButton = createShowAllButtonElement()
+    const showDiscountedButton = createShowDiscountedButtonElement()
 
-    allButton.addEventListener('click', () => {
-      if (allButton.classList.contains(CLASS_BUTTON_INACTIVE)) {
+    showAllButton.addEventListener('click', () => {
+      if (showAllButton.classList.contains(CLASS_BUTTON_INACTIVE)) {
         return
       }
 
-      deactivateButton(allButton)
-      activateButton(discountedButton)
+      deactivateButton(showAllButton)
+      activateButton(showDiscountedButton)
       showAllItems()
     })
 
-    discountedButton.addEventListener('click', () => {
-      if (discountedButton.classList.contains(CLASS_BUTTON_INACTIVE)) {
+    showDiscountedButton.addEventListener('click', () => {
+      if (showDiscountedButton.classList.contains(CLASS_BUTTON_INACTIVE)) {
         return
       }
 
-      deactivateButton(discountedButton)
-      activateButton(allButton)
+      deactivateButton(showDiscountedButton)
+      activateButton(showAllButton)
       showDiscountedItems()
     })
 
     const buttonList = document.createElement('ul')
-    buttonList.appendChild(allButton)
-    buttonList.appendChild(discountedButton)
+    buttonList.appendChild(showAllButton)
+    buttonList.appendChild(showDiscountedButton)
     return buttonList
   }
 
