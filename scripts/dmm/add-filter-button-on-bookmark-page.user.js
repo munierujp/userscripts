@@ -41,10 +41,11 @@
   }
 
   /**
+   * @param {string} text
    * @returns {HTMLLIElement}
    */
-  const createShowAllButtonElement = () => {
-    const button = createButtonElement('すべて')
+  const createInactiveButtonElement = (text) => {
+    const button = createButtonElement(text)
     button.classList.add(CLASS_BUTTON_INACTIVE)
     button.style.cursor = CURSOR_BUTTON_INACTIVE
     return button
@@ -115,7 +116,7 @@
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = () => {
-    const showAllButton = createShowAllButtonElement()
+    const showAllButton = createInactiveButtonElement('すべて')
     const showDiscountedButton = createShowDiscountedButtonElement()
 
     showAllButton.addEventListener('click', () => {
