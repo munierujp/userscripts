@@ -52,10 +52,11 @@
   }
 
   /**
+   * @param {string} text
    * @returns {HTMLLIElement}
    */
-  const createShowDiscountedButtonElement = () => {
-    const button = createButtonElement('セール中')
+  const createActiveButtonElement = (text) => {
+    const button = createButtonElement(text)
     button.style.cursor = CURSOR_BUTTON_ACTIVE
     return button
   }
@@ -117,7 +118,7 @@
    */
   const createButtonListElement = () => {
     const showAllButton = createInactiveButtonElement('すべて')
-    const showDiscountedButton = createShowDiscountedButtonElement()
+    const showDiscountedButton = createActiveButtonElement('セール中')
 
     showAllButton.addEventListener('click', () => {
       if (isInactiveButton(showAllButton)) {
