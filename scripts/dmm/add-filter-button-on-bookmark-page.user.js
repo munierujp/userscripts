@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name        Add filter button on bookmark page
 // @namespace    https://github.com/munierujp/
-// @version      1.0.3
+// @version      1.0.4
 // @description   Add filter button on bookmark page on DMM Books
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -16,7 +16,6 @@
 // ==/UserScript==
 
 // TODO: リスト表示に対応
-// TODO: 価格で絞り込めるようにする？その場合価格はフォームで指定？固定（「500円以下」など）？
 
 (function () {
   'use strict'
