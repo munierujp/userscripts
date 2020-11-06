@@ -99,7 +99,7 @@
   }
 
   /**
-   * @param {HTMLLIElement} item
+   * @param {HTMLElement} item
    * @returns {boolean}
    */
   const isDiscountedItem = (item) => {
