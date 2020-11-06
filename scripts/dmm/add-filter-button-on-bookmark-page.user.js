@@ -16,12 +16,28 @@
 // ==/UserScript==
 
 // TODO: リスト表示に対応
-// TODO: アクティブな状態ではマウスカーソルをポインターにする
 
 (function () {
   'use strict'
 
   const CLASS_ACTIVE_BUTTON = 'current'
+  const CURSOR_ACTIVE = 'auto'
+  const CURSOR_INACTIVE = 'pointer'
+
+  /**
+   * @param {HTMLElement} element
+   */
+  const toggleActiveClass = (element) => {
+    element.classList.toggle(CLASS_ACTIVE_BUTTON)
+  }
+
+  /**
+   * @param {HTMLElement} element
+   */
+  const toggleCursor = (element) => {
+    const cursor = element.style.cursor === CURSOR_INACTIVE ? CURSOR_ACTIVE : CURSOR_INACTIVE
+    element.style.cursor = cursor
+  }
 
   const getItemElements = () => {
     const list = document.getElementById('list')
@@ -75,6 +91,7 @@
     buttonList.appendChild(allButton)
 
     const discountedButton = createButtonElement('セール中')
+    discountedButton.style.cursor = CURSOR_INACTIVE
     buttonList.appendChild(discountedButton)
 
     allButton.addEventListener('click', () => {
@@ -82,8 +99,10 @@
         return
       }
 
-      allButton.classList.toggle(CLASS_ACTIVE_BUTTON)
-      discountedButton.classList.toggle(CLASS_ACTIVE_BUTTON)
+      toggleActiveClass(allButton)
+      toggleActiveClass(discountedButton)
+      toggleCursor(allButton)
+      toggleCursor(discountedButton)
       showAllItems()
     })
 
@@ -92,8 +111,10 @@
         return
       }
 
-      discountedButton.classList.toggle(CLASS_ACTIVE_BUTTON)
-      allButton.classList.toggle(CLASS_ACTIVE_BUTTON)
+      toggleActiveClass(discountedButton)
+      toggleActiveClass(allButton)
+      toggleCursor(discountedButton)
+      toggleCursor(allButton)
       showDiscountedItems()
     })
 
