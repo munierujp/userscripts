@@ -99,17 +99,14 @@
   }
 
   /**
-   * @param {HTMLElement} item
-   * @returns {boolean}
+   * @param {number} [rate]
    */
-  const isDiscountedItem = (item) => {
-    return !!item.querySelector('.txtoff')
-  }
-
-  const showDiscountedItems = () => {
+  const showDiscountedItems = (rate) => {
     const items = getItemElements()
     items.forEach(item => {
-      const display = isDiscountedItem(item) ? 'list-item' : 'none'
+      const discount = item.querySelector('.txtoff')
+      const show = rate ? (discount && discount.textContent === `${rate}%OFF`) : discount
+      const display = show ? 'list-item' : 'none'
       item.style.display = display
     })
   }
