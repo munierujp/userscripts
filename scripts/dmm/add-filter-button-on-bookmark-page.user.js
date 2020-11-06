@@ -21,8 +21,8 @@
   'use strict'
 
   const CLASS_ACTIVE_BUTTON = 'current'
-  const CURSOR_ACTIVE = 'auto'
-  const CURSOR_INACTIVE = 'pointer'
+  const CURSOR_BUTTON_ACTIVE = 'auto'
+  const CURSOR_BUTTON_INACTIVE = 'pointer'
 
   /**
    * @param {string} text
@@ -45,7 +45,7 @@
   const toggleButton = (...buttons) => {
     buttons.forEach(button => button.classList.toggle(CLASS_ACTIVE_BUTTON))
     buttons.forEach(button => {
-      const cursor = button.style.cursor === CURSOR_INACTIVE ? CURSOR_ACTIVE : CURSOR_INACTIVE
+      const cursor = button.style.cursor === CURSOR_BUTTON_INACTIVE ? CURSOR_BUTTON_ACTIVE : CURSOR_BUTTON_INACTIVE
       button.style.cursor = cursor
     })
   }
@@ -93,7 +93,7 @@
     buttonList.appendChild(allButton)
 
     const discountedButton = createButtonElement('セール中')
-    discountedButton.style.cursor = CURSOR_INACTIVE
+    discountedButton.style.cursor = CURSOR_BUTTON_INACTIVE
     buttonList.appendChild(discountedButton)
 
     allButton.addEventListener('click', () => {
