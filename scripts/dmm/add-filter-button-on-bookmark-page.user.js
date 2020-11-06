@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name        Add filter button on bookmark page
 // @namespace    https://github.com/munierujp/
-// @version      1.0.1
+// @version      1.0.2
 // @description   Add filter button on bookmark page on DMM Books
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -16,13 +16,75 @@
 // ==/UserScript==
 
 // TODO: リスト表示に対応
-// TODO: アクティブな状態ではマウスカーソルをポインターにする
+// TODO: 割引率別のボタンを追加
 
 (function () {
   'use strict'
 
-  const CLASS_ACTIVE_BUTTON = 'current'
+  const CLASS_BUTTON_INACTIVE = 'current'
+  const CURSOR_BUTTON_ACTIVE = 'pointer'
+  const CURSOR_BUTTON_INACTIVE = 'auto'
 
+  /**
+   * @param {string} text
+   * @returns {HTMLLIElement}
+   */
+  const createButtonElement = (text) => {
+    const button = document.createElement('li')
+    button.style.width = 'auto'
+    const label = document.createElement('span')
+    label.style['padding-left'] = '8px'
+    label.style['padding-right'] = '8px'
+    label.textContent = text
+    button.appendChild(label)
+    return button
+  }
+
+  /**
+   * @returns {HTMLLIElement}
+   */
+  const createShowAllButtonElement = () => {
+    const button = createButtonElement('すべて')
+    button.classList.add(CLASS_BUTTON_INACTIVE)
+    button.style.cursor = CURSOR_BUTTON_INACTIVE
+    return button
+  }
+
+  /**
+   * @returns {HTMLLIElement}
+   */
+  const createShowDiscountedButtonElement = () => {
+    const button = createButtonElement('セール中')
+    button.style.cursor = CURSOR_BUTTON_ACTIVE
+    return button
+  }
+
+  /**
+   * @param {HTMLElement} button
+   */
+  const isInactiveButton = (button) => {
+    return button.classList.contains(CLASS_BUTTON_INACTIVE)
+  }
+
+  /**
+   * @param {HTMLElement} button
+   */
+  const activateButton = (button) => {
+    button.classList.remove(CLASS_BUTTON_INACTIVE)
+    button.style.cursor = CURSOR_BUTTON_ACTIVE
+  }
+
+  /**
+   * @param {HTMLElement} button
+   */
+  const deactivateButton = (button) => {
+    button.classList.add(CLASS_BUTTON_INACTIVE)
+    button.style.cursor = CURSOR_BUTTON_INACTIVE
+  }
+
+  /**
+   * @returns {HTMLLIElement[]}
+   */
   const getItemElements = () => {
     const list = document.getElementById('list')
     const items = Array.from(list.querySelectorAll('li'))
@@ -53,63 +115,48 @@
   }
 
   /**
-   * @param {string} text
-   * @returns {HTMLLIElement}
+   * @returns {HTMLUListElement}
    */
-  const createButtonElement = (text) => {
-    const button = document.createElement('li')
-    button.style.width = 'auto'
-    const label = document.createElement('span')
-    label.style['padding-left'] = '8px'
-    label.style['padding-right'] = '8px'
-    label.textContent = text
-    button.appendChild(label)
-    return button
-  }
-
   const createButtonListElement = () => {
-    const buttonList = document.createElement('ul')
+    const showAllButton = createShowAllButtonElement()
+    const showDiscountedButton = createShowDiscountedButtonElement()
 
-    const allButton = createButtonElement('すべて')
-    allButton.classList.add(CLASS_ACTIVE_BUTTON)
-    buttonList.appendChild(allButton)
-
-    const discountedButton = createButtonElement('セール中')
-    buttonList.appendChild(discountedButton)
-
-    allButton.addEventListener('click', () => {
-      if (allButton.classList.contains(CLASS_ACTIVE_BUTTON)) {
+    showAllButton.addEventListener('click', () => {
+      if (isInactiveButton(showAllButton)) {
         return
       }
 
-      allButton.classList.toggle(CLASS_ACTIVE_BUTTON)
-      discountedButton.classList.toggle(CLASS_ACTIVE_BUTTON)
+      deactivateButton(showAllButton)
+      activateButton(showDiscountedButton)
       showAllItems()
     })
 
-    discountedButton.addEventListener('click', () => {
-      if (discountedButton.classList.contains(CLASS_ACTIVE_BUTTON)) {
+    showDiscountedButton.addEventListener('click', () => {
+      if (isInactiveButton(showDiscountedButton)) {
         return
       }
 
-      discountedButton.classList.toggle(CLASS_ACTIVE_BUTTON)
-      allButton.classList.toggle(CLASS_ACTIVE_BUTTON)
+      deactivateButton(showDiscountedButton)
+      activateButton(showAllButton)
       showDiscountedItems()
     })
 
+    const buttonList = document.createElement('ul')
+    buttonList.appendChild(showAllButton)
+    buttonList.appendChild(showDiscountedButton)
     return buttonList
   }
 
+  /**
+   * @returns {HTMLDivElement}
+   */
   const createFilterMenuElement = () => {
-    const filterMenu = document.createElement('div')
-
     const label = document.createElement('span')
     label.textContent = '絞り込み'
-    filterMenu.appendChild(label)
-
     const buttonList = createButtonListElement()
+    const filterMenu = document.createElement('div')
+    filterMenu.appendChild(label)
     filterMenu.appendChild(buttonList)
-
     return filterMenu
   }
 
