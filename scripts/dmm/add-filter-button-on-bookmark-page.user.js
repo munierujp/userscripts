@@ -86,15 +86,10 @@
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = () => {
-    const buttonList = document.createElement('ul')
-
     const allButton = createButtonElement('すべて')
     allButton.classList.add(CLASS_ACTIVE_BUTTON)
-    buttonList.appendChild(allButton)
-
     const discountedButton = createButtonElement('セール中')
     discountedButton.style.cursor = CURSOR_BUTTON_INACTIVE
-    buttonList.appendChild(discountedButton)
 
     allButton.addEventListener('click', () => {
       if (allButton.classList.contains(CLASS_ACTIVE_BUTTON)) {
@@ -114,6 +109,9 @@
       showDiscountedItems()
     })
 
+    const buttonList = document.createElement('ul')
+    buttonList.appendChild(allButton)
+    buttonList.appendChild(discountedButton)
     return buttonList
   }
 
@@ -121,15 +119,12 @@
    * @returns {HTMLDivElement}
    */
   const createFilterMenuElement = () => {
-    const filterMenu = document.createElement('div')
-
     const label = document.createElement('span')
     label.textContent = '絞り込み'
-    filterMenu.appendChild(label)
-
     const buttonList = createButtonListElement()
+    const filterMenu = document.createElement('div')
+    filterMenu.appendChild(label)
     filterMenu.appendChild(buttonList)
-
     return filterMenu
   }
 
