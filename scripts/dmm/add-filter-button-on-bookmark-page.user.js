@@ -40,6 +40,16 @@
   }
 
   /**
+   * @returns {HTMLLIElement}
+   */
+  const createAllButtonElement = () => {
+    const button = createButtonElement('すべて')
+    button.classList.add(CLASS_BUTTON_INACTIVE)
+    button.style.cursor = CURSOR_BUTTON_INACTIVE
+    return button
+  }
+
+  /**
    * @param {HTMLElement} button
    */
   const activateButton = (button) => {
@@ -91,9 +101,7 @@
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = () => {
-    const allButton = createButtonElement('すべて')
-    allButton.classList.add(CLASS_BUTTON_INACTIVE)
-    allButton.style.cursor = CURSOR_BUTTON_INACTIVE
+    const allButton = createAllButtonElement()
     const discountedButton = createButtonElement('セール中')
     discountedButton.style.cursor = CURSOR_BUTTON_ACTIVE
 
