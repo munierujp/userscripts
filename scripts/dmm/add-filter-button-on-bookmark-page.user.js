@@ -50,6 +50,15 @@
   }
 
   /**
+   * @returns {HTMLLIElement}
+   */
+  const createDiscountedButtonElement = () => {
+    const button = createButtonElement('セール中')
+    button.style.cursor = CURSOR_BUTTON_ACTIVE
+    return button
+  }
+
+  /**
    * @param {HTMLElement} button
    */
   const activateButton = (button) => {
@@ -102,8 +111,7 @@
    */
   const createButtonListElement = () => {
     const allButton = createAllButtonElement()
-    const discountedButton = createButtonElement('セール中')
-    discountedButton.style.cursor = CURSOR_BUTTON_ACTIVE
+    const discountedButton = createDiscountedButtonElement()
 
     allButton.addEventListener('click', () => {
       if (allButton.classList.contains(CLASS_BUTTON_INACTIVE)) {
