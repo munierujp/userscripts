@@ -119,6 +119,7 @@
   const createButtonListElement = () => {
     const showAllButton = createInactiveButtonElement('すべて')
     const showDiscountedButton = createActiveButtonElement('セール中')
+    const show50PercentOffButton = createActiveButtonElement('50%OFF')
 
     showAllButton.addEventListener('click', () => {
       if (isInactiveButton(showAllButton)) {
@@ -127,6 +128,7 @@
 
       deactivateButton(showAllButton)
       activateButton(showDiscountedButton)
+      activateButton(show50PercentOffButton)
       showAllItems()
     })
 
@@ -137,12 +139,25 @@
 
       deactivateButton(showDiscountedButton)
       activateButton(showAllButton)
+      activateButton(show50PercentOffButton)
       showDiscountedItems()
+    })
+
+    show50PercentOffButton.addEventListener('click', () => {
+      if (isInactiveButton(show50PercentOffButton)) {
+        return
+      }
+
+      deactivateButton(show50PercentOffButton)
+      activateButton(showAllButton)
+      activateButton(showDiscountedButton)
+      showDiscountedItems(50)
     })
 
     const buttonList = document.createElement('ul')
     buttonList.appendChild(showAllButton)
     buttonList.appendChild(showDiscountedButton)
+    buttonList.appendChild(show50PercentOffButton)
     return buttonList
   }
 
