@@ -21,8 +21,7 @@
   /** @typedef {'table' | 'list'} ViewType */
   /** @typedef {() => void} AppendFilterMenuFunction */
   /** @typedef {(main: HTMLElement) => HTMLElement} CreateFilterMenuElementFunction */
-  /** @typedef {() => void} ShowAllItemsFunction */
-  /** @typedef {() => void} ShowDiscountedItemsFunction */
+  /** @typedef {() => void} ShowItemsFunction */
 
   const CLASS_CURRENT = 'current'
   const CURSOR_BUTTON_CURRENT = 'auto'
@@ -145,8 +144,8 @@
 
   /**
    * @param {Object} params
-   * @param {ShowAllItemsFunction} params.showAllItems
-   * @param {ShowDiscountedItemsFunction} params.showDiscountedItems
+   * @param {ShowItemsFunction} params.showAllItems
+   * @param {ShowItemsFunction} params.showDiscountedItems
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = ({
@@ -184,8 +183,8 @@
 
   /**
    * @param {Object} params
-   * @param {ShowAllItemsFunction} params.showAllItems
-   * @param {ShowDiscountedItemsFunction} params.showDiscountedItems
+   * @param {ShowItemsFunction} params.showAllItems
+   * @param {ShowItemsFunction} params.showDiscountedItems
    * @returns {HTMLDivElement}
    */
   const createFilterMenuElement = ({
@@ -210,14 +209,14 @@
   const createFilterMenuElementForTableView = (main) => {
     const items = findItemElementsForTableView(main)
 
-    /** @type {ShowAllItemsFunction} */
+    /** @type {ShowItemsFunction} */
     const showAllItems = () => {
       items.forEach(item => {
         item.style.display = 'list-item'
       })
     }
 
-    /** @type {ShowDiscountedItemsFunction} */
+    /** @type {ShowItemsFunction} */
     const showDiscountedItems = () => {
       items.forEach(item => {
         const discount = item.querySelector('.txtoff')
@@ -244,13 +243,13 @@
   /** @type {CreateFilterMenuElementFunction} */
   const createFilterMenuElementForListView = (main) => {
     const rows = findItemElementsForListView(main)
-    /** @type {ShowAllItemsFunction} */
+    /** @type {ShowItemsFunction} */
     const showAllItems = () => {
       rows.forEach(row => {
         row.style.display = 'table-row'
       })
     }
-    /** @type {ShowDiscountedItemsFunction} */
+    /** @type {ShowItemsFunction} */
     const showDiscountedItems = () => {
       rows.forEach(row => {
         const price = row.querySelector('.price')
