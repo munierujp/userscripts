@@ -60,27 +60,6 @@
   }
 
   /**
-   * @param {HTMLElement} main
-   * @returns {HTMLLIElement[]}
-   */
-  const findItemElementsForTableView = (main) => {
-    const list = main.querySelector('#list')
-    const items = Array.from(list.querySelectorAll('li'))
-    return items
-  }
-
-  /**
-   * @param {HTMLElement} main
-   * @returns {HTMLTableRowElement[]}
-   */
-  const findItemElementsForListView = (main) => {
-    const table = main.querySelector('table')
-    const rows = Array.from(table.querySelectorAll('tr'))
-    const items = rows.filter(row => row.querySelector('td'))
-    return items
-  }
-
-  /**
    * @param {string} text
    * @returns {HTMLLIElement}
    */
@@ -181,95 +160,61 @@
     return buttonList
   }
 
-  /**
-   * @param {Object} params
-   * @param {ShowItemsFunction} params.showAllItems
-   * @param {ShowItemsFunction} params.showDiscountedItems
-   * @returns {HTMLDivElement}
-   */
-  const createFilterMenuElement = ({
-    showAllItems,
-    showDiscountedItems
-  }) => {
-    const filterMenu = document.createElement('div')
-    const label = document.createElement('span')
-    label.textContent = '絞り込み'
-    filterMenu.appendChild(label)
-
-    const buttonList = createButtonListElement({
-      showAllItems,
-      showDiscountedItems
-    })
-
-    filterMenu.appendChild(buttonList)
-    return filterMenu
-  }
-
-  /** @type {CreateFilterMenuElementFunction} */
-  const createFilterMenuElementForTableView = (main) => {
-    const items = findItemElementsForTableView(main)
-
-    /** @type {ShowItemsFunction} */
-    const showAllItems = () => {
-      items.forEach(item => {
-        item.style.display = 'list-item'
-      })
-    }
-
-    /** @type {ShowItemsFunction} */
-    const showDiscountedItems = () => {
-      items.forEach(item => {
-        const discount = item.querySelector('.txtoff')
-        const display = discount ? 'list-item' : 'none'
-        item.style.display = display
-      })
-    }
-
-    const filterMenu = createFilterMenuElement({
-      showAllItems,
-      showDiscountedItems
-    })
-    return filterMenu
-  }
-
   /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnTableView = () => {
+    const label = document.createElement('span')
+    label.textContent = '絞り込み'
     const main = getMainElement()
-    const menu = findMenuElement(main)
-    const filterMenu = createFilterMenuElementForTableView(main)
-    menu.appendChild(filterMenu)
-  }
-
-  /** @type {CreateFilterMenuElementFunction} */
-  const createFilterMenuElementForListView = (main) => {
-    const rows = findItemElementsForListView(main)
-    /** @type {ShowItemsFunction} */
-    const showAllItems = () => {
-      rows.forEach(row => {
-        row.style.display = 'table-row'
-      })
-    }
-    /** @type {ShowItemsFunction} */
-    const showDiscountedItems = () => {
-      rows.forEach(row => {
-        const price = row.querySelector('.price')
-        const discount = price.querySelector('.tx-sp')
-        const display = discount ? 'table-row' : 'none'
-        row.style.display = display
-      })
-    }
-    const filterMenu = createFilterMenuElement({
-      showAllItems,
-      showDiscountedItems
+    const list = main.querySelector('#list')
+    const items = Array.from(list.querySelectorAll('li'))
+    const buttonList = createButtonListElement({
+      showAllItems: () => {
+        items.forEach(item => {
+          item.style.display = 'list-item'
+        })
+      },
+      showDiscountedItems: () => {
+        items.forEach(item => {
+          const discount = item.querySelector('.txtoff')
+          const display = discount ? 'list-item' : 'none'
+          item.style.display = display
+        })
+      }
     })
-    return filterMenu
+    const filterMenu = document.createElement('div')
+    filterMenu.appendChild(label)
+    filterMenu.appendChild(buttonList)
+    const menu = findMenuElement(main)
+    menu.appendChild(filterMenu)
   }
 
   /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnListView = () => {
+    const label = document.createElement('span')
+    label.textContent = '絞り込み'
     const main = getMainElement()
+    const table = main.querySelector('table')
+    const rows = Array.from(table.querySelectorAll('tr'))
+      .filter(row => row.querySelector('td'))
+    const buttonList = createButtonListElement({
+      showAllItems: () => {
+        rows.forEach(row => {
+          row.style.display = 'table-row'
+        })
+      },
+      showDiscountedItems: () => {
+        rows.forEach(row => {
+          const price = row.querySelector('.price')
+          const discount = price.querySelector('.tx-sp')
+          const display = discount ? 'table-row' : 'none'
+          row.style.display = display
+        })
+      }
+    })
+    const filterMenu = document.createElement('div')
+    filterMenu.appendChild(label)
+    filterMenu.appendChild(buttonList)
     const menu = findMenuElement(main)
-    const filterMenu = createFilterMenuElementForListView(main)
     menu.appendChild(filterMenu)
   }
 
