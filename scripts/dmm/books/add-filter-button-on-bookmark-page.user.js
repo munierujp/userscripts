@@ -18,7 +18,7 @@
 (function () {
   'use strict'
 
-  /** @typedef {'table' | 'list'} ViewStyle */
+  /** @typedef {'table' | 'list'} ViewType */
   /** @typedef {() => void} AppendFilterMenuFunction */
   /** @typedef {(main: HTMLElement) => HTMLElement} CreateFilterMenuElementFunction */
   /** @typedef {() => void} ShowAllItemsFunction */
@@ -29,9 +29,9 @@
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
 
   /**
-   * @returns {ViewStyle}
+   * @returns {ViewType}
    */
-  const getViewStyle = () => {
+  const getViewType = () => {
     const params = new URLSearchParams(location.search)
     const view = params.get('view')
 
@@ -275,11 +275,11 @@
   }
 
   /**
-   * @param {ViewStyle} viewStyle
+   * @param {ViewType} viewType
    * @returns {AppendFilterMenuFunction}
    */
-  const getAppendFilterMenuFunction = (viewStyle) => {
-    switch (viewStyle) {
+  const getAppendFilterMenuFunction = (viewType) => {
+    switch (viewType) {
       case 'table':
         return appendFilterMenuOnTableView
       case 'list':
@@ -289,9 +289,9 @@
 
   const main = () => {
     console.debug('start')
-    const viewStyle = getViewStyle()
-    console.debug(`viewStyle=${viewStyle}`)
-    const appendFilterMenu = getAppendFilterMenuFunction(viewStyle)
+    const viewType = getViewType()
+    console.debug(`viewType=${viewType}`)
+    const appendFilterMenu = getAppendFilterMenuFunction(viewType)
     appendFilterMenu()
   }
 
