@@ -21,16 +21,39 @@
   'use strict'
 
   const CLASS_CURRENT = 'current'
+  const CLASS_BUTTON_PICTURE = 'pic'
+  const CLASS_BUTTON_TEXT = 'tx'
   const CURSOR_BUTTON_CURRENT = 'auto'
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
   const STYLE_DISPLAY_ITEM_HIDDEN = 'none'
   const STYLE_DISPLAY_ITEM_SHOW = 'list-item'
+
+  /** @typedef {'thumbnail' | 'list'} ViewStyle */
 
   /**
    * @returns {HTMLElement}
    */
   const getMenuElement = () => {
     return document.querySelector('.d-rcol.selector')
+  }
+
+  /**
+   * @param {HTMLElement} menu
+   * @returns {ViewStyle}
+   */
+  const getViewStyle = (menu) => {
+    const items = Array.from(menu.querySelectorAll('.style li'))
+    const currentItem = items.find(item => item.classList.contains(CLASS_CURRENT))
+
+    if (currentItem.classList.contains(CLASS_BUTTON_PICTURE)) {
+      return 'thumbnail'
+    }
+
+    if (currentItem.classList.contains(CLASS_BUTTON_TEXT)) {
+      return 'list'
+    }
+
+    throw new Error('Failed to get view style')
   }
 
   /**
