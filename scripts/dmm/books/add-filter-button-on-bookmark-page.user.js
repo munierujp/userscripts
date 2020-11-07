@@ -99,15 +99,11 @@
     })
   }
 
-  /**
-   * @param {number} [rate]
-   */
-  const showDiscountedItems = (rate) => {
+  const showDiscountedItems = () => {
     const items = getItemElements()
     items.forEach(item => {
       const discount = item.querySelector('.txtoff')
-      const show = rate ? (discount && discount.textContent === `${rate}%OFF`) : discount
-      const display = show ? 'list-item' : 'none'
+      const display = discount ? 'list-item' : 'none'
       item.style.display = display
     })
   }
