@@ -56,7 +56,7 @@
    * @param {HTMLElement} menu
    * @returns {ViewStyle}
    */
-  const findViewStyle = (menu) => {
+  const getViewStyle = (menu) => {
     const buttonList = menu.querySelector('.style')
     const buttons = Array.from(buttonList.querySelectorAll('li'))
     const currentButton = buttons.find(isCurrentElement)
@@ -285,7 +285,7 @@
     console.debug('start')
     const main = getMainElement()
     const menu = findMenuElement(main)
-    const viewStyle = findViewStyle(menu)
+    const viewStyle = getViewStyle(menu)
     console.debug(`viewStyle=${viewStyle}`)
     const appendFilterMenu = getAppendFilterMenuFunction(viewStyle)
     appendFilterMenu({
