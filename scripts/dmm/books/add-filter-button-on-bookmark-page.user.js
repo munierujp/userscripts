@@ -49,14 +49,15 @@
    * @returns {ViewStyle}
    */
   const getViewStyle = (menu) => {
-    const items = Array.from(menu.querySelectorAll('.style li'))
-    const currentItem = items.find(item => item.classList.contains(CLASS_CURRENT))
+    const buttonList = menu.querySelector('.style')
+    const buttons = Array.from(buttonList.querySelectorAll('li'))
+    const currentButton = buttons.find(isCurrentElement)
 
-    if (currentItem.classList.contains(CLASS_BUTTON_THUMBNAIL)) {
+    if (currentButton.classList.contains(CLASS_BUTTON_THUMBNAIL)) {
       return 'thumbnail'
     }
 
-    if (currentItem.classList.contains(CLASS_BUTTON_LIST)) {
+    if (currentButton.classList.contains(CLASS_BUTTON_LIST)) {
       return 'list'
     }
 
