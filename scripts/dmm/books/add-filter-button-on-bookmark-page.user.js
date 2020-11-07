@@ -29,29 +29,6 @@
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
 
   /**
-   * @returns {HTMLElement}
-   */
-  const getMainElement = () => {
-    return document.getElementById('main-bmk')
-  }
-
-  /**
-   * @param {HTMLElement} main
-   * @returns {HTMLElement}
-   */
-  const findMenuElement = (main) => {
-    return main.querySelector('.d-rcol.selector')
-  }
-
-  /**
-   * @param {HTMLElement} element
-   * @returns {boolean}
-   */
-  const isCurrentElement = (element) => {
-    return element.classList.contains(CLASS_CURRENT)
-  }
-
-  /**
    * @returns {ViewStyle}
    */
   const getViewStyle = () => {
@@ -66,6 +43,21 @@
       default:
         throw new Error('Failed to get view style')
     }
+  }
+
+  /**
+   * @returns {HTMLElement}
+   */
+  const getMainElement = () => {
+    return document.getElementById('main-bmk')
+  }
+
+  /**
+   * @param {HTMLElement} main
+   * @returns {HTMLElement}
+   */
+  const findMenuElement = (main) => {
+    return main.querySelector('.d-rcol.selector')
   }
 
   /**
@@ -128,11 +120,11 @@
   }
 
   /**
-   * @param {HTMLElement} button
+   * @param {HTMLElement} element
+   * @returns {boolean}
    */
-  const activateButton = (button) => {
-    button.classList.remove(CLASS_CURRENT)
-    button.style.cursor = CURSOR_BUTTON_NOT_CURRENT
+  const isCurrentElement = (element) => {
+    return element.classList.contains(CLASS_CURRENT)
   }
 
   /**
@@ -141,6 +133,14 @@
   const deactivateButton = (button) => {
     button.classList.add(CLASS_CURRENT)
     button.style.cursor = CURSOR_BUTTON_CURRENT
+  }
+
+  /**
+   * @param {HTMLElement} button
+   */
+  const activateButton = (button) => {
+    button.classList.remove(CLASS_CURRENT)
+    button.style.cursor = CURSOR_BUTTON_NOT_CURRENT
   }
 
   /**
