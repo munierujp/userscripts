@@ -117,6 +117,7 @@
     button.style.cursor = CURSOR_BUTTON_CURRENT
   }
 
+  // NOTE: サムネイル表示用
   /**
    * @returns {HTMLLIElement[]}
    */
@@ -126,6 +127,7 @@
     return items
   }
 
+  // NOTE: サムネイル表示用
   const showAllItems = () => {
     const items = getItemElements()
     items.forEach(item => {
@@ -133,6 +135,7 @@
     })
   }
 
+  // NOTE: サムネイル表示用
   const showDiscountedItems = () => {
     const items = getItemElements()
     items.forEach(item => {
@@ -142,6 +145,7 @@
     })
   }
 
+  // NOTE: サムネイル表示用
   /**
    * @returns {HTMLUListElement}
    */
@@ -175,6 +179,7 @@
     return buttonList
   }
 
+  // NOTE: サムネイル表示用
   /**
    * @returns {HTMLDivElement}
    */
