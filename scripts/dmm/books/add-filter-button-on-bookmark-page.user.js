@@ -20,9 +20,9 @@
 (function () {
   'use strict'
 
-  const CLASS_BUTTON_INACTIVE = 'current'
-  const CURSOR_BUTTON_ACTIVE = 'pointer'
-  const CURSOR_BUTTON_INACTIVE = 'auto'
+  const CLASS_CURRENT = 'current'
+  const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
+  const CURSOR_BUTTON_CURRENT = 'auto'
 
   /**
    * @param {string} text
@@ -43,10 +43,10 @@
    * @param {string} text
    * @returns {HTMLLIElement}
    */
-  const createInactiveButtonElement = (text) => {
+  const createCurrentButtonElement = (text) => {
     const button = createButtonElement(text)
-    button.classList.add(CLASS_BUTTON_INACTIVE)
-    button.style.cursor = CURSOR_BUTTON_INACTIVE
+    button.classList.add(CLASS_CURRENT)
+    button.style.cursor = CURSOR_BUTTON_CURRENT
     return button
   }
 
@@ -54,33 +54,33 @@
    * @param {string} text
    * @returns {HTMLLIElement}
    */
-  const createActiveButtonElement = (text) => {
+  const createNotCurrentButtonElement = (text) => {
     const button = createButtonElement(text)
-    button.style.cursor = CURSOR_BUTTON_ACTIVE
+    button.style.cursor = CURSOR_BUTTON_NOT_CURRENT
     return button
   }
 
   /**
    * @param {HTMLElement} button
    */
-  const isInactiveButton = (button) => {
-    return button.classList.contains(CLASS_BUTTON_INACTIVE)
+  const isCurrentButton = (button) => {
+    return button.classList.contains(CLASS_CURRENT)
   }
 
   /**
    * @param {HTMLElement} button
    */
   const activateButton = (button) => {
-    button.classList.remove(CLASS_BUTTON_INACTIVE)
-    button.style.cursor = CURSOR_BUTTON_ACTIVE
+    button.classList.remove(CLASS_CURRENT)
+    button.style.cursor = CURSOR_BUTTON_NOT_CURRENT
   }
 
   /**
    * @param {HTMLElement} button
    */
   const deactivateButton = (button) => {
-    button.classList.add(CLASS_BUTTON_INACTIVE)
-    button.style.cursor = CURSOR_BUTTON_INACTIVE
+    button.classList.add(CLASS_CURRENT)
+    button.style.cursor = CURSOR_BUTTON_CURRENT
   }
 
   /**
@@ -116,11 +116,11 @@
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = () => {
-    const showAllButton = createInactiveButtonElement('すべて')
-    const showDiscountedButton = createActiveButtonElement('セール中')
+    const showAllButton = createCurrentButtonElement('すべて')
+    const showDiscountedButton = createNotCurrentButtonElement('セール中')
 
     showAllButton.addEventListener('click', () => {
-      if (isInactiveButton(showAllButton)) {
+      if (isCurrentButton(showAllButton)) {
         return
       }
 
@@ -130,7 +130,7 @@
     })
 
     showDiscountedButton.addEventListener('click', () => {
-      if (isInactiveButton(showDiscountedButton)) {
+      if (isCurrentButton(showDiscountedButton)) {
         return
       }
 
