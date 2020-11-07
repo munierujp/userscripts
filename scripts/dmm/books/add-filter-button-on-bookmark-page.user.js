@@ -192,8 +192,13 @@
   const main = () => {
     console.debug('start')
     const menu = getMenuElement()
-    const filterMenu = createFilterMenuElement()
-    menu.appendChild(filterMenu)
+    const viewStyle = getViewStyle(menu)
+    console.debug(`viewStyle=${viewStyle}`)
+
+    if (viewStyle === 'thumbnail') {
+      const filterMenu = createFilterMenuElement()
+      menu.appendChild(filterMenu)
+    }
   }
 
   main()
