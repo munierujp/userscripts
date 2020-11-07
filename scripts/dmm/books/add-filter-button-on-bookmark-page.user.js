@@ -20,6 +20,7 @@
 
   /** @typedef {'thumbnail' | 'list'} ViewStyle */
   /** @typedef {(params: { main: HTMLElement, menu: HTMLElement }) => void} AppendFilterMenuFunction */
+  /** @typedef {(main: HTMLElement) => HTMLElement} CreateFilterMenuElementFunction */
   /** @typedef {() => void} ShowAllItemsFunction */
   /** @typedef {() => void} ShowDiscountedItemsFunction */
 
@@ -240,11 +241,8 @@
     menu.appendChild(filterMenu)
   }
 
-  /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnListView = ({
-    main,
-    menu
-  }) => {
+  /** @type {CreateFilterMenuElementFunction} */
+  const createFilterMenuElementForListView = (main) => {
     const rows = findListItemElements(main)
     /** @type {ShowAllItemsFunction} */
     const showAllItems = () => {
@@ -265,6 +263,15 @@
       showAllItems,
       showDiscountedItems
     })
+    return filterMenu
+  }
+
+  /** @type {AppendFilterMenuFunction} */
+  const appendFilterMenuOnListView = ({
+    main,
+    menu
+  }) => {
+    const filterMenu = createFilterMenuElementForListView(main)
     menu.appendChild(filterMenu)
   }
 
