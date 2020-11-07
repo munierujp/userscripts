@@ -15,8 +15,6 @@
 // @grant        none
 // ==/UserScript==
 
-// TODO: リスト表示に対応
-
 (function () {
   'use strict'
 
@@ -25,10 +23,10 @@
   const CLASS_BUTTON_LIST = 'tx'
   const CURSOR_BUTTON_CURRENT = 'auto'
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
-  const STYLE_DISPLAY_ITEM_HIDDEN = 'none'
-  const STYLE_DISPLAY_ITEM_SHOW = 'list-item'
 
   /** @typedef {'thumbnail' | 'list'} ViewStyle */
+  /** @typedef {(main: HTMLElement) => void} ShowAllItemsFunction */
+  /** @typedef {(main: HTMLElement) => void} ShowDiscountedItemsFunction */
 
   /**
    * @returns {HTMLElement}
@@ -137,33 +135,66 @@
     return items
   }
 
-  /**
-   * @param {HTMLElement} main
-   */
+  /** @type {ShowAllItemsFunction} */
   const showAllItemsForThumbnailView = (main) => {
     const items = getItemElementsForThumbnailView(main)
     items.forEach(item => {
-      item.style.display = STYLE_DISPLAY_ITEM_SHOW
+      item.style.display = 'list-item'
     })
   }
 
-  /**
-   * @param {HTMLElement} main
-   */
+  /** @type {ShowDiscountedItemsFunction} */
   const showDiscountedItemsForThumbnailView = (main) => {
     const items = getItemElementsForThumbnailView(main)
     items.forEach(item => {
       const discount = item.querySelector('.txtoff')
-      const display = discount ? STYLE_DISPLAY_ITEM_SHOW : STYLE_DISPLAY_ITEM_HIDDEN
+      const display = discount ? 'list-item' : 'none'
       item.style.display = display
     })
   }
 
   /**
    * @param {HTMLElement} main
+   * @returns {HTMLTableRowElement[]}
+   */
+  const getItemElementsForListView = (main) => {
+    const table = main.querySelector('table')
+    const rows = Array.from(table.querySelectorAll('tr'))
+    const items = rows.filter(row => row.querySelector('td'))
+    return items
+  }
+
+  /** @type {ShowAllItemsFunction} */
+  const showAllItemsForListView = (main) => {
+    const rows = getItemElementsForListView(main)
+    rows.forEach(row => {
+      row.style.display = 'table-row'
+    })
+  }
+
+  /** @type {ShowDiscountedItemsFunction} */
+  const showDiscountedItemsForListView = (main) => {
+    const rows = getItemElementsForListView(main)
+    rows.forEach(row => {
+      const price = row.querySelector('.price')
+      const discount = price.querySelector('.tx-sp')
+      const display = discount ? 'table-row' : 'none'
+      row.style.display = display
+    })
+  }
+
+  /**
+   * @param {Object} params
+   * @param {HTMLElement} params.main
+   * @param {ShowAllItemsFunction} params.showAllItems
+   * @param {ShowDiscountedItemsFunction} params.showDiscountedItems
    * @returns {HTMLUListElement}
    */
-  const createButtonListElementForThumbnailView = (main) => {
+  const createButtonListElement = ({
+    main,
+    showAllItems,
+    showDiscountedItems
+  }) => {
     const buttonList = document.createElement('ul')
     const showAllButton = createCurrentButtonElement('すべて')
     buttonList.appendChild(showAllButton)
@@ -177,7 +208,7 @@
 
       deactivateButton(showAllButton)
       activateButton(showDiscountedButton)
-      showAllItemsForThumbnailView(main)
+      showAllItems(main)
     })
 
     showDiscountedButton.addEventListener('click', () => {
@@ -187,23 +218,35 @@
 
       deactivateButton(showDiscountedButton)
       activateButton(showAllButton)
-      showDiscountedItemsForThumbnailView(main)
+      showDiscountedItems(main)
     })
 
     return buttonList
   }
 
   /**
-   * @param {HTMLElement} main
+   * @param {Object} params
+   * @param {HTMLElement} params.main
+   * @param {ShowAllItemsFunction} params.showAllItems
+   * @param {ShowDiscountedItemsFunction} params.showDiscountedItems
    * @returns {HTMLDivElement}
    */
-  const createFilterMenuElementForThumbnailView = (main) => {
+  const createFilterMenuElement = ({
+    main,
+    showAllItems,
+    showDiscountedItems
+  }) => {
     const filterMenu = document.createElement('div')
     const label = document.createElement('span')
     label.textContent = '絞り込み'
     filterMenu.appendChild(label)
 
-    const buttonList = createButtonListElementForThumbnailView(main)
+    const buttonList = createButtonListElement({
+      main,
+      showAllItems,
+      showDiscountedItems
+    })
+
     filterMenu.appendChild(buttonList)
     return filterMenu
   }
@@ -216,7 +259,20 @@
     console.debug(`viewStyle=${viewStyle}`)
 
     if (viewStyle === 'thumbnail') {
-      const filterMenu = createFilterMenuElementForThumbnailView(main)
+      const filterMenu = createFilterMenuElement({
+        main,
+        showAllItems: showAllItemsForThumbnailView,
+        showDiscountedItems: showDiscountedItemsForThumbnailView
+      })
+      menu.appendChild(filterMenu)
+    }
+
+    if (viewStyle === 'list') {
+      const filterMenu = createFilterMenuElement({
+        main,
+        showAllItems: showAllItemsForListView,
+        showDiscountedItems: showDiscountedItemsForListView
+      })
       menu.appendChild(filterMenu)
     }
   }
