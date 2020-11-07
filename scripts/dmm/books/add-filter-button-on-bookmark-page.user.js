@@ -27,6 +27,13 @@
   const STYLE_DISPLAY_ITEM_SHOW = 'list-item'
 
   /**
+   * @returns {HTMLElement}
+   */
+  const getMenuElement = () => {
+    return document.querySelector('.d-rcol.selector')
+  }
+
+  /**
    * @param {string} text
    * @returns {HTMLLIElement}
    */
@@ -161,7 +168,7 @@
 
   const main = () => {
     console.debug('start')
-    const menu = document.querySelector('.d-rcol.selector')
+    const menu = getMenuElement()
     const filterMenu = createFilterMenuElement()
     menu.appendChild(filterMenu)
   }
