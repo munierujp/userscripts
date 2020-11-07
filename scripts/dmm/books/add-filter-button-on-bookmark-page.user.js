@@ -40,7 +40,7 @@
       case 'list':
         return 'list'
       default:
-        throw new Error('Failed to get view style')
+        throw new Error('Failed to get view type.')
     }
   }
 
