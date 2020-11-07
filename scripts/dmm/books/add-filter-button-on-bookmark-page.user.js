@@ -33,8 +33,16 @@
   /**
    * @returns {HTMLElement}
    */
-  const getMenuElement = () => {
-    return document.querySelector('.d-rcol.selector')
+  const getMainElement = () => {
+    return document.getElementById('main-bmk')
+  }
+
+  /**
+   * @param {HTMLElement} main
+   * @returns {HTMLElement}
+   */
+  const getMenuElement = (main) => {
+    return main.querySelector('.d-rcol.selector')
   }
 
   /**
@@ -120,23 +128,30 @@
   }
 
   /**
+   * @param {HTMLElement} main
    * @returns {HTMLLIElement[]}
    */
-  const getItemElementsForThumbnailView = () => {
-    const list = document.getElementById('list')
+  const getItemElementsForThumbnailView = (main) => {
+    const list = main.querySelector('#list')
     const items = Array.from(list.querySelectorAll('li'))
     return items
   }
 
-  const showAllItemsForThumbnailView = () => {
-    const items = getItemElementsForThumbnailView()
+  /**
+   * @param {HTMLElement} main
+   */
+  const showAllItemsForThumbnailView = (main) => {
+    const items = getItemElementsForThumbnailView(main)
     items.forEach(item => {
       item.style.display = STYLE_DISPLAY_ITEM_SHOW
     })
   }
 
-  const showDiscountedItemsForThumbnailView = () => {
-    const items = getItemElementsForThumbnailView()
+  /**
+   * @param {HTMLElement} main
+   */
+  const showDiscountedItemsForThumbnailView = (main) => {
+    const items = getItemElementsForThumbnailView(main)
     items.forEach(item => {
       const discount = item.querySelector('.txtoff')
       const display = discount ? STYLE_DISPLAY_ITEM_SHOW : STYLE_DISPLAY_ITEM_HIDDEN
@@ -145,9 +160,10 @@
   }
 
   /**
+   * @param {HTMLElement} main
    * @returns {HTMLUListElement}
    */
-  const createButtonListElementForThumbnailView = () => {
+  const createButtonListElementForThumbnailView = (main) => {
     const buttonList = document.createElement('ul')
     const showAllButton = createCurrentButtonElement('すべて')
     buttonList.appendChild(showAllButton)
@@ -161,7 +177,7 @@
 
       deactivateButton(showAllButton)
       activateButton(showDiscountedButton)
-      showAllItemsForThumbnailView()
+      showAllItemsForThumbnailView(main)
     })
 
     showDiscountedButton.addEventListener('click', () => {
@@ -171,34 +187,36 @@
 
       deactivateButton(showDiscountedButton)
       activateButton(showAllButton)
-      showDiscountedItemsForThumbnailView()
+      showDiscountedItemsForThumbnailView(main)
     })
 
     return buttonList
   }
 
   /**
+   * @param {HTMLElement} main
    * @returns {HTMLDivElement}
    */
-  const createFilterMenuElementForThumbnailView = () => {
+  const createFilterMenuElementForThumbnailView = (main) => {
     const filterMenu = document.createElement('div')
     const label = document.createElement('span')
     label.textContent = '絞り込み'
     filterMenu.appendChild(label)
 
-    const buttonList = createButtonListElementForThumbnailView()
+    const buttonList = createButtonListElementForThumbnailView(main)
     filterMenu.appendChild(buttonList)
     return filterMenu
   }
 
   const main = () => {
     console.debug('start')
-    const menu = getMenuElement()
+    const main = getMainElement()
+    const menu = getMenuElement(main)
     const viewStyle = getViewStyle(menu)
     console.debug(`viewStyle=${viewStyle}`)
 
     if (viewStyle === 'thumbnail') {
-      const filterMenu = createFilterMenuElementForThumbnailView()
+      const filterMenu = createFilterMenuElementForThumbnailView(main)
       menu.appendChild(filterMenu)
     }
   }
