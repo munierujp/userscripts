@@ -19,7 +19,7 @@
   'use strict'
 
   /** @typedef {'table' | 'list'} ViewStyle */
-  /** @typedef {(params: { main: HTMLElement, menu: HTMLElement }) => void} AppendFilterMenuFunction */
+  /** @typedef {() => void} AppendFilterMenuFunction */
   /** @typedef {(main: HTMLElement) => HTMLElement} CreateFilterMenuElementFunction */
   /** @typedef {() => void} ShowAllItemsFunction */
   /** @typedef {() => void} ShowDiscountedItemsFunction */
@@ -234,10 +234,9 @@
   }
 
   /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnThumbnailView = ({
-    main,
-    menu
-  }) => {
+  const appendFilterMenuOnThumbnailView = () => {
+    const main = getMainElement()
+    const menu = findMenuElement(main)
     const filterMenu = createFilterMenuElementForThumbnailView(main)
     menu.appendChild(filterMenu)
   }
@@ -268,10 +267,9 @@
   }
 
   /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnListView = ({
-    main,
-    menu
-  }) => {
+  const appendFilterMenuOnListView = () => {
+    const main = getMainElement()
+    const menu = findMenuElement(main)
     const filterMenu = createFilterMenuElementForListView(main)
     menu.appendChild(filterMenu)
   }
@@ -291,15 +289,10 @@
 
   const main = () => {
     console.debug('start')
-    const main = getMainElement()
-    const menu = findMenuElement(main)
     const viewStyle = getViewStyle()
     console.debug(`viewStyle=${viewStyle}`)
     const appendFilterMenu = getAppendFilterMenuFunction(viewStyle)
-    appendFilterMenu({
-      main,
-      menu
-    })
+    appendFilterMenu()
   }
 
   main()
