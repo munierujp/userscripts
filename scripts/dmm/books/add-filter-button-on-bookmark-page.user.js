@@ -211,11 +211,8 @@
     return filterMenu
   }
 
-  /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnThumbnailView = ({
-    main,
-    menu
-  }) => {
+  /** @type {CreateFilterMenuElementFunction} */
+  const createFilterMenuElementForThumbnailView = (main) => {
     const items = findThumbnailItemElements(main)
 
     /** @type {ShowAllItemsFunction} */
@@ -238,6 +235,15 @@
       showAllItems,
       showDiscountedItems
     })
+    return filterMenu
+  }
+
+  /** @type {AppendFilterMenuFunction} */
+  const appendFilterMenuOnThumbnailView = ({
+    main,
+    menu
+  }) => {
+    const filterMenu = createFilterMenuElementForThumbnailView(main)
     menu.appendChild(filterMenu)
   }
 
