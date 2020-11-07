@@ -38,6 +38,13 @@
   }
 
   /**
+   * @param {HTMLElement} element
+   */
+  const isCurrentElement = (element) => {
+    return element.classList.contains(CLASS_CURRENT)
+  }
+
+  /**
    * @param {HTMLElement} menu
    * @returns {ViewStyle}
    */
@@ -97,13 +104,6 @@
   /**
    * @param {HTMLElement} button
    */
-  const isCurrentButton = (button) => {
-    return button.classList.contains(CLASS_CURRENT)
-  }
-
-  /**
-   * @param {HTMLElement} button
-   */
   const activateButton = (button) => {
     button.classList.remove(CLASS_CURRENT)
     button.style.cursor = CURSOR_BUTTON_NOT_CURRENT
@@ -153,7 +153,7 @@
     buttonList.appendChild(showDiscountedButton)
 
     showAllButton.addEventListener('click', () => {
-      if (isCurrentButton(showAllButton)) {
+      if (isCurrentElement(showAllButton)) {
         return
       }
 
@@ -163,7 +163,7 @@
     })
 
     showDiscountedButton.addEventListener('click', () => {
-      if (isCurrentButton(showDiscountedButton)) {
+      if (isCurrentElement(showDiscountedButton)) {
         return
       }
 
