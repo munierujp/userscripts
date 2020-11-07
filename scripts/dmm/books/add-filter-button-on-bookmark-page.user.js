@@ -25,8 +25,8 @@
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
 
   /** @typedef {'thumbnail' | 'list'} ViewStyle */
-  /** @typedef {(main: HTMLElement) => void} ShowAllItemsFunction */
-  /** @typedef {(main: HTMLElement) => void} ShowDiscountedItemsFunction */
+  /** @typedef {() => void} ShowAllItemsFunction */
+  /** @typedef {() => void} ShowDiscountedItemsFunction */
 
   /**
    * @returns {HTMLElement}
@@ -69,6 +69,27 @@
     }
 
     throw new Error('Failed to get view style')
+  }
+
+  /**
+   * @param {HTMLElement} main
+   * @returns {HTMLLIElement[]}
+   */
+  const getThumbnailItemElements = (main) => {
+    const list = main.querySelector('#list')
+    const items = Array.from(list.querySelectorAll('li'))
+    return items
+  }
+
+  /**
+   * @param {HTMLElement} main
+   * @returns {HTMLTableRowElement[]}
+   */
+  const getListItemElements = (main) => {
+    const table = main.querySelector('table')
+    const rows = Array.from(table.querySelectorAll('tr'))
+    const items = rows.filter(row => row.querySelector('td'))
+    return items
   }
 
   /**
@@ -126,64 +147,6 @@
   }
 
   /**
-   * @param {HTMLElement} main
-   * @returns {HTMLLIElement[]}
-   */
-  const getItemElementsForThumbnailView = (main) => {
-    const list = main.querySelector('#list')
-    const items = Array.from(list.querySelectorAll('li'))
-    return items
-  }
-
-  /** @type {ShowAllItemsFunction} */
-  const showAllItemsForThumbnailView = (main) => {
-    const items = getItemElementsForThumbnailView(main)
-    items.forEach(item => {
-      item.style.display = 'list-item'
-    })
-  }
-
-  /** @type {ShowDiscountedItemsFunction} */
-  const showDiscountedItemsForThumbnailView = (main) => {
-    const items = getItemElementsForThumbnailView(main)
-    items.forEach(item => {
-      const discount = item.querySelector('.txtoff')
-      const display = discount ? 'list-item' : 'none'
-      item.style.display = display
-    })
-  }
-
-  /**
-   * @param {HTMLElement} main
-   * @returns {HTMLTableRowElement[]}
-   */
-  const getItemElementsForListView = (main) => {
-    const table = main.querySelector('table')
-    const rows = Array.from(table.querySelectorAll('tr'))
-    const items = rows.filter(row => row.querySelector('td'))
-    return items
-  }
-
-  /** @type {ShowAllItemsFunction} */
-  const showAllItemsForListView = (main) => {
-    const rows = getItemElementsForListView(main)
-    rows.forEach(row => {
-      row.style.display = 'table-row'
-    })
-  }
-
-  /** @type {ShowDiscountedItemsFunction} */
-  const showDiscountedItemsForListView = (main) => {
-    const rows = getItemElementsForListView(main)
-    rows.forEach(row => {
-      const price = row.querySelector('.price')
-      const discount = price.querySelector('.tx-sp')
-      const display = discount ? 'table-row' : 'none'
-      row.style.display = display
-    })
-  }
-
-  /**
    * @param {Object} params
    * @param {HTMLElement} params.main
    * @param {ShowAllItemsFunction} params.showAllItems
@@ -208,7 +171,7 @@
 
       deactivateButton(showAllButton)
       activateButton(showDiscountedButton)
-      showAllItems(main)
+      showAllItems()
     })
 
     showDiscountedButton.addEventListener('click', () => {
@@ -218,7 +181,7 @@
 
       deactivateButton(showDiscountedButton)
       activateButton(showAllButton)
-      showDiscountedItems(main)
+      showDiscountedItems()
     })
 
     return buttonList
@@ -259,19 +222,50 @@
     console.debug(`viewStyle=${viewStyle}`)
 
     if (viewStyle === 'thumbnail') {
+      const items = getThumbnailItemElements(main)
+      /** @type {ShowAllItemsFunction} */
+      const showAllItems = () => {
+        items.forEach(item => {
+          item.style.display = 'list-item'
+        })
+      }
+      /** @type {ShowDiscountedItemsFunction} */
+      const showDiscountedItems = () => {
+        items.forEach(item => {
+          const discount = item.querySelector('.txtoff')
+          const display = discount ? 'list-item' : 'none'
+          item.style.display = display
+        })
+      }
       const filterMenu = createFilterMenuElement({
         main,
-        showAllItems: showAllItemsForThumbnailView,
-        showDiscountedItems: showDiscountedItemsForThumbnailView
+        showAllItems,
+        showDiscountedItems
       })
       menu.appendChild(filterMenu)
     }
 
     if (viewStyle === 'list') {
+      const rows = getListItemElements(main)
+      /** @type {ShowAllItemsFunction} */
+      const showAllItems = () => {
+        rows.forEach(row => {
+          row.style.display = 'table-row'
+        })
+      }
+      /** @type {ShowDiscountedItemsFunction} */
+      const showDiscountedItems = () => {
+        rows.forEach(row => {
+          const price = row.querySelector('.price')
+          const discount = price.querySelector('.tx-sp')
+          const display = discount ? 'table-row' : 'none'
+          row.style.display = display
+        })
+      }
       const filterMenu = createFilterMenuElement({
         main,
-        showAllItems: showAllItemsForListView,
-        showDiscountedItems: showDiscountedItemsForListView
+        showAllItems,
+        showDiscountedItems
       })
       menu.appendChild(filterMenu)
     }
