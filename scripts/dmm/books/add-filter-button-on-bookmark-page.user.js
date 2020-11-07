@@ -56,23 +56,20 @@
   }
 
   /**
-   * @param {HTMLElement} menu
    * @returns {ViewStyle}
    */
-  const getViewStyle = (menu) => {
-    const buttonList = menu.querySelector('.style')
-    const buttons = Array.from(buttonList.querySelectorAll('li'))
-    const currentButton = buttons.find(isCurrentElement)
+  const getViewStyle = () => {
+    const params = new URLSearchParams(location.search)
+    const view = params.get('view')
 
-    if (currentButton.classList.contains(CLASS_BUTTON_THUMBNAIL)) {
-      return 'thumbnail'
+    switch (view) {
+      case 'table':
+        return 'thumbnail'
+      case 'list':
+        return 'list'
+      default:
+        throw new Error('Failed to get view style')
     }
-
-    if (currentButton.classList.contains(CLASS_BUTTON_LIST)) {
-      return 'list'
-    }
-
-    throw new Error('Failed to get view style')
   }
 
   /**
@@ -300,7 +297,7 @@
     console.debug('start')
     const main = getMainElement()
     const menu = findMenuElement(main)
-    const viewStyle = getViewStyle(menu)
+    const viewStyle = getViewStyle()
     console.debug(`viewStyle=${viewStyle}`)
     const appendFilterMenu = getAppendFilterMenuFunction(viewStyle)
     appendFilterMenu({
