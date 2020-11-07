@@ -19,8 +19,6 @@
   'use strict'
 
   /** @typedef {'table' | 'list'} ViewType */
-  /** @typedef {() => void} AppendFilterMenuFunction */
-  /** @typedef {(main: HTMLElement) => HTMLElement} CreateFilterMenuElementFunction */
   /** @typedef {() => void} ShowItemsFunction */
 
   const CLASS_CURRENT = 'current'
@@ -160,26 +158,21 @@
     return buttonList
   }
 
-  /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnTableView = () => {
+  /**
+   * @param {Object} params
+   * @param {ShowItemsFunction} params.showAllItems
+   * @param {ShowItemsFunction} params.showDiscountedItems
+   */
+  const appendFilterMenu = ({
+    showAllItems,
+    showDiscountedItems
+  }) => {
     const label = document.createElement('span')
     label.textContent = '絞り込み'
     const main = getMainElement()
-    const list = main.querySelector('#list')
-    const items = Array.from(list.querySelectorAll('li'))
     const buttonList = createButtonListElement({
-      showAllItems: () => {
-        items.forEach(item => {
-          item.style.display = 'list-item'
-        })
-      },
-      showDiscountedItems: () => {
-        items.forEach(item => {
-          const discount = item.querySelector('.txtoff')
-          const display = discount ? 'list-item' : 'none'
-          item.style.display = display
-        })
-      }
+      showAllItems,
+      showDiscountedItems
     })
     const filterMenu = document.createElement('div')
     filterMenu.appendChild(label)
@@ -188,39 +181,56 @@
     menu.appendChild(filterMenu)
   }
 
-  /** @type {AppendFilterMenuFunction} */
+  const appendFilterMenuOnTableView = () => {
+    const main = getMainElement()
+    const list = main.querySelector('#list')
+    const items = Array.from(list.querySelectorAll('li'))
+    const showAllItems = () => {
+      items.forEach(item => {
+        item.style.display = 'list-item'
+      })
+    }
+    const showDiscountedItems = () => {
+      items.forEach(item => {
+        const discount = item.querySelector('.txtoff')
+        const show = discount !== null
+        const display = show ? 'list-item' : 'none'
+        item.style.display = display
+      })
+    }
+    appendFilterMenu({
+      showAllItems,
+      showDiscountedItems
+    })
+  }
+
   const appendFilterMenuOnListView = () => {
-    const label = document.createElement('span')
-    label.textContent = '絞り込み'
     const main = getMainElement()
     const table = main.querySelector('table')
     const rows = Array.from(table.querySelectorAll('tr'))
       .filter(row => row.querySelector('td'))
-    const buttonList = createButtonListElement({
-      showAllItems: () => {
-        rows.forEach(row => {
-          row.style.display = 'table-row'
-        })
-      },
-      showDiscountedItems: () => {
-        rows.forEach(row => {
-          const price = row.querySelector('.price')
-          const discount = price.querySelector('.tx-sp')
-          const display = discount ? 'table-row' : 'none'
-          row.style.display = display
-        })
-      }
+    const showAllItems = () => {
+      rows.forEach(row => {
+        row.style.display = 'table-row'
+      })
+    }
+    const showDiscountedItems = () => {
+      rows.forEach(row => {
+        const price = row.querySelector('.price')
+        const discount = price.querySelector('.tx-sp')
+        const show = discount !== null
+        const display = show ? 'table-row' : 'none'
+        row.style.display = display
+      })
+    }
+    appendFilterMenu({
+      showAllItems,
+      showDiscountedItems
     })
-    const filterMenu = document.createElement('div')
-    filterMenu.appendChild(label)
-    filterMenu.appendChild(buttonList)
-    const menu = findMenuElement(main)
-    menu.appendChild(filterMenu)
   }
 
   /**
    * @param {ViewType} viewType
-   * @returns {AppendFilterMenuFunction}
    */
   const getAppendFilterMenuFunction = (viewType) => {
     switch (viewType) {
