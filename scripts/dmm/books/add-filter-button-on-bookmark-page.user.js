@@ -27,8 +27,6 @@
   /** @typedef {() => void} ShowDiscountedItemsFunction */
 
   const CLASS_CURRENT = 'current'
-  const CLASS_BUTTON_THUMBNAIL = 'pic'
-  const CLASS_BUTTON_LIST = 'tx'
   const CURSOR_BUTTON_CURRENT = 'auto'
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
 
