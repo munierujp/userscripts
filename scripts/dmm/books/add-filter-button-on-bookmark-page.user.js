@@ -166,6 +166,16 @@
   }
 
   /**
+   * @param {string} text
+   * @returns {HTMLSpanElement}
+   */
+  const createMenuLabelElement = (text) => {
+    const label = document.createElement('span')
+    label.textContent = text
+    return label
+  }
+
+  /**
    * @param {Object} params
    * @param {ShowItemsFunction} params.showAllItems
    * @param {ShowItemsFunction} params.showDiscountedItems
@@ -174,15 +184,14 @@
     showAllItems,
     showDiscountedItems
   }) => {
-    const label = document.createElement('span')
-    label.textContent = '絞り込み'
+    const filterMenu = document.createElement('div')
+    const label = createMenuLabelElement('絞り込み')
+    filterMenu.appendChild(label)
     const main = getMainElement()
     const buttonList = createButtonListElement({
       showAllItems,
       showDiscountedItems
     })
-    const filterMenu = document.createElement('div')
-    filterMenu.appendChild(label)
     filterMenu.appendChild(buttonList)
     const menu = findMenuElement(main)
     menu.appendChild(filterMenu)
