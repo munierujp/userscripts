@@ -39,6 +39,7 @@
 
   /**
    * @param {HTMLElement} element
+   * @returns {boolean}
    */
   const isCurrentElement = (element) => {
     return element.classList.contains(CLASS_CURRENT)
