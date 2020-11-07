@@ -40,7 +40,7 @@
    * @param {HTMLElement} main
    * @returns {HTMLElement}
    */
-  const getMenuElement = (main) => {
+  const findMenuElement = (main) => {
     return main.querySelector('.d-rcol.selector')
   }
 
@@ -56,7 +56,7 @@
    * @param {HTMLElement} menu
    * @returns {ViewStyle}
    */
-  const getViewStyle = (menu) => {
+  const findViewStyle = (menu) => {
     const buttonList = menu.querySelector('.style')
     const buttons = Array.from(buttonList.querySelectorAll('li'))
     const currentButton = buttons.find(isCurrentElement)
@@ -76,7 +76,7 @@
    * @param {HTMLElement} main
    * @returns {HTMLLIElement[]}
    */
-  const getThumbnailItemElements = (main) => {
+  const findThumbnailItemElements = (main) => {
     const list = main.querySelector('#list')
     const items = Array.from(list.querySelectorAll('li'))
     return items
@@ -86,7 +86,7 @@
    * @param {HTMLElement} main
    * @returns {HTMLTableRowElement[]}
    */
-  const getListItemElements = (main) => {
+  const findListItemElements = (main) => {
     const table = main.querySelector('table')
     const rows = Array.from(table.querySelectorAll('tr'))
     const items = rows.filter(row => row.querySelector('td'))
@@ -215,7 +215,7 @@
     main,
     menu
   }) => {
-    const items = getThumbnailItemElements(main)
+    const items = findThumbnailItemElements(main)
 
     /** @type {ShowAllItemsFunction} */
     const showAllItems = () => {
@@ -245,7 +245,7 @@
     main,
     menu
   }) => {
-    const rows = getListItemElements(main)
+    const rows = findListItemElements(main)
     /** @type {ShowAllItemsFunction} */
     const showAllItems = () => {
       rows.forEach(row => {
@@ -284,8 +284,8 @@
   const main = () => {
     console.debug('start')
     const main = getMainElement()
-    const menu = getMenuElement(main)
-    const viewStyle = getViewStyle(menu)
+    const menu = findMenuElement(main)
+    const viewStyle = findViewStyle(menu)
     console.debug(`viewStyle=${viewStyle}`)
     const appendFilterMenu = getAppendFilterMenuFunction(viewStyle)
     appendFilterMenu({
