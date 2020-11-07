@@ -148,13 +148,11 @@
 
   /**
    * @param {Object} params
-   * @param {HTMLElement} params.main
    * @param {ShowAllItemsFunction} params.showAllItems
    * @param {ShowDiscountedItemsFunction} params.showDiscountedItems
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = ({
-    main,
     showAllItems,
     showDiscountedItems
   }) => {
@@ -189,13 +187,11 @@
 
   /**
    * @param {Object} params
-   * @param {HTMLElement} params.main
    * @param {ShowAllItemsFunction} params.showAllItems
    * @param {ShowDiscountedItemsFunction} params.showDiscountedItems
    * @returns {HTMLDivElement}
    */
   const createFilterMenuElement = ({
-    main,
     showAllItems,
     showDiscountedItems
   }) => {
@@ -205,7 +201,6 @@
     filterMenu.appendChild(label)
 
     const buttonList = createButtonListElement({
-      main,
       showAllItems,
       showDiscountedItems
     })
@@ -238,7 +233,6 @@
         })
       }
       const filterMenu = createFilterMenuElement({
-        main,
         showAllItems,
         showDiscountedItems
       })
@@ -263,7 +257,6 @@
         })
       }
       const filterMenu = createFilterMenuElement({
-        main,
         showAllItems,
         showDiscountedItems
       })
