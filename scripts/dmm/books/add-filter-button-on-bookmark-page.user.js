@@ -18,16 +18,16 @@
 (function () {
   'use strict'
 
+  /** @typedef {'thumbnail' | 'list'} ViewStyle */
+  /** @typedef {(params: { main: HTMLElement, menu: HTMLElement }) => void} AppendFilterMenuFunction */
+  /** @typedef {() => void} ShowAllItemsFunction */
+  /** @typedef {() => void} ShowDiscountedItemsFunction */
+
   const CLASS_CURRENT = 'current'
   const CLASS_BUTTON_THUMBNAIL = 'pic'
   const CLASS_BUTTON_LIST = 'tx'
   const CURSOR_BUTTON_CURRENT = 'auto'
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
-
-  /** @typedef {'thumbnail' | 'list'} ViewStyle */
-  /** @typedef {(params: { main: HTMLElement, menu: HTMLElement }) => void} AppendFilterMenuFunction */
-  /** @typedef {() => void} ShowAllItemsFunction */
-  /** @typedef {() => void} ShowDiscountedItemsFunction */
 
   /**
    * @returns {HTMLElement}
@@ -268,27 +268,30 @@
     menu.appendChild(filterMenu)
   }
 
+  /**
+   * @param {ViewStyle} viewStyle
+   * @returns {AppendFilterMenuFunction}
+   */
+  const getAppendFilterMenuFunction = (viewStyle) => {
+    switch (viewStyle) {
+      case 'thumbnail':
+        return appendFilterMenuOnThumbnailView
+      case 'list':
+        return appendFilterMenuOnListView
+    }
+  }
+
   const main = () => {
     console.debug('start')
     const main = getMainElement()
     const menu = getMenuElement(main)
     const viewStyle = getViewStyle(menu)
     console.debug(`viewStyle=${viewStyle}`)
-
-    switch (viewStyle) {
-      case 'thumbnail':
-        appendFilterMenuOnThumbnailView({
-          main,
-          menu
-        })
-        break
-      case 'list':
-        appendFilterMenuOnListView({
-          main,
-          menu
-        })
-        break
-    }
+    const appendFilterMenu = getAppendFilterMenuFunction(viewStyle)
+    appendFilterMenu({
+      main,
+      menu
+    })
   }
 
   main()
