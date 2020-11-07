@@ -177,17 +177,18 @@
 
   /**
    * @param {Object} params
+   * @param {HTMLElement} params.main
    * @param {ShowItemsFunction} params.showAllItems
    * @param {ShowItemsFunction} params.showDiscountedItems
    */
   const appendFilterMenu = ({
+    main,
     showAllItems,
     showDiscountedItems
   }) => {
     const filterMenu = document.createElement('div')
     const label = createMenuLabelElement('絞り込み')
     filterMenu.appendChild(label)
-    const main = getMainElement()
     const buttonList = createButtonListElement({
       showAllItems,
       showDiscountedItems
@@ -215,6 +216,7 @@
       })
     }
     appendFilterMenu({
+      main,
       showAllItems,
       showDiscountedItems
     })
@@ -240,6 +242,7 @@
       })
     }
     appendFilterMenu({
+      main,
       showAllItems,
       showDiscountedItems
     })
