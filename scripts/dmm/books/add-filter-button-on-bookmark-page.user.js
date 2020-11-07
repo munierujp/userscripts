@@ -21,8 +21,8 @@
   'use strict'
 
   const CLASS_CURRENT = 'current'
-  const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
   const CURSOR_BUTTON_CURRENT = 'auto'
+  const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
 
   /**
    * @param {string} text
