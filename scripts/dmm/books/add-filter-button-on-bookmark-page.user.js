@@ -64,7 +64,7 @@
    * @param {HTMLElement} main
    * @returns {HTMLLIElement[]}
    */
-  const findThumbnailItemElements = (main) => {
+  const findItemElementsForTableView = (main) => {
     const list = main.querySelector('#list')
     const items = Array.from(list.querySelectorAll('li'))
     return items
@@ -74,7 +74,7 @@
    * @param {HTMLElement} main
    * @returns {HTMLTableRowElement[]}
    */
-  const findListItemElements = (main) => {
+  const findItemElementsForListView = (main) => {
     const table = main.querySelector('table')
     const rows = Array.from(table.querySelectorAll('tr'))
     const items = rows.filter(row => row.querySelector('td'))
@@ -207,8 +207,8 @@
   }
 
   /** @type {CreateFilterMenuElementFunction} */
-  const createFilterMenuElementForThumbnailView = (main) => {
-    const items = findThumbnailItemElements(main)
+  const createFilterMenuElementForTableView = (main) => {
+    const items = findItemElementsForTableView(main)
 
     /** @type {ShowAllItemsFunction} */
     const showAllItems = () => {
@@ -234,16 +234,16 @@
   }
 
   /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnThumbnailView = () => {
+  const appendFilterMenuOnTableView = () => {
     const main = getMainElement()
     const menu = findMenuElement(main)
-    const filterMenu = createFilterMenuElementForThumbnailView(main)
+    const filterMenu = createFilterMenuElementForTableView(main)
     menu.appendChild(filterMenu)
   }
 
   /** @type {CreateFilterMenuElementFunction} */
   const createFilterMenuElementForListView = (main) => {
-    const rows = findListItemElements(main)
+    const rows = findItemElementsForListView(main)
     /** @type {ShowAllItemsFunction} */
     const showAllItems = () => {
       rows.forEach(row => {
@@ -281,7 +281,7 @@
   const getAppendFilterMenuFunction = (viewStyle) => {
     switch (viewStyle) {
       case 'table':
-        return appendFilterMenuOnThumbnailView
+        return appendFilterMenuOnTableView
       case 'list':
         return appendFilterMenuOnListView
     }
