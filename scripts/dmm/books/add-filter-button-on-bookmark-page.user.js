@@ -59,17 +59,24 @@
 
   /**
    * @param {string} text
+   * @returns {HTMLSpanElement}
+   */
+  const createButtonLabelElement = (text) => {
+    const label = document.createElement('span')
+    label.style['padding-left'] = '8px'
+    label.style['padding-right'] = '8px'
+    label.textContent = text
+    return label
+  }
+
+  /**
+   * @param {string} text
    * @returns {HTMLLIElement}
    */
   const createButtonElement = (text) => {
     const button = document.createElement('li')
     button.style.width = 'auto'
-
-    const label = document.createElement('span')
-    label.style['padding-left'] = '8px'
-    label.style['padding-right'] = '8px'
-    label.textContent = text
-
+    const label = createButtonLabelElement(text)
     button.appendChild(label)
     return button
   }
