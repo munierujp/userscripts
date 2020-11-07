@@ -20,7 +20,7 @@
 (function () {
   'use strict'
 
-  /** @typedef {'thumbnail' | 'list'} ViewStyle */
+  /** @typedef {'table' | 'list'} ViewStyle */
   /** @typedef {(params: { main: HTMLElement, menu: HTMLElement }) => void} AppendFilterMenuFunction */
   /** @typedef {(main: HTMLElement) => HTMLElement} CreateFilterMenuElementFunction */
   /** @typedef {() => void} ShowAllItemsFunction */
@@ -62,7 +62,7 @@
 
     switch (view) {
       case 'table':
-        return 'thumbnail'
+        return 'table'
       case 'list':
         return 'list'
       default:
@@ -284,7 +284,7 @@
    */
   const getAppendFilterMenuFunction = (viewStyle) => {
     switch (viewStyle) {
-      case 'thumbnail':
+      case 'table':
         return appendFilterMenuOnThumbnailView
       case 'list':
         return appendFilterMenuOnListView
