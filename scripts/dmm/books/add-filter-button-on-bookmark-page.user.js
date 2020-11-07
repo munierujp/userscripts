@@ -15,6 +15,8 @@
 // @grant        none
 // ==/UserScript==
 
+// TODO: viewStyle はURLから判断する
+
 (function () {
   'use strict'
 
