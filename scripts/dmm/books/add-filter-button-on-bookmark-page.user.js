@@ -33,10 +33,12 @@
   const createButtonElement = (text) => {
     const button = document.createElement('li')
     button.style.width = 'auto'
+
     const label = document.createElement('span')
     label.style['padding-left'] = '8px'
     label.style['padding-right'] = '8px'
     label.textContent = text
+
     button.appendChild(label)
     return button
   }
@@ -114,8 +116,11 @@
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = () => {
+    const buttonList = document.createElement('ul')
     const showAllButton = createCurrentButtonElement('すべて')
+    buttonList.appendChild(showAllButton)
     const showDiscountedButton = createNotCurrentButtonElement('セール中')
+    buttonList.appendChild(showDiscountedButton)
 
     showAllButton.addEventListener('click', () => {
       if (isCurrentButton(showAllButton)) {
@@ -137,9 +142,6 @@
       showDiscountedItems()
     })
 
-    const buttonList = document.createElement('ul')
-    buttonList.appendChild(showAllButton)
-    buttonList.appendChild(showDiscountedButton)
     return buttonList
   }
 
@@ -147,11 +149,12 @@
    * @returns {HTMLDivElement}
    */
   const createFilterMenuElement = () => {
+    const filterMenu = document.createElement('div')
     const label = document.createElement('span')
     label.textContent = '絞り込み'
-    const buttonList = createButtonListElement()
-    const filterMenu = document.createElement('div')
     filterMenu.appendChild(label)
+
+    const buttonList = createButtonListElement()
     filterMenu.appendChild(buttonList)
     return filterMenu
   }
