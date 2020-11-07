@@ -23,6 +23,7 @@
   const CLASS_CURRENT = 'current'
   const CURSOR_BUTTON_CURRENT = 'auto'
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
+  const STYLE_DISPLAY_ITEM_SHOW = 'list-item'
 
   /**
    * @param {string} text
@@ -95,7 +96,7 @@
   const showAllItems = () => {
     const items = getItemElements()
     items.forEach(item => {
-      item.style.display = 'list-item'
+      item.style.display = STYLE_DISPLAY_ITEM_SHOW
     })
   }
 
@@ -103,7 +104,7 @@
     const items = getItemElements()
     items.forEach(item => {
       const discount = item.querySelector('.txtoff')
-      const display = discount ? 'list-item' : 'none'
+      const display = discount ? STYLE_DISPLAY_ITEM_SHOW : 'none'
       item.style.display = display
     })
   }
