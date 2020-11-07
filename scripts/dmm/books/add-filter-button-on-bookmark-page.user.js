@@ -195,25 +195,6 @@
     return filterMenu
   }
 
-  /**
-   * @param {Object} params
-   * @param {HTMLElement} params.main
-   * @param {ShowItemsFunction} params.showAllItems
-   * @param {ShowItemsFunction} params.showDiscountedItems
-   */
-  const appendFilterMenu = ({
-    main,
-    showAllItems,
-    showDiscountedItems
-  }) => {
-    const filterMenu = createFilterMenuElement({
-      showAllItems,
-      showDiscountedItems
-    })
-    const menu = findMenuElement(main)
-    menu.appendChild(filterMenu)
-  }
-
   const appendFilterMenuOnTableView = () => {
     const main = getMainElement()
     const list = main.querySelector('#list')
@@ -231,11 +212,12 @@
         item.style.display = display
       })
     }
-    appendFilterMenu({
-      main,
+    const filterMenu = createFilterMenuElement({
       showAllItems,
       showDiscountedItems
     })
+    const menu = findMenuElement(main)
+    menu.appendChild(filterMenu)
   }
 
   const appendFilterMenuOnListView = () => {
@@ -257,11 +239,12 @@
         row.style.display = display
       })
     }
-    appendFilterMenu({
-      main,
+    const filterMenu = createFilterMenuElement({
       showAllItems,
       showDiscountedItems
     })
+    const menu = findMenuElement(main)
+    menu.appendChild(filterMenu)
   }
 
   /**
