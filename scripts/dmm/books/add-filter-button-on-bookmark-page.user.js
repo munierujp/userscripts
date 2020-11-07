@@ -177,12 +177,10 @@
 
   /**
    * @param {Object} params
-   * @param {HTMLElement} params.main
    * @param {ShowItemsFunction} params.showAllItems
    * @param {ShowItemsFunction} params.showDiscountedItems
    */
-  const appendFilterMenu = ({
-    main,
+  const createFilterMenuElement = ({
     showAllItems,
     showDiscountedItems
   }) => {
@@ -194,6 +192,24 @@
       showDiscountedItems
     })
     filterMenu.appendChild(buttonList)
+    return filterMenu
+  }
+
+  /**
+   * @param {Object} params
+   * @param {HTMLElement} params.main
+   * @param {ShowItemsFunction} params.showAllItems
+   * @param {ShowItemsFunction} params.showDiscountedItems
+   */
+  const appendFilterMenu = ({
+    main,
+    showAllItems,
+    showDiscountedItems
+  }) => {
+    const filterMenu = createFilterMenuElement({
+      showAllItems,
+      showDiscountedItems
+    })
     const menu = findMenuElement(main)
     menu.appendChild(filterMenu)
   }
