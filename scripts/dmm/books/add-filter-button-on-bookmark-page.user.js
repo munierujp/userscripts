@@ -117,27 +117,24 @@
     button.style.cursor = CURSOR_BUTTON_CURRENT
   }
 
-  // NOTE: サムネイル表示用
   /**
    * @returns {HTMLLIElement[]}
    */
-  const getItemElements = () => {
+  const getItemElementsForThumbnailView = () => {
     const list = document.getElementById('list')
     const items = Array.from(list.querySelectorAll('li'))
     return items
   }
 
-  // NOTE: サムネイル表示用
-  const showAllItems = () => {
-    const items = getItemElements()
+  const showAllItemsForThumbnailView = () => {
+    const items = getItemElementsForThumbnailView()
     items.forEach(item => {
       item.style.display = STYLE_DISPLAY_ITEM_SHOW
     })
   }
 
-  // NOTE: サムネイル表示用
-  const showDiscountedItems = () => {
-    const items = getItemElements()
+  const showDiscountedItemsForThumbnailView = () => {
+    const items = getItemElementsForThumbnailView()
     items.forEach(item => {
       const discount = item.querySelector('.txtoff')
       const display = discount ? STYLE_DISPLAY_ITEM_SHOW : STYLE_DISPLAY_ITEM_HIDDEN
@@ -145,11 +142,10 @@
     })
   }
 
-  // NOTE: サムネイル表示用
   /**
    * @returns {HTMLUListElement}
    */
-  const createButtonListElement = () => {
+  const createButtonListElementForThumbnailView = () => {
     const buttonList = document.createElement('ul')
     const showAllButton = createCurrentButtonElement('すべて')
     buttonList.appendChild(showAllButton)
@@ -163,7 +159,7 @@
 
       deactivateButton(showAllButton)
       activateButton(showDiscountedButton)
-      showAllItems()
+      showAllItemsForThumbnailView()
     })
 
     showDiscountedButton.addEventListener('click', () => {
@@ -173,23 +169,22 @@
 
       deactivateButton(showDiscountedButton)
       activateButton(showAllButton)
-      showDiscountedItems()
+      showDiscountedItemsForThumbnailView()
     })
 
     return buttonList
   }
 
-  // NOTE: サムネイル表示用
   /**
    * @returns {HTMLDivElement}
    */
-  const createFilterMenuElement = () => {
+  const createFilterMenuElementForThumbnailView = () => {
     const filterMenu = document.createElement('div')
     const label = document.createElement('span')
     label.textContent = '絞り込み'
     filterMenu.appendChild(label)
 
-    const buttonList = createButtonListElement()
+    const buttonList = createButtonListElementForThumbnailView()
     filterMenu.appendChild(buttonList)
     return filterMenu
   }
@@ -201,7 +196,7 @@
     console.debug(`viewStyle=${viewStyle}`)
 
     if (viewStyle === 'thumbnail') {
-      const filterMenu = createFilterMenuElement()
+      const filterMenu = createFilterMenuElementForThumbnailView()
       menu.appendChild(filterMenu)
     }
   }
