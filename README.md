@@ -15,7 +15,7 @@ My User Scripts
 
 ## DMM
 
-- [add-filter-button-on-bookmark-page.user.js](https://munierujp.github.io/userscripts/scripts/dmm/add-filter-button-on-bookmark-page.user.js)
+- [add-filter-button-on-bookmark-page.user.js](https://munierujp.github.io/userscripts/scripts/dmm/books/add-filter-button-on-bookmark-page.user.js)
 
 ## Vue.js
 
