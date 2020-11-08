@@ -100,11 +100,15 @@
   })
 
   /**
-   * @param {Node} node
-   * @returns {Node}
+   * @template {Node} T
+   * @param {T} node
+   * @returns {T}
    */
   const deepCloneNode = (node) => {
-    return node.cloneNode(true)
+    /** @type {T} */
+    // @ts-expect-error
+    const clonedNode = node.cloneNode(true)
+    return clonedNode
   }
 
   /**
@@ -213,8 +217,6 @@
    * @returns {HTMLElement}
    */
   const createPlayWithVlcButton = (playButton) => {
-    /** @type {HTMLElement} */
-    // @ts-expect-error
     const playWithVlcButton = deepCloneNode(playButton)
     playWithVlcButton.addEventListener('click', () => {
       console.debug('fetch file path')
