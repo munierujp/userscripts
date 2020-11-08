@@ -189,6 +189,7 @@
   const hideVideoInfoDialog = (menuStyle) => {
     menuStyle.textContent = `
 ${SELECTOR_VIDEO_INFO_DIALOG} {
+  display: none !important;
   visibility: hidden !important;
 }
 `
