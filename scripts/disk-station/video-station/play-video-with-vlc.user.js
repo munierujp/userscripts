@@ -167,7 +167,7 @@
    * @returns {Promise<string>}
    */
   const fetchFilePath = () => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const observer = new MutationObserver((records, observer) => {
         const dialog = findVideoInfoDialogElement(records)
 
