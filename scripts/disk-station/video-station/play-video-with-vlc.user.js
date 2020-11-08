@@ -365,14 +365,6 @@ ${SELECTOR_DROPDOWN_MENU} {
     element.parentElement.insertBefore(newElement, element)
   }
 
-  /**
-   * @param {HTMLElement} playButton
-   */
-  const replacePlayButton = (playButton) => {
-    const playWithVlcButton = createPlayWithVlcButton(playButton)
-    replaceElement(playButton, playWithVlcButton)
-  }
-
   const updatePlayButton = () => {
     console.debug('start observing body')
     observeAddingHTMLElement({
@@ -383,8 +375,8 @@ ${SELECTOR_DROPDOWN_MENU} {
       },
       find: findPlayButtonElement,
       callback: (playButton) => {
-        console.debug('replace play button')
-        replacePlayButton(playButton)
+        const playWithVlcButton = createPlayWithVlcButton(playButton)
+        replaceElement(playButton, playWithVlcButton)
       }
     })
   }
