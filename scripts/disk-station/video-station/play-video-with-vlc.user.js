@@ -163,14 +163,22 @@
     return element.textContent === 'メディア情報を表示'
   }
 
+  /**
+   * @param {HTMLElement} dropdownMenu
+   * @returns {HTMLAnchorElement}
+   */
+  const findVideoInfoDialogLinkElement = (dropdownMenu) => {
+    /** @type {HTMLAnchorElement[]} */
+    const links = Array.from(dropdownMenu.querySelectorAll('a.x-menu-list-item'))
+    return links.find(isVideoInfoDialogLinkElement)
+  }
+
   // TODO: チラつきを防ぐために事前にmenuをCSSで非表示化してから実行し、実行後に非表示化を解除する
   const openVideoInfoDialog = () => {
     const operationButton = getOperationButtonElement()
     operationButton.click()
     const menu = getDropdownMenuElement()
-    /** @type {HTMLAnchorElement[]} */
-    const links = Array.from(menu.querySelectorAll('a.x-menu-list-item'))
-    const link = links.find(isVideoInfoDialogLinkElement)
+    const link = findVideoInfoDialogLinkElement(menu)
     link.click()
   }
 
