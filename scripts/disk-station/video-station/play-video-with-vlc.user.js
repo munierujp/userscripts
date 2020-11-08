@@ -33,12 +33,11 @@
   /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
 
   /**
-   * @param {string | URL} url
    * @returns {boolean}
    */
-  const isVideoStationPage = (url) => {
-    url = url instanceof URL ? url : new URL(url)
-    const appId = url.searchParams.get('launchApp')
+  const isVideoStationPage = () => {
+    const params = new URLSearchParams(location.search)
+    const appId = params.get('launchApp')
     return appId === APP_ID
   }
 
@@ -196,7 +195,7 @@
   const main = () => {
     console.debug('start')
 
-    if (!isVideoStationPage(location.href)) {
+    if (!isVideoStationPage()) {
       return
     }
 
