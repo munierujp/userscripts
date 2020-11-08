@@ -137,28 +137,28 @@
     showDiscountedItems
   }) => {
     const buttonList = document.createElement('ul')
-    const showAllButton = createCurrentButtonElement('すべて')
-    buttonList.appendChild(showAllButton)
-    const showDiscountedButton = createNotCurrentButtonElement('セール中')
-    buttonList.appendChild(showDiscountedButton)
+    const allButton = createCurrentButtonElement('すべて')
+    buttonList.appendChild(allButton)
+    const discountedButton = createNotCurrentButtonElement('セール中')
+    buttonList.appendChild(discountedButton)
 
-    showAllButton.addEventListener('click', () => {
-      if (isCurrentElement(showAllButton)) {
+    allButton.addEventListener('click', () => {
+      if (isCurrentElement(allButton)) {
         return
       }
 
-      deactivateButton(showAllButton)
-      activateButton(showDiscountedButton)
+      deactivateButton(allButton)
+      activateButton(discountedButton)
       showAllItems()
     })
 
-    showDiscountedButton.addEventListener('click', () => {
-      if (isCurrentElement(showDiscountedButton)) {
+    discountedButton.addEventListener('click', () => {
+      if (isCurrentElement(discountedButton)) {
         return
       }
 
-      deactivateButton(showDiscountedButton)
-      activateButton(showAllButton)
+      deactivateButton(discountedButton)
+      activateButton(allButton)
       showDiscountedItems()
     })
 
