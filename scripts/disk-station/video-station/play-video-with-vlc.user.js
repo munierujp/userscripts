@@ -43,10 +43,18 @@
 
   /**
    * @param {MutationRecord} record
+   * @returns {Node[]}
+   */
+  const toAddedNodes = (record) => {
+    return record.addedNodes ? Array.from(record.addedNodes) : []
+  }
+
+  /**
+   * @param {MutationRecord} record
    * @returns {HTMLElement[]}
    */
   const toAddedHTMLElements = (record) => {
-    const addedNodes = record.addedNodes ? Array.from(record.addedNodes) : []
+    const addedNodes = toAddedNodes(record)
     return addedNodes
       .filter(node => node instanceof HTMLElement)
       .map(node => {
