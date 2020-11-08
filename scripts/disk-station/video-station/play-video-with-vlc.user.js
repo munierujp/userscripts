@@ -74,9 +74,17 @@
     }
   }
 
-  const findPlayButtonElement = createHTMLElementFinder(element => {
+  /**
+   * @param {HTMLElement} element
+   * @returns {boolean}
+   */
+  const isPlayButtonElement = (element) => {
     const { classList } = element
     return classList.contains('x-btn') && classList.contains('play')
+  }
+
+  const findPlayButtonElement = createHTMLElementFinder(element => {
+    return isPlayButtonElement(element)
   })
 
   /**
