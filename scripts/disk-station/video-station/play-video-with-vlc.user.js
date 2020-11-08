@@ -111,10 +111,17 @@
 
   /**
    * @param {HTMLElement} dialog
+   * @returns {HTMLButtonElement}
+   */
+  const findCloseButtonElement = (dialog) => {
+    return dialog.querySelector('button[aria-label="閉じる"]')
+  }
+
+  /**
+   * @param {HTMLElement} dialog
    */
   const closeVideoInfoDialog = (dialog) => {
-    /** @type {HTMLButtonElement} */
-    const closeButton = dialog.querySelector('button[aria-label="閉じる"]')
+    const closeButton = findCloseButtonElement(dialog)
     closeButton.click()
   }
 
