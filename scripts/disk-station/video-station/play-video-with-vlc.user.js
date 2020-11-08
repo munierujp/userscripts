@@ -149,6 +149,13 @@
   }
 
   /**
+   * @returns {HTMLElement}
+   */
+  const getDropdownMenuElement = () => {
+    return document.querySelector('.syno-vs2-dropdown-menu')
+  }
+
+  /**
    * @param {HTMLElement} element
    * @returns {boolean}
    */
@@ -160,8 +167,7 @@
   const openVideoInfoDialog = () => {
     const operationButton = getOperationButtonElement()
     operationButton.click()
-    /** @type {HTMLElement} */
-    const menu = document.querySelector('.syno-vs2-dropdown-menu')
+    const menu = getDropdownMenuElement()
     /** @type {HTMLAnchorElement[]} */
     const links = Array.from(menu.querySelectorAll('a.x-menu-list-item'))
     const link = links.find(isVideoInfoDialogLinkElement)
