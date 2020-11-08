@@ -55,14 +55,10 @@
    */
   const toAddedHTMLElements = (record) => {
     const addedNodes = toAddedNodes(record)
-    return addedNodes
-      .filter(node => node instanceof HTMLElement)
-      .map(node => {
-        /** @type {HTMLElement} */
-        // @ts-expect-error
-        const element = node
-        return element
-      })
+    /** @type {HTMLElement[]} */
+    // @ts-expect-error
+    const addedElements = addedNodes.filter(node => node instanceof HTMLElement)
+    return addedElements
   }
 
   /**
