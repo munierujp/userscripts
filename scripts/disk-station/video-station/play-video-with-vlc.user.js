@@ -263,15 +263,11 @@ ${SELECTOR_DROPDOWN_MENU} {
 
   const openVideoInfoDialog = () => {
     const menuStyle = getDropdownMenuStyleElement()
-    console.debug('hide dropdown menu')
     hideDropdownMenuElement(menuStyle)
-    console.debug('open dropdown menu')
     openDropdownMenuElement()
     const menu = getDropdownMenuElement()
     const link = findVideoInfoDialogLinkElement(menu)
     link.click()
-    console.debug('close dropdown menu indirectly')
-    console.debug('show dropdown menu')
     showDropdownMenuElement(menuStyle)
   }
 
@@ -323,16 +319,12 @@ ${SELECTOR_DROPDOWN_MENU} {
         find: findVideoInfoDialogElement,
         callback: (dialog) => {
           const filePath = findFilePath(dialog)
-          console.debug('close video info dialog')
           closeVideoInfoDialog(dialog)
-          console.debug('show video info dialog')
           showVideoInfoDialog(videoInfoDialogStyle)
           resolve(filePath)
         }
       })
-      console.debug('hide video info dialog')
       hideVideoInfoDialog(videoInfoDialogStyle)
-      console.debug('open video info dialog')
       openVideoInfoDialog()
     })
   }
