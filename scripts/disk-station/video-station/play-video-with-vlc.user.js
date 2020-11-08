@@ -192,13 +192,7 @@
     playButton.parentElement.appendChild(playWithVlcButton)
   }
 
-  const main = () => {
-    console.debug('start')
-
-    if (!isVideoStationPage()) {
-      return
-    }
-
+  const updatePlayButton = () => {
     const observer = new MutationObserver((records, observer) => {
       const playButton = findPlayButtonElement(records)
 
@@ -214,6 +208,14 @@
       childList: true,
       subtree: true
     })
+  }
+
+  const main = () => {
+    console.debug('start')
+
+    if (isVideoStationPage()) {
+      updatePlayButton()
+    }
   }
 
   main()
