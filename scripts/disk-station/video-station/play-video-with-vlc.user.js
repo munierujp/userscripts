@@ -29,6 +29,7 @@
   const APP_ID = 'SYNO.SDS.VideoStation.AppInstance'
   const URL_SCHEME = 'vlc'
   const ROOT_DIR = '/Volumes'
+  const SELECTOR_DROPDOWN_MENU = '.syno-ux-menu.syno-vs2-dropdown-menu'
   const ID_STYLE_DROPDOWN_MENU = 'jp-munieru-style-dropdown-menu'
 
   /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
@@ -190,7 +191,7 @@
    * @returns {HTMLElement}
    */
   const getDropdownMenuElement = () => {
-    return document.querySelector('.syno-vs2-dropdown-menu')
+    return document.querySelector(SELECTOR_DROPDOWN_MENU)
   }
 
   /**
