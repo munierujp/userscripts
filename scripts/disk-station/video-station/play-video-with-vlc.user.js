@@ -79,8 +79,16 @@
     return classList.contains('x-btn') && classList.contains('play')
   })
 
-  const findVideoInfoDialogElement = createHTMLElementFinder(element => {
+  /**
+   * @param {HTMLElement} element
+   * @returns {boolean}
+   */
+  const isVideoInfoDialogElement = (element) => {
     return element.classList.contains('video-info-dialog')
+  }
+
+  const findVideoInfoDialogElement = createHTMLElementFinder(element => {
+    return isVideoInfoDialogElement(element)
   })
 
   /**
