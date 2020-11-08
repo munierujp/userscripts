@@ -30,7 +30,9 @@
   const URL_SCHEME = 'vlc'
   const ROOT_DIR = '/Volumes'
   const SELECTOR_DROPDOWN_MENU = '.syno-ux-menu.syno-vs2-dropdown-menu'
+  const SELECTOR_VIDEO_INFO_DIALOG = '.video-info-dialog'
   const ID_STYLE_DROPDOWN_MENU = 'jp-munieru-style-dropdown-menu'
+  const ID_STYLE_VIDEO_INFO_DIALOG = 'jp-munieru-style-video-info-dialog'
 
   /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
 
@@ -64,6 +66,7 @@
 
   const appendStyleElements = () => {
     appendStyleElement(ID_STYLE_DROPDOWN_MENU)
+    appendStyleElement(ID_STYLE_VIDEO_INFO_DIALOG)
   }
 
   /**
@@ -173,6 +176,27 @@
   /**
    * @returns {HTMLStyleElement}
    */
+  const getVideoInfoDialogStyleElement = () => {
+    /** @type {HTMLStyleElement} */
+    // @ts-expect-error
+    const style = document.getElementById(ID_STYLE_VIDEO_INFO_DIALOG)
+    return style
+  }
+
+  /**
+   * @param {HTMLStyleElement} menuStyle
+   */
+  const hideVideoInfoDialog = (menuStyle) => {
+    menuStyle.textContent = `
+${SELECTOR_VIDEO_INFO_DIALOG} {
+  visibility: hidden !important;
+}
+`
+  }
+
+  /**
+   * @returns {HTMLStyleElement}
+   */
   const getDropdownMenuStyleElement = () => {
     /** @type {HTMLStyleElement} */
     // @ts-expect-error
@@ -246,6 +270,13 @@ ${SELECTOR_DROPDOWN_MENU} {
   }
 
   /**
+   * @param {HTMLStyleElement} menuStyle
+   */
+  const showVideoInfoDialog = (menuStyle) => {
+    menuStyle.textContent = ''
+  }
+
+  /**
    * @param {Object} params
    * @param {Node} params.target
    * @param {MutationObserverInit} params.options
@@ -270,7 +301,6 @@ ${SELECTOR_DROPDOWN_MENU} {
     observer.observe(target, options)
   }
 
-  // TODO: チラつきを防ぐために事前にdialogをCSSで非表示化してから実行し、実行後に非表示化を解除する
   /**
    * @returns {Promise<string>}
    */
@@ -289,7 +319,10 @@ ${SELECTOR_DROPDOWN_MENU} {
           resolve(filePath)
         }
       })
+      const videoInfoDialogStyle = getVideoInfoDialogStyleElement()
+      hideVideoInfoDialog(videoInfoDialogStyle)
       openVideoInfoDialog()
+      showVideoInfoDialog(videoInfoDialogStyle)
     })
   }
 
