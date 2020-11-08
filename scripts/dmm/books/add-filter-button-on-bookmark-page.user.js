@@ -209,7 +209,7 @@
     const showDiscountedItems = () => {
       items.forEach(item => {
         const discount = item.querySelector('.txtoff')
-        const show = discount !== null
+        const show = !!discount
         const display = show ? 'list-item' : 'none'
         item.style.display = display
       })
@@ -253,7 +253,7 @@
       rows.forEach(row => {
         const price = row.querySelector('.price')
         const discount = price.querySelector('.tx-sp')
-        const show = discount !== null
+        const show = !!discount
         const display = show ? 'table-row' : 'none'
         row.style.display = display
       })
