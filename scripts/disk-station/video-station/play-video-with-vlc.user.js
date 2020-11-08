@@ -212,13 +212,17 @@
     return links.find(isVideoInfoDialogLinkElement)
   }
 
-  // TODO: チラつきを防ぐために事前にmenuをCSSで非表示化してから実行し、実行後に非表示化を解除する
   const openVideoInfoDialog = () => {
+    const menuStyle = getDropdownMenuStyleElement()
+    menuStyle.textContent = `${SELECTOR_DROPDOWN_MENU} {
+  display: none !important;
+}`
     const operationButton = getOperationButtonElement()
     operationButton.click()
     const menu = getDropdownMenuElement()
     const link = findVideoInfoDialogLinkElement(menu)
     link.click()
+    menuStyle.textContent = ''
   }
 
   /**
