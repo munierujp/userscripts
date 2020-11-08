@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Play video with VLC
 // @namespace    https://github.com/munierujp/
-// @version      0.1.11
+// @version      0.1.12
 // @description  Play video with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -29,6 +29,10 @@
   const APP_ID = 'SYNO.SDS.VideoStation.AppInstance'
   const URL_SCHEME = 'vlc'
   const ROOT_DIR = '/Volumes'
+  const SELECTOR_DROPDOWN_MENU = '.syno-ux-menu.syno-vs2-dropdown-menu'
+  const SELECTOR_VIDEO_INFO_DIALOG = '.video-info-dialog'
+  const ID_DROPDOWN_MENU_STYLE = 'jp-munieru-style-dropdown-menu'
+  const ID_VIDEO_INFO_DIALOG_STYLE = 'jp-munieru-style-video-info-dialog'
 
   /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
 
@@ -39,6 +43,30 @@
     const params = new URLSearchParams(location.search)
     const appId = params.get('launchApp')
     return appId === APP_ID
+  }
+
+  /**
+   * @param {string} id
+   * @returns {HTMLStyleElement}
+   */
+  const createStyleElement = (id) => {
+    const style = document.createElement('style')
+    style.id = id
+    style.type = 'text/css'
+    return style
+  }
+
+  /**
+   * @param {string} id
+   */
+  const appendStyleElement = (id) => {
+    const style = createStyleElement(id)
+    document.head.appendChild(style)
+  }
+
+  const appendStyleElements = () => {
+    appendStyleElement(ID_DROPDOWN_MENU_STYLE)
+    appendStyleElement(ID_VIDEO_INFO_DIALOG_STYLE)
   }
 
   /**
@@ -146,17 +174,66 @@
   }
 
   /**
+   * @returns {HTMLStyleElement}
+   */
+  const getVideoInfoDialogStyleElement = () => {
+    /** @type {HTMLStyleElement} */
+    // @ts-expect-error
+    const style = document.getElementById(ID_VIDEO_INFO_DIALOG_STYLE)
+    return style
+  }
+
+  /**
+   * @param {HTMLStyleElement} style
+   */
+  const hideVideoInfoDialog = (style) => {
+    style.textContent = `
+${SELECTOR_VIDEO_INFO_DIALOG} {
+  display: none !important;
+  visibility: hidden !important;
+}
+`
+  }
+
+  /**
+   * @returns {HTMLStyleElement}
+   */
+  const getDropdownMenuStyleElement = () => {
+    /** @type {HTMLStyleElement} */
+    // @ts-expect-error
+    const style = document.getElementById(ID_DROPDOWN_MENU_STYLE)
+    return style
+  }
+
+  /**
+   * @param {HTMLStyleElement} style
+   */
+  const hideDropdownMenuElement = (style) => {
+    style.textContent = `
+${SELECTOR_DROPDOWN_MENU} {
+  display: none !important;
+  visibility: hidden !important;
+}
+`
+  }
+
+  /**
    * @returns {HTMLButtonElement}
    */
   const getOperationButtonElement = () => {
     return document.querySelector('button[aria-label="操作"]')
   }
 
+  const openDropdownMenuElement = () => {
+    const operationButton = getOperationButtonElement()
+    operationButton.click()
+  }
+
   /**
    * @returns {HTMLElement}
    */
   const getDropdownMenuElement = () => {
-    return document.querySelector('.syno-vs2-dropdown-menu')
+    return document.querySelector(SELECTOR_DROPDOWN_MENU)
   }
 
   /**
@@ -177,13 +254,28 @@
     return links.find(isVideoInfoDialogLinkElement)
   }
 
-  // TODO: チラつきを防ぐために事前にmenuをCSSで非表示化してから実行し、実行後に非表示化を解除する
+  /**
+   * @param {HTMLStyleElement} menuStyle
+   */
+  const showDropdownMenuElement = (menuStyle) => {
+    menuStyle.textContent = ''
+  }
+
   const openVideoInfoDialog = () => {
-    const operationButton = getOperationButtonElement()
-    operationButton.click()
+    const menuStyle = getDropdownMenuStyleElement()
+    hideDropdownMenuElement(menuStyle)
+    openDropdownMenuElement()
     const menu = getDropdownMenuElement()
     const link = findVideoInfoDialogLinkElement(menu)
     link.click()
+    showDropdownMenuElement(menuStyle)
+  }
+
+  /**
+   * @param {HTMLStyleElement} menuStyle
+   */
+  const showVideoInfoDialog = (menuStyle) => {
+    menuStyle.textContent = ''
   }
 
   /**
@@ -211,12 +303,13 @@
     observer.observe(target, options)
   }
 
-  // TODO: チラつきを防ぐために事前にdialogをCSSで非表示化してから実行し、実行後に非表示化を解除する
   /**
    * @returns {Promise<string>}
    */
   const fetchFilePath = () => {
     return new Promise(resolve => {
+      const videoInfoDialogStyle = getVideoInfoDialogStyleElement()
+
       console.debug('start observing #sds-desktop')
       observeAddingHTMLElement({
         target: document.getElementById('sds-desktop'),
@@ -227,9 +320,11 @@
         callback: (dialog) => {
           const filePath = findFilePath(dialog)
           closeVideoInfoDialog(dialog)
+          showVideoInfoDialog(videoInfoDialogStyle)
           resolve(filePath)
         }
       })
+      hideVideoInfoDialog(videoInfoDialogStyle)
       openVideoInfoDialog()
     })
   }
@@ -272,14 +367,6 @@
     element.parentElement.insertBefore(newElement, element)
   }
 
-  /**
-   * @param {HTMLElement} playButton
-   */
-  const replacePlayButton = (playButton) => {
-    const playWithVlcButton = createPlayWithVlcButton(playButton)
-    replaceElement(playButton, playWithVlcButton)
-  }
-
   const updatePlayButton = () => {
     console.debug('start observing body')
     observeAddingHTMLElement({
@@ -290,8 +377,8 @@
       },
       find: findPlayButtonElement,
       callback: (playButton) => {
-        console.debug('replace play button')
-        replacePlayButton(playButton)
+        const playWithVlcButton = createPlayWithVlcButton(playButton)
+        replaceElement(playButton, playWithVlcButton)
       }
     })
   }
@@ -300,6 +387,7 @@
     console.debug('start')
 
     if (isVideoStationPage()) {
+      appendStyleElements()
       updatePlayButton()
     }
   }
