@@ -221,13 +221,20 @@
   }
 
   /**
+   * @param {HTMLTableRowElement} row
+   * @returns {boolean}
+   */
+  const isDataRow = (row) => {
+    return !!row.querySelector('td')
+  }
+
+  /**
    * @param {HTMLTableElement} table
    * @returns {HTMLTableRowElement[]}
    */
   const findDataRowElements = (table) => {
     const rows = Array.from(table.querySelectorAll('tr'))
-      .filter(row => row.querySelector('td'))
-    return rows
+    return rows.filter(isDataRow)
   }
 
   const appendFilterMenuOnListView = () => {
