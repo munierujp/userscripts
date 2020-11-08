@@ -142,6 +142,13 @@
   }
 
   /**
+   * @returns {HTMLButtonElement}
+   */
+  const getOperationButtonElement = () => {
+    return document.querySelector('button[aria-label="操作"]')
+  }
+
+  /**
    * @param {HTMLElement} element
    * @returns {boolean}
    */
@@ -151,8 +158,7 @@
 
   // TODO: チラつきを防ぐために事前にmenuをCSSで非表示化してから実行し、実行後に非表示化を解除する
   const openVideoInfoDialog = () => {
-    /** @type {HTMLButtonElement} */
-    const operationButton = document.querySelector('button[aria-label="操作"]')
+    const operationButton = getOperationButtonElement()
     operationButton.click()
     /** @type {HTMLElement} */
     const menu = document.querySelector('.syno-vs2-dropdown-menu')
