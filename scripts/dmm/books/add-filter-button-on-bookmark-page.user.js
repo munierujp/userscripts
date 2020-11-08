@@ -220,11 +220,20 @@
     menu.appendChild(filterMenu)
   }
 
+  /**
+   * @param {HTMLTableElement} table
+   * @returns {HTMLTableRowElement[]}
+   */
+  const findDataRowElements = (table) => {
+    const rows = Array.from(table.querySelectorAll('tr'))
+      .filter(row => row.querySelector('td'))
+    return rows
+  }
+
   const appendFilterMenuOnListView = () => {
     const main = getMainElement()
     const table = main.querySelector('table')
-    const rows = Array.from(table.querySelectorAll('tr'))
-      .filter(row => row.querySelector('td'))
+    const rows = findDataRowElements(table)
     const showAllItems = () => {
       rows.forEach(row => {
         row.style.display = 'table-row'
