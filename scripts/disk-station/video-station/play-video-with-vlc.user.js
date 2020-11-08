@@ -66,7 +66,7 @@
    * @returns {HTMLElementFinder}
    */
   const createHTMLElementFinder = (filter) => {
-    return (records) => {
+    return records => {
       return records
         .map(toAddedHTMLElements)
         .reduce((a, b) => a.concat(b), [])
