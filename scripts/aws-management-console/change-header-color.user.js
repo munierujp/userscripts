@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Change header color
 // @namespace    https://github.com/munierujp/
-// @version      1.3.2
+// @version      1.3.3
 // @description  Change header color on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -140,17 +140,21 @@ body #awsgnav #nav-menubar .nav-menu,
     })
   }
 
-  try {
-    changeHeaderColorByPatternA()
-  } catch (e) {
-    console.warn(e)
-    console.warn('Failed to change header color by pattern A.')
-
+  const main = () => {
     try {
-      changeHeaderColorByPatternB()
+      changeHeaderColorByPatternA()
     } catch (e) {
-      console.error(e)
-      console.error('Failed to change header color by pattern B.')
+      console.warn(e)
+      console.warn('Failed to change header color by pattern A.')
+
+      try {
+        changeHeaderColorByPatternB()
+      } catch (e) {
+        console.error(e)
+        console.error('Failed to change header color by pattern B.')
+      }
     }
   }
+
+  main()
 })()
