@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name        Add filter button on bookmark page
 // @namespace    https://github.com/munierujp/
-// @version      1.1.0
+// @version      1.1.1
 // @description   Add filter button on bookmark page on DMM Books
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -19,6 +19,7 @@
   'use strict'
 
   /** @typedef {'table' | 'list'} ViewType */
+  /** @typedef {() => void} AppendFilterMenuFunction */
   /** @typedef {() => void} ShowItemsFunction */
 
   const CLASS_CURRENT = 'current'
@@ -137,28 +138,28 @@
     showDiscountedItems
   }) => {
     const buttonList = document.createElement('ul')
-    const showAllButton = createCurrentButtonElement('すべて')
-    buttonList.appendChild(showAllButton)
-    const showDiscountedButton = createNotCurrentButtonElement('セール中')
-    buttonList.appendChild(showDiscountedButton)
+    const allButton = createCurrentButtonElement('すべて')
+    buttonList.appendChild(allButton)
+    const discountedButton = createNotCurrentButtonElement('セール中')
+    buttonList.appendChild(discountedButton)
 
-    showAllButton.addEventListener('click', () => {
-      if (isCurrentElement(showAllButton)) {
+    allButton.addEventListener('click', () => {
+      if (isCurrentElement(allButton)) {
         return
       }
 
-      deactivateButton(showAllButton)
-      activateButton(showDiscountedButton)
+      deactivateButton(allButton)
+      activateButton(discountedButton)
       showAllItems()
     })
 
-    showDiscountedButton.addEventListener('click', () => {
-      if (isCurrentElement(showDiscountedButton)) {
+    discountedButton.addEventListener('click', () => {
+      if (isCurrentElement(discountedButton)) {
         return
       }
 
-      deactivateButton(showDiscountedButton)
-      activateButton(showAllButton)
+      deactivateButton(discountedButton)
+      activateButton(allButton)
       showDiscountedItems()
     })
 
@@ -195,6 +196,7 @@
     return filterMenu
   }
 
+  /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnTableView = () => {
     const main = getMainElement()
     const list = main.querySelector('#list')
@@ -207,7 +209,7 @@
     const showDiscountedItems = () => {
       items.forEach(item => {
         const discount = item.querySelector('.txtoff')
-        const show = discount !== null
+        const show = !!discount
         const display = show ? 'list-item' : 'none'
         item.style.display = display
       })
@@ -220,11 +222,28 @@
     menu.appendChild(filterMenu)
   }
 
+  /**
+   * @param {HTMLTableRowElement} row
+   * @returns {boolean}
+   */
+  const isDataRow = (row) => {
+    return !!row.querySelector('td')
+  }
+
+  /**
+   * @param {HTMLTableElement} table
+   * @returns {HTMLTableRowElement[]}
+   */
+  const findDataRowElements = (table) => {
+    const rows = Array.from(table.querySelectorAll('tr'))
+    return rows.filter(isDataRow)
+  }
+
+  /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnListView = () => {
     const main = getMainElement()
     const table = main.querySelector('table')
-    const rows = Array.from(table.querySelectorAll('tr'))
-      .filter(row => row.querySelector('td'))
+    const rows = findDataRowElements(table)
     const showAllItems = () => {
       rows.forEach(row => {
         row.style.display = 'table-row'
@@ -234,7 +253,7 @@
       rows.forEach(row => {
         const price = row.querySelector('.price')
         const discount = price.querySelector('.tx-sp')
-        const show = discount !== null
+        const show = !!discount
         const display = show ? 'table-row' : 'none'
         row.style.display = display
       })
@@ -249,6 +268,7 @@
 
   /**
    * @param {ViewType} viewType
+   * @returns {AppendFilterMenuFunction}
    */
   const getAppendFilterMenuFunction = (viewType) => {
     switch (viewType) {
