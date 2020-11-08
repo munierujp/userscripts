@@ -214,9 +214,11 @@
 
   const openVideoInfoDialog = () => {
     const menuStyle = getDropdownMenuStyleElement()
-    menuStyle.textContent = `${SELECTOR_DROPDOWN_MENU} {
-  display: none !important;
-}`
+    menuStyle.textContent = `
+${SELECTOR_DROPDOWN_MENU} {
+  visibility: hidden !important;
+}
+`
     const operationButton = getOperationButtonElement()
     operationButton.click()
     const menu = getDropdownMenuElement()
