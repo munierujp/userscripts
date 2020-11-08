@@ -247,8 +247,7 @@
    */
   const replaceElement = (element, newElement) => {
     element.style.display = 'none'
-    element.parentElement.appendChild(newElement)
-    element.remove()
+    element.parentElement.insertBefore(newElement, element)
   }
 
   /**
