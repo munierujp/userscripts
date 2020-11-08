@@ -184,12 +184,19 @@
   }
 
   /**
+   * @param {HTMLElement} element
+   */
+  const replaceElement = (element, newElement) => {
+    element.style.display = 'none'
+    element.parentElement.appendChild(newElement)
+  }
+
+  /**
    * @param {HTMLElement} playButton
    */
   const replacePlayButton = (playButton) => {
     const playWithVlcButton = createPlayWithVlcButton(playButton)
-    playButton.style.display = 'none'
-    playButton.parentElement.appendChild(playWithVlcButton)
+    replaceElement(playButton, playWithVlcButton)
   }
 
   const updatePlayButton = () => {
