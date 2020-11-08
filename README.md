@@ -11,7 +11,7 @@ My User Scripts
 
 ### Video Station
 
-- [play-video-with-vlc.user.js](https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-video-with-vlc.user.js)
+- [play-with-vlc.user.js](https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-with-vlc.user.js)
 
 ## DMM
 
