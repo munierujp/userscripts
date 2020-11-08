@@ -19,6 +19,7 @@
   'use strict'
 
   /** @typedef {'table' | 'list'} ViewType */
+  /** @typedef {() => void} AppendFilterMenuFunction */
   /** @typedef {() => void} ShowItemsFunction */
 
   const CLASS_CURRENT = 'current'
@@ -195,6 +196,7 @@
     return filterMenu
   }
 
+  /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnTableView = () => {
     const main = getMainElement()
     const list = main.querySelector('#list')
@@ -237,6 +239,7 @@
     return rows.filter(isDataRow)
   }
 
+  /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnListView = () => {
     const main = getMainElement()
     const table = main.querySelector('table')
@@ -265,6 +268,7 @@
 
   /**
    * @param {ViewType} viewType
+   * @returns {AppendFilterMenuFunction}
    */
   const getAppendFilterMenuFunction = (viewType) => {
     switch (viewType) {
