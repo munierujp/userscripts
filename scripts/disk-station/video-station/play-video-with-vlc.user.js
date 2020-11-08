@@ -335,6 +335,7 @@
     console.debug('start')
 
     if (isVideoStationPage()) {
+      appendStyleElements()
       updatePlayButton()
     }
   }
