@@ -184,10 +184,10 @@
   }
 
   /**
-   * @param {HTMLStyleElement} menuStyle
+   * @param {HTMLStyleElement} style
    */
-  const hideVideoInfoDialog = (menuStyle) => {
-    menuStyle.textContent = `
+  const hideVideoInfoDialog = (style) => {
+    style.textContent = `
 ${SELECTOR_VIDEO_INFO_DIALOG} {
   display: none !important;
   visibility: hidden !important;
@@ -206,10 +206,10 @@ ${SELECTOR_VIDEO_INFO_DIALOG} {
   }
 
   /**
-   * @param {HTMLStyleElement} menuStyle
+   * @param {HTMLStyleElement} style
    */
-  const hideDropdownMenuElement = (menuStyle) => {
-    menuStyle.textContent = `
+  const hideDropdownMenuElement = (style) => {
+    style.textContent = `
 ${SELECTOR_DROPDOWN_MENU} {
   display: none !important;
   visibility: hidden !important;
