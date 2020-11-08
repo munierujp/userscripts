@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Redirect to latest page
 // @namespace    https://github.com/munierujp/
-// @version      1.1.1
+// @version      1.1.2
 // @description   Redirect to latest page on Vue.js document
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -36,9 +36,13 @@
     'v1.vuejs.org': 'vuejs.org'
   }
 
-  const host = HOSTS[location.host]
+  const main = () => {
+    const host = HOSTS[location.host]
 
-  if (host) {
-    location.host = host
+    if (host) {
+      location.host = host
+    }
   }
+
+  main()
 })()
