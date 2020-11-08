@@ -186,27 +186,50 @@
     link.click()
   }
 
+  // TODO: 名前を具体的にする
+  /**
+   * @param {Object} params
+   * @param {Node} params.target
+   * @param {MutationObserverInit} params.options
+   * @param {HTMLElementFinder} params.find
+   * @param {(element: HTMLElement) => void} params.callback
+   */
+  const observeAddingHTMLElement = ({
+    target,
+    options,
+    find,
+    callback
+  }) => {
+    const observer = new MutationObserver((records, observer) => {
+      const element = find(records)
+
+      if (element) {
+        // NOTE: コストが高いので先に止める
+        observer.disconnect()
+        callback(element)
+      }
+    })
+    observer.observe(target, options)
+  }
+
   // TODO: チラつきを防ぐために事前にdialogをCSSで非表示化してから実行し、実行後に非表示化を解除する
   /**
    * @returns {Promise<string>}
    */
   const fetchFilePath = () => {
     return new Promise(resolve => {
-      const observer = new MutationObserver((records, observer) => {
-        const dialog = findVideoInfoDialogElement(records)
-
-        if (dialog) {
-          // NOTE: コストが高いので先に止める
-          console.debug('end observing #sds-desktop')
-          observer.disconnect()
+      console.debug('start observing #sds-desktop')
+      observeAddingHTMLElement({
+        target: document.getElementById('sds-desktop'),
+        options: {
+          childList: true
+        },
+        find: findVideoInfoDialogElement,
+        callback: (dialog) => {
           const filePath = findFilePath(dialog)
           closeVideoInfoDialog(dialog)
-          return resolve(filePath)
+          resolve(filePath)
         }
-      })
-      console.debug('start observing #sds-desktop')
-      observer.observe(document.getElementById('sds-desktop'), {
-        childList: true
       })
       openVideoInfoDialog()
     })
@@ -259,21 +282,18 @@
   }
 
   const updatePlayButton = () => {
-    const observer = new MutationObserver((records, observer) => {
-      const playButton = findPlayButtonElement(records)
-
-      if (playButton) {
-        // NOTE: コストが高いので先に止める
-        console.debug('end observing body')
-        observer.disconnect()
+    console.debug('start observing body')
+    observeAddingHTMLElement({
+      target: document.body,
+      options: {
+        childList: true,
+        subtree: true
+      },
+      find: findPlayButtonElement,
+      callback: (playButton) => {
         console.debug('replace play button')
         replacePlayButton(playButton)
       }
-    })
-    console.debug('start observing body')
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
     })
   }
 
