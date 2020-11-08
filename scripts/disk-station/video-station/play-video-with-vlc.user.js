@@ -306,6 +306,8 @@ ${SELECTOR_DROPDOWN_MENU} {
    */
   const fetchFilePath = () => {
     return new Promise(resolve => {
+      const videoInfoDialogStyle = getVideoInfoDialogStyleElement()
+
       console.debug('start observing #sds-desktop')
       observeAddingHTMLElement({
         target: document.getElementById('sds-desktop'),
@@ -320,7 +322,6 @@ ${SELECTOR_DROPDOWN_MENU} {
           resolve(filePath)
         }
       })
-      const videoInfoDialogStyle = getVideoInfoDialogStyleElement()
       hideVideoInfoDialog(videoInfoDialogStyle)
       openVideoInfoDialog()
     })
