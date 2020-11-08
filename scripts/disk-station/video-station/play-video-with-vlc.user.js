@@ -316,13 +316,13 @@ ${SELECTOR_DROPDOWN_MENU} {
         callback: (dialog) => {
           const filePath = findFilePath(dialog)
           closeVideoInfoDialog(dialog)
+          showVideoInfoDialog(videoInfoDialogStyle)
           resolve(filePath)
         }
       })
       const videoInfoDialogStyle = getVideoInfoDialogStyleElement()
       hideVideoInfoDialog(videoInfoDialogStyle)
       openVideoInfoDialog()
-      showVideoInfoDialog(videoInfoDialogStyle)
     })
   }
 
