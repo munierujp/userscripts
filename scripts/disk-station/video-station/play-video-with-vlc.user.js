@@ -170,6 +170,16 @@
   }
 
   /**
+   * @returns {HTMLStyleElement}
+   */
+  const getDropdownMenuStyleElement = () => {
+    /** @type {HTMLStyleElement} */
+    // @ts-expect-error
+    const style = document.getElementById(ID_STYLE_DROPDOWN_MENU)
+    return style
+  }
+
+  /**
    * @returns {HTMLButtonElement}
    */
   const getOperationButtonElement = () => {
