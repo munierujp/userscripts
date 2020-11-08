@@ -185,6 +185,7 @@
 
   /**
    * @param {HTMLElement} element
+   * @param {HTMLElement} newElement
    */
   const replaceElement = (element, newElement) => {
     element.style.display = 'none'
