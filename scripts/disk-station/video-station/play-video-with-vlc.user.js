@@ -42,6 +42,17 @@
   }
 
   /**
+   * @param {string} id
+   * @returns {HTMLStyleElement}
+   */
+  const createStyleElement = (id) => {
+    const style = document.createElement('style')
+    style.id = id
+    style.type = 'text/css'
+    return style
+  }
+
+  /**
    * @param {MutationRecord} record
    * @returns {Node[]}
    */
