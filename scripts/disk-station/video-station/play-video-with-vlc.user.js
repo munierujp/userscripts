@@ -181,13 +181,6 @@
   }
 
   /**
-   * @returns {HTMLButtonElement}
-   */
-  const getOperationButtonElement = () => {
-    return document.querySelector('button[aria-label="操作"]')
-  }
-
-  /**
    * @param {HTMLStyleElement} menuStyle
    */
   const hideDropdownMenuElement = (menuStyle) => {
@@ -196,6 +189,13 @@ ${SELECTOR_DROPDOWN_MENU} {
   visibility: hidden !important;
 }
 `
+  }
+
+  /**
+   * @returns {HTMLButtonElement}
+   */
+  const getOperationButtonElement = () => {
+    return document.querySelector('button[aria-label="操作"]')
   }
 
   const openDropdownMenuElement = () => {
