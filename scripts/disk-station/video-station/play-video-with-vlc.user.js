@@ -29,6 +29,7 @@
   const APP_ID = 'SYNO.SDS.VideoStation.AppInstance'
   const URL_SCHEME = 'vlc'
   const ROOT_DIR = '/Volumes'
+  const ID_STYLE_DROPDOWN_MENU = 'jp-munieru-style-dropdown-menu'
 
   /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
 
@@ -58,6 +59,10 @@
   const appendStyleElement = (id) => {
     const style = createStyleElement(id)
     document.head.appendChild(style)
+  }
+
+  const appendStyleElements = () => {
+    appendStyleElement(ID_STYLE_DROPDOWN_MENU)
   }
 
   /**
