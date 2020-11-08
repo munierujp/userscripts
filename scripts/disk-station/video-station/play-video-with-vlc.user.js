@@ -228,6 +228,13 @@ ${SELECTOR_DROPDOWN_MENU} {
     return links.find(isVideoInfoDialogLinkElement)
   }
 
+  /**
+   * @param {HTMLStyleElement} menuStyle
+   */
+  const showDropdownMenuElement = (menuStyle) => {
+    menuStyle.textContent = ''
+  }
+
   const openVideoInfoDialog = () => {
     const menuStyle = getDropdownMenuStyleElement()
     hideDropdownMenuElement(menuStyle)
@@ -235,7 +242,7 @@ ${SELECTOR_DROPDOWN_MENU} {
     const menu = getDropdownMenuElement()
     const link = findVideoInfoDialogLinkElement(menu)
     link.click()
-    menuStyle.textContent = ''
+    showDropdownMenuElement(menuStyle)
   }
 
   /**
