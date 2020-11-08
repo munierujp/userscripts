@@ -225,9 +225,6 @@
           console.debug(`filePath=${filePath}`)
           const url = `${URL_SCHEME}://${ROOT_DIR}${filePath}`
           console.debug(`url=${url}`)
-          return url
-        })
-        .then(url => {
           console.debug(`open ${url}`)
           window.open(url)
         })
