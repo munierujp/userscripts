@@ -53,6 +53,14 @@
   }
 
   /**
+   * @param {string} id
+   */
+  const appendStyleElement = (id) => {
+    const style = createStyleElement(id)
+    document.head.appendChild(style)
+  }
+
+  /**
    * @param {MutationRecord} record
    * @returns {Node[]}
    */
