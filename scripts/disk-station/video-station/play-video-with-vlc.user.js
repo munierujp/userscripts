@@ -31,8 +31,8 @@
   const ROOT_DIR = '/Volumes'
   const SELECTOR_DROPDOWN_MENU = '.syno-ux-menu.syno-vs2-dropdown-menu'
   const SELECTOR_VIDEO_INFO_DIALOG = '.video-info-dialog'
-  const ID_STYLE_DROPDOWN_MENU = 'jp-munieru-style-dropdown-menu'
-  const ID_STYLE_VIDEO_INFO_DIALOG = 'jp-munieru-style-video-info-dialog'
+  const ID_DROPDOWN_MENU_STYLE = 'jp-munieru-style-dropdown-menu'
+  const ID_VIDEO_INFO_DIALOG_STYLE = 'jp-munieru-style-video-info-dialog'
 
   /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
 
@@ -65,8 +65,8 @@
   }
 
   const appendStyleElements = () => {
-    appendStyleElement(ID_STYLE_DROPDOWN_MENU)
-    appendStyleElement(ID_STYLE_VIDEO_INFO_DIALOG)
+    appendStyleElement(ID_DROPDOWN_MENU_STYLE)
+    appendStyleElement(ID_VIDEO_INFO_DIALOG_STYLE)
   }
 
   /**
@@ -179,7 +179,7 @@
   const getVideoInfoDialogStyleElement = () => {
     /** @type {HTMLStyleElement} */
     // @ts-expect-error
-    const style = document.getElementById(ID_STYLE_VIDEO_INFO_DIALOG)
+    const style = document.getElementById(ID_VIDEO_INFO_DIALOG_STYLE)
     return style
   }
 
@@ -200,7 +200,7 @@ ${SELECTOR_VIDEO_INFO_DIALOG} {
   const getDropdownMenuStyleElement = () => {
     /** @type {HTMLStyleElement} */
     // @ts-expect-error
-    const style = document.getElementById(ID_STYLE_DROPDOWN_MENU)
+    const style = document.getElementById(ID_DROPDOWN_MENU_STYLE)
     return style
   }
 
