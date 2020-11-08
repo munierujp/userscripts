@@ -172,12 +172,15 @@
         const dialog = findVideoInfoDialogElement(records)
 
         if (dialog) {
-          const filePath = findFilePath(dialog)
-          resolve(filePath)
-          closeVideoInfoDialog(dialog)
+          // NOTE: コストが高いので先に止める
+          console.debug('end observing #sds-desktop')
           observer.disconnect()
+          const filePath = findFilePath(dialog)
+          closeVideoInfoDialog(dialog)
+          return resolve(filePath)
         }
       })
+      console.debug('start observing #sds-desktop')
       observer.observe(document.getElementById('sds-desktop'), {
         childList: true
       })
