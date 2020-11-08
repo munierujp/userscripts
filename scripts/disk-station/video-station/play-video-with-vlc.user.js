@@ -236,13 +236,14 @@
       const playButton = findPlayButtonElement(records)
 
       if (playButton) {
+        // NOTE: コストが高いので先に止める
+        console.debug('end observing body')
+        observer.disconnect()
         console.debug('replace play button')
         replacePlayButton(playButton)
-        console.debug('end observing document.body')
-        observer.disconnect()
       }
     })
-    console.debug('start observing document.body')
+    console.debug('start observing body')
     observer.observe(document.body, {
       childList: true,
       subtree: true
