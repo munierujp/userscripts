@@ -194,6 +194,12 @@
   }
 
   const main = () => {
+    console.debug('start')
+
+    if (!isVideoStationPage(location.href)) {
+      return
+    }
+
     const observer = new MutationObserver((records, observer) => {
       const playButton = findPlayButtonElement(records)
 
@@ -211,8 +217,5 @@
     })
   }
 
-  if (isVideoStationPage(location.href)) {
-    console.debug('start')
-    main()
-  }
+  main()
 })()
