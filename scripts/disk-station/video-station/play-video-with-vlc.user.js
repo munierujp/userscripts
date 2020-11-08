@@ -187,6 +187,17 @@
     return document.querySelector('button[aria-label="操作"]')
   }
 
+  /**
+   * @param {HTMLStyleElement} menuStyle
+   */
+  const hideDropdownMenuElement = (menuStyle) => {
+    menuStyle.textContent = `
+${SELECTOR_DROPDOWN_MENU} {
+  visibility: hidden !important;
+}
+`
+  }
+
   const openDropdownMenuElement = () => {
     const operationButton = getOperationButtonElement()
     operationButton.click()
@@ -219,11 +230,7 @@
 
   const openVideoInfoDialog = () => {
     const menuStyle = getDropdownMenuStyleElement()
-    menuStyle.textContent = `
-${SELECTOR_DROPDOWN_MENU} {
-  visibility: hidden !important;
-}
-`
+    hideDropdownMenuElement(menuStyle)
     openDropdownMenuElement()
     const menu = getDropdownMenuElement()
     const link = findVideoInfoDialogLinkElement(menu)
