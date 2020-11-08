@@ -213,6 +213,15 @@
   }
 
   /**
+   * @param {string} filePath
+   * @returns {string}
+   */
+  const createUrl = (filePath) => {
+    const url = `${URL_SCHEME}://${ROOT_DIR}${filePath}`
+    return encodeURI(url)
+  }
+
+  /**
    * @param {HTMLElement} playButton
    * @returns {HTMLElement}
    */
@@ -223,7 +232,7 @@
       fetchFilePath()
         .then(filePath => {
           console.debug(`filePath=${filePath}`)
-          const url = `${URL_SCHEME}://${ROOT_DIR}${filePath}`
+          const url = createUrl(filePath)
           console.debug(`url=${url}`)
           console.debug(`open ${url}`)
           window.open(url)
