@@ -211,6 +211,7 @@ ${SELECTOR_VIDEO_INFO_DIALOG} {
   const hideDropdownMenuElement = (menuStyle) => {
     menuStyle.textContent = `
 ${SELECTOR_DROPDOWN_MENU} {
+  display: none !important;
   visibility: hidden !important;
 }
 `
