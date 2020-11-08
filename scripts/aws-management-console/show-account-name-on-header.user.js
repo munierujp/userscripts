@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Show account name on header
 // @namespace    https://github.com/munierujp/
-// @version      1.2.4
+// @version      1.2.5
 // @description  Show account name on header on AWS Management Console
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -105,17 +105,21 @@
     })
   }
 
-  try {
-    showAccountNameByPatternA()
-  } catch (e) {
-    console.warn(e)
-    console.warn('Failed to show account name by pattern A.')
-
+  const main = () => {
     try {
-      showAccountNameByPatternB()
+      showAccountNameByPatternA()
     } catch (e) {
-      console.error(e)
-      console.error('Failed to show account name by pattern B.')
+      console.warn(e)
+      console.warn('Failed to show account name by pattern A.')
+
+      try {
+        showAccountNameByPatternB()
+      } catch (e) {
+        console.error(e)
+        console.error('Failed to show account name by pattern B.')
+      }
     }
   }
+
+  main()
 })()
