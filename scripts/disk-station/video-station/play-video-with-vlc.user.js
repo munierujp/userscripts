@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Play video with VLC
 // @namespace    https://github.com/munierujp/
-// @version      0.1.9
+// @version      0.1.10
 // @description  Play video with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -33,13 +33,20 @@
   /** @typedef {(records: MutationRecord[]) => HTMLElement} HTMLElementFinder */
 
   /**
-   * @param {string | URL} url
    * @returns {boolean}
    */
-  const isVideoStationPage = (url) => {
-    url = url instanceof URL ? url : new URL(url)
-    const appId = url.searchParams.get('launchApp')
+  const isVideoStationPage = () => {
+    const params = new URLSearchParams(location.search)
+    const appId = params.get('launchApp')
     return appId === APP_ID
+  }
+
+  /**
+   * @param {MutationRecord} record
+   * @returns {Node[]}
+   */
+  const toAddedNodes = (record) => {
+    return record.addedNodes ? Array.from(record.addedNodes) : []
   }
 
   /**
@@ -47,15 +54,11 @@
    * @returns {HTMLElement[]}
    */
   const toAddedHTMLElements = (record) => {
-    const addedNodes = record.addedNodes ? Array.from(record.addedNodes) : []
-    return addedNodes
-      .filter(node => node instanceof HTMLElement)
-      .map(node => {
-        /** @type {HTMLElement} */
-        // @ts-expect-error
-        const element = node
-        return element
-      })
+    const addedNodes = toAddedNodes(record)
+    /** @type {HTMLElement[]} */
+    // @ts-expect-error
+    const addedElements = addedNodes.filter(node => node instanceof HTMLElement)
+    return addedElements
   }
 
   /**
@@ -63,7 +66,7 @@
    * @returns {HTMLElementFinder}
    */
   const createHTMLElementFinder = (filter) => {
-    return (records) => {
+    return records => {
       return records
         .map(toAddedHTMLElements)
         .reduce((a, b) => a.concat(b), [])
@@ -71,21 +74,41 @@
     }
   }
 
-  const findPlayButtonElement = createHTMLElementFinder(element => {
+  /**
+   * @param {HTMLElement} element
+   * @returns {boolean}
+   */
+  const isPlayButtonElement = (element) => {
     const { classList } = element
     return classList.contains('x-btn') && classList.contains('play')
-  })
+  }
 
-  const findVideoInfoDialogElement = createHTMLElementFinder(element => {
-    return element.classList.contains('video-info-dialog')
+  const findPlayButtonElement = createHTMLElementFinder(element => {
+    return isPlayButtonElement(element)
   })
 
   /**
-   * @param {Node} node
-   * @returns {Node}
+   * @param {HTMLElement} element
+   * @returns {boolean}
+   */
+  const isVideoInfoDialogElement = (element) => {
+    return element.classList.contains('video-info-dialog')
+  }
+
+  const findVideoInfoDialogElement = createHTMLElementFinder(element => {
+    return isVideoInfoDialogElement(element)
+  })
+
+  /**
+   * @template {Node} T
+   * @param {T} node
+   * @returns {T}
    */
   const deepCloneNode = (node) => {
-    return node.cloneNode(true)
+    /** @type {T} */
+    // @ts-expect-error
+    const clonedNode = node.cloneNode(true)
+    return clonedNode
   }
 
   /**
@@ -108,11 +131,32 @@
 
   /**
    * @param {HTMLElement} dialog
+   * @returns {HTMLButtonElement}
+   */
+  const findCloseButtonElement = (dialog) => {
+    return dialog.querySelector('button[aria-label="閉じる"]')
+  }
+
+  /**
+   * @param {HTMLElement} dialog
    */
   const closeVideoInfoDialog = (dialog) => {
-    /** @type {HTMLButtonElement} */
-    const closeButton = dialog.querySelector('button[aria-label="閉じる"]')
+    const closeButton = findCloseButtonElement(dialog)
     closeButton.click()
+  }
+
+  /**
+   * @returns {HTMLButtonElement}
+   */
+  const getOperationButtonElement = () => {
+    return document.querySelector('button[aria-label="操作"]')
+  }
+
+  /**
+   * @returns {HTMLElement}
+   */
+  const getDropdownMenuElement = () => {
+    return document.querySelector('.syno-vs2-dropdown-menu')
   }
 
   /**
@@ -123,17 +167,49 @@
     return element.textContent === 'メディア情報を表示'
   }
 
+  /**
+   * @param {HTMLElement} dropdownMenu
+   * @returns {HTMLAnchorElement}
+   */
+  const findVideoInfoDialogLinkElement = (dropdownMenu) => {
+    /** @type {HTMLAnchorElement[]} */
+    const links = Array.from(dropdownMenu.querySelectorAll('a.x-menu-list-item'))
+    return links.find(isVideoInfoDialogLinkElement)
+  }
+
   // TODO: チラつきを防ぐために事前にmenuをCSSで非表示化してから実行し、実行後に非表示化を解除する
   const openVideoInfoDialog = () => {
-    /** @type {HTMLButtonElement} */
-    const operationButton = document.querySelector('button[aria-label="操作"]')
+    const operationButton = getOperationButtonElement()
     operationButton.click()
-    /** @type {HTMLElement} */
-    const menu = document.querySelector('.syno-vs2-dropdown-menu')
-    /** @type {HTMLAnchorElement[]} */
-    const links = Array.from(menu.querySelectorAll('a.x-menu-list-item'))
-    const link = links.find(isVideoInfoDialogLinkElement)
+    const menu = getDropdownMenuElement()
+    const link = findVideoInfoDialogLinkElement(menu)
     link.click()
+  }
+
+  // TODO: 名前を具体的にする
+  /**
+   * @param {Object} params
+   * @param {Node} params.target
+   * @param {MutationObserverInit} params.options
+   * @param {HTMLElementFinder} params.find
+   * @param {(element: HTMLElement) => void} params.callback
+   */
+  const observeAddingHTMLElement = ({
+    target,
+    options,
+    find,
+    callback
+  }) => {
+    const observer = new MutationObserver((records, observer) => {
+      const element = find(records)
+
+      if (element) {
+        // NOTE: コストが高いので先に止める
+        observer.disconnect()
+        callback(element)
+      }
+    })
+    observer.observe(target, options)
   }
 
   // TODO: チラつきを防ぐために事前にdialogをCSSで非表示化してから実行し、実行後に非表示化を解除する
@@ -141,22 +217,31 @@
    * @returns {Promise<string>}
    */
   const fetchFilePath = () => {
-    return new Promise((resolve) => {
-      const observer = new MutationObserver((records, observer) => {
-        const dialog = findVideoInfoDialogElement(records)
-
-        if (dialog) {
+    return new Promise(resolve => {
+      console.debug('start observing #sds-desktop')
+      observeAddingHTMLElement({
+        target: document.getElementById('sds-desktop'),
+        options: {
+          childList: true
+        },
+        find: findVideoInfoDialogElement,
+        callback: (dialog) => {
           const filePath = findFilePath(dialog)
-          resolve(filePath)
           closeVideoInfoDialog(dialog)
-          observer.disconnect()
+          resolve(filePath)
         }
-      })
-      observer.observe(document.getElementById('sds-desktop'), {
-        childList: true
       })
       openVideoInfoDialog()
     })
+  }
+
+  /**
+   * @param {string} filePath
+   * @returns {string}
+   */
+  const createUrl = (filePath) => {
+    const url = `${URL_SCHEME}://${ROOT_DIR}${filePath}`
+    return encodeURI(url)
   }
 
   /**
@@ -164,19 +249,14 @@
    * @returns {HTMLElement}
    */
   const createPlayWithVlcButton = (playButton) => {
-    /** @type {HTMLElement} */
-    // @ts-expect-error
     const playWithVlcButton = deepCloneNode(playButton)
     playWithVlcButton.addEventListener('click', () => {
       console.debug('fetch file path')
       fetchFilePath()
         .then(filePath => {
           console.debug(`filePath=${filePath}`)
-          const url = `${URL_SCHEME}://${ROOT_DIR}${filePath}`
+          const url = createUrl(filePath)
           console.debug(`url=${url}`)
-          return url
-        })
-        .then(url => {
           console.debug(`open ${url}`)
           window.open(url)
         })
@@ -185,34 +265,45 @@
   }
 
   /**
+   * @param {HTMLElement} element
+   * @param {HTMLElement} newElement
+   */
+  const replaceElement = (element, newElement) => {
+    element.style.display = 'none'
+    element.parentElement.insertBefore(newElement, element)
+  }
+
+  /**
    * @param {HTMLElement} playButton
    */
   const replacePlayButton = (playButton) => {
     const playWithVlcButton = createPlayWithVlcButton(playButton)
-    playButton.style.display = 'none'
-    playButton.parentElement.appendChild(playWithVlcButton)
+    replaceElement(playButton, playWithVlcButton)
+  }
+
+  const updatePlayButton = () => {
+    console.debug('start observing body')
+    observeAddingHTMLElement({
+      target: document.body,
+      options: {
+        childList: true,
+        subtree: true
+      },
+      find: findPlayButtonElement,
+      callback: (playButton) => {
+        console.debug('replace play button')
+        replacePlayButton(playButton)
+      }
+    })
   }
 
   const main = () => {
-    const observer = new MutationObserver((records, observer) => {
-      const playButton = findPlayButtonElement(records)
-
-      if (playButton) {
-        console.debug('replace play button')
-        replacePlayButton(playButton)
-        console.debug('end observing document.body')
-        observer.disconnect()
-      }
-    })
-    console.debug('start observing document.body')
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    })
-  }
-
-  if (isVideoStationPage(location.href)) {
     console.debug('start')
-    main()
+
+    if (isVideoStationPage()) {
+      updatePlayButton()
+    }
   }
+
+  main()
 })()
