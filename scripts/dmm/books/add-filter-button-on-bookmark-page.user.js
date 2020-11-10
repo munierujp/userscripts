@@ -47,6 +47,23 @@
   }
 
   /**
+   * @returns {ShowType}
+   */
+  const getShowType = () => {
+    const params = new URLSearchParams(location.search)
+    const show = params.get('show')
+
+    switch (show) {
+      case 'all':
+        return 'all'
+      case 'discounted':
+        return 'discounted'
+      default:
+        throw new Error('Failed to get show type.')
+    }
+  }
+
+  /**
    * @returns {HTMLElement}
    */
   const getMainElement = () => {
