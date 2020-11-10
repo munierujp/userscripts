@@ -225,13 +225,10 @@
     })
   }
 
-  /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnTableView = () => {
-    const main = getMainElement()
-    const list = main.querySelector('#list')
-    const items = Array.from(list.querySelectorAll('li'))
-    const showAllItems = () => showAllItemsOnTableView(items)
-    const showDiscountedItems = () => {
+  /**
+   * @param {HTMLLIElement[]} items
+   */
+  const showDiscountedItemsOnTableView = (items) => {
       items.forEach(item => {
         const discount = item.querySelector('.txtoff')
         const show = !!discount
@@ -239,6 +236,14 @@
         item.style.display = display
       })
     }
+
+  /** @type {AppendFilterMenuFunction} */
+  const appendFilterMenuOnTableView = () => {
+    const main = getMainElement()
+    const list = main.querySelector('#list')
+    const items = Array.from(list.querySelectorAll('li'))
+    const showAllItems = () => showAllItemsOnTableView(items)
+    const showDiscountedItems = () => showDiscountedItemsOnTableView(items)
     const filterMenu = createFilterMenuElement({
       showAllItems,
       showDiscountedItems
