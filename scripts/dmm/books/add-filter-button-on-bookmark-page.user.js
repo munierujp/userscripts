@@ -216,16 +216,21 @@
     return filterMenu
   }
 
+  /**
+   * @param {HTMLLIElement[]} items
+   */
+  const showAllItemsOnTableView = (items) => {
+    items.forEach(item => {
+      item.style.display = 'list-item'
+    })
+  }
+
   /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnTableView = () => {
     const main = getMainElement()
     const list = main.querySelector('#list')
     const items = Array.from(list.querySelectorAll('li'))
-    const showAllItems = () => {
-      items.forEach(item => {
-        item.style.display = 'list-item'
-      })
-    }
+    const showAllItems = () => showAllItemsOnTableView(items)
     const showDiscountedItems = () => {
       items.forEach(item => {
         const discount = item.querySelector('.txtoff')
