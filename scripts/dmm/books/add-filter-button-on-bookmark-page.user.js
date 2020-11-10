@@ -259,16 +259,21 @@
     return rows.filter(isDataRow)
   }
 
+  /**
+   * @param {HTMLTableRowElement[]} rows
+   */
+  const showAllItemsOnListView = (rows) => {
+    rows.forEach(row => {
+      row.style.display = 'table-row'
+    })
+  }
+
   /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnListView = () => {
     const main = getMainElement()
     const table = main.querySelector('table')
     const rows = findDataRowElements(table)
-    const showAllItems = () => {
-      rows.forEach(row => {
-        row.style.display = 'table-row'
-      })
-    }
+    const showAllItems = () => showAllItemsOnListView(rows)
     const showDiscountedItems = () => {
       rows.forEach(row => {
         const price = row.querySelector('.price')
