@@ -21,6 +21,7 @@
   'use strict'
 
   /** @typedef {'table' | 'list'} ViewType */
+  /** @typedef {'all' | 'discounted'} ShowType */
   /** @typedef {() => void} AppendFilterMenuFunction */
   /** @typedef {() => void} ShowItemsFunction */
 
