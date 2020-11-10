@@ -268,13 +268,10 @@
     })
   }
 
-  /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnListView = () => {
-    const main = getMainElement()
-    const table = main.querySelector('table')
-    const rows = findDataRowElements(table)
-    const showAllItems = () => showAllItemsOnListView(rows)
-    const showDiscountedItems = () => {
+  /**
+   * @param {HTMLTableRowElement[]} rows
+   */
+  const showDiscountedItemsOnListView = (rows) => {
       rows.forEach(row => {
         const price = row.querySelector('.price')
         const discount = price.querySelector('.tx-sp')
@@ -283,6 +280,14 @@
         row.style.display = display
       })
     }
+
+  /** @type {AppendFilterMenuFunction} */
+  const appendFilterMenuOnListView = () => {
+    const main = getMainElement()
+    const table = main.querySelector('table')
+    const rows = findDataRowElements(table)
+    const showAllItems = () => showAllItemsOnListView(rows)
+    const showDiscountedItems = () => showDiscountedItemsOnListView(rows)
     const filterMenu = createFilterMenuElement({
       showAllItems,
       showDiscountedItems
