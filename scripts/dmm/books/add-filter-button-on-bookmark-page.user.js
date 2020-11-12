@@ -23,7 +23,6 @@
   /** @typedef {'table' | 'list'} ViewType */
   /** @typedef {'all' | 'discounted'} ShowType */
   /** @typedef {() => void} ShowItemsFunction */
-  /** @typedef {{ showAllItems: ShowItemsFunction, showDiscountedItems: ShowItemsFunction }} ShowItemsFunctions */
   /** @typedef {(main: HTMLElement) => ShowItemsFunction} CreateShowItemsFunctionFunction */
 
   const CLASS_CURRENT = 'current'
