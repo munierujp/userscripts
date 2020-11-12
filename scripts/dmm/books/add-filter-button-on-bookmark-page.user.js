@@ -298,6 +298,19 @@
     }
   }
 
+  /**
+   * @param {ViewType} view
+   * @returns {CreateShowItemsFunctionsFunction}
+   */
+  const getCreateShowItemsFunctions = (view) => {
+    switch (view) {
+      case 'table':
+        return createShowItemsFunctionsOnTableView
+      case 'list':
+        return createShowItemsFunctionsOnListView
+    }
+  }
+
   const main = () => {
     console.debug('start')
     const params = new URLSearchParams(location.search)
@@ -308,30 +321,17 @@
     }
 
     const main = getMainElement()
-
-    if (view === 'table') {
-      const {
-        showAllItems,
-        showDiscountedItems
-      } = createShowItemsFunctionsOnTableView(main)
-      const filterMenu = createFilterMenuElement({
-        showAllItems,
-        showDiscountedItems
-      })
-      const menu = findMenuElement(main)
-      menu.appendChild(filterMenu)
-    } else if (view === 'list') {
-      const {
-        showAllItems,
-        showDiscountedItems
-      } = createShowItemsFunctionsOnListView(main)
-      const filterMenu = createFilterMenuElement({
-        showAllItems,
-        showDiscountedItems
-      })
-      const menu = findMenuElement(main)
-      menu.appendChild(filterMenu)
-    }
+    const createShowItemsFunctions = getCreateShowItemsFunctions(view)
+    const {
+      showAllItems,
+      showDiscountedItems
+    } = createShowItemsFunctions(main)
+    const filterMenu = createFilterMenuElement({
+      showAllItems,
+      showDiscountedItems
+    })
+    const menu = findMenuElement(main)
+    menu.appendChild(filterMenu)
   }
 
   main()
