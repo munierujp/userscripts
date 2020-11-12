@@ -79,15 +79,14 @@
   const showDiscountedItemsOnListView = (main) => {
     const table = main.querySelector('table')
     const rows = Array.from(table.querySelectorAll('tr'))
-    rows
-      .filter(row => row.querySelector('td'))
-      .forEach(row => {
-        const price = row.querySelector('.price')
-        const discount = price.querySelector('.tx-sp')
-        const show = !!discount
-        const display = show ? 'table-row' : 'none'
-        row.style.display = display
-      })
+    const dataRows = rows.filter(row => row.querySelector('td'))
+    dataRows.forEach(row => {
+      const price = row.querySelector('.price')
+      const discount = price.querySelector('.tx-sp')
+      const show = !!discount
+      const display = show ? 'table-row' : 'none'
+      row.style.display = display
+    })
   }
 
   /**
