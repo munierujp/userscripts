@@ -215,11 +215,11 @@
       throw new Error(`Invalid view. view=${view}`)
     }
 
-    const main = getMainElement()
-    const showDiscountedItems = getDiscountedItemsShower(view)
-
     const filter = params.get('filter')
     const filterType = isFilterType(filter) ? filter : 'all'
+
+    const main = getMainElement()
+    const showDiscountedItems = getDiscountedItemsShower(view)
 
     if (filterType === 'discounted') {
       showDiscountedItems(main)
