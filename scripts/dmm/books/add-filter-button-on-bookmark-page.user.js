@@ -22,8 +22,8 @@
 
   /** @typedef {'table' | 'list'} ViewType */
   /** @typedef {'all' | 'discounted'} ShowType */
-  /** @typedef {() => void} ShowItemsFunction */
-  /** @typedef {(main: HTMLElement) => ShowItemsFunction} CreateShowItemsFunctionFunction */
+  /** @typedef {() => void} ItemsShower */
+  /** @typedef {(main: HTMLElement) => ItemsShower} ItemsShowerCreator */
 
   const CLASS_CURRENT = 'current'
   const CURSOR_BUTTON_CURRENT = 'auto'
@@ -173,8 +173,8 @@
     return filterMenu
   }
 
-  /** @type {CreateShowItemsFunctionFunction} */
-  const createShowDiscountedItemsFunctionOnTableView = (main) => {
+  /** @type {ItemsShowerCreator} */
+  const createDiscountedItemsShowerForTableView = (main) => {
     const list = main.querySelector('#list')
     const items = Array.from(list.querySelectorAll('li'))
     return () => {
@@ -187,8 +187,8 @@
     }
   }
 
-  /** @type {CreateShowItemsFunctionFunction} */
-  const createShowDiscountedItemsFunctionsOnListView = (main) => {
+  /** @type {ItemsShowerCreator} */
+  const createDiscountedItemsShowerForListView = (main) => {
     const table = main.querySelector('table')
     const rows = Array.from(table.querySelectorAll('tr'))
     return () => {
@@ -206,14 +206,14 @@
 
   /**
    * @param {ViewType} viewType
-   * @returns {CreateShowItemsFunctionFunction}
+   * @returns {ItemsShowerCreator}
    */
-  const getCreateShowDiscountedItemsFunctions = (viewType) => {
+  const getDiscountedItemsShowerCreator = (viewType) => {
     switch (viewType) {
       case 'table':
-        return createShowDiscountedItemsFunctionOnTableView
+        return createDiscountedItemsShowerForTableView
       case 'list':
-        return createShowDiscountedItemsFunctionsOnListView
+        return createDiscountedItemsShowerForListView
     }
   }
 
@@ -227,8 +227,8 @@
     }
 
     const main = getMainElement()
-    const createShowDiscountedItemsFunctions = getCreateShowDiscountedItemsFunctions(view)
-    const showDiscountedItems = createShowDiscountedItemsFunctions(main)
+    const createDiscountedItemsShower = getDiscountedItemsShowerCreator(view)
+    const showDiscountedItems = createDiscountedItemsShower(main)
 
     const show = params.get('show')
     const showType = isShowType(show) ? show : 'all'
