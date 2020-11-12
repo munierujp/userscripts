@@ -161,6 +161,7 @@
 
   /**
    * @param {ShowType} showType
+   * @returns {HTMLElement}
    */
   const createFilterMenuElement = (showType) => {
     const filterMenu = document.createElement('div')
