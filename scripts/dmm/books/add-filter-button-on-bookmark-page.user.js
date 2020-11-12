@@ -63,12 +63,31 @@
     return document.getElementById('main-bmk')
   }
 
-  /**
-   * @param {HTMLElement} main
-   * @returns {HTMLElement}
-   */
-  const findMenuElement = (main) => {
-    return main.querySelector('.d-rcol.selector')
+  /** @type {ItemsShower} */
+  const showDiscountedItemsOnTableView = (main) => {
+    const list = main.querySelector('#list')
+    const items = Array.from(list.querySelectorAll('li'))
+    items.forEach(item => {
+      const discount = item.querySelector('.txtoff')
+      const show = !!discount
+      const display = show ? 'list-item' : 'none'
+      item.style.display = display
+    })
+  }
+
+  /** @type {ItemsShower} */
+  const showDiscountedItemsOnListView = (main) => {
+    const table = main.querySelector('table')
+    const rows = Array.from(table.querySelectorAll('tr'))
+    rows
+      .filter(row => row.querySelector('td'))
+      .forEach(row => {
+        const price = row.querySelector('.price')
+        const discount = price.querySelector('.tx-sp')
+        const show = !!discount
+        const display = show ? 'table-row' : 'none'
+        row.style.display = display
+      })
   }
 
   /**
@@ -166,31 +185,12 @@
     return filterMenu
   }
 
-  /** @type {ItemsShower} */
-  const showDiscountedItemsOnTableView = (main) => {
-    const list = main.querySelector('#list')
-    const items = Array.from(list.querySelectorAll('li'))
-    items.forEach(item => {
-      const discount = item.querySelector('.txtoff')
-      const show = !!discount
-      const display = show ? 'list-item' : 'none'
-      item.style.display = display
-    })
-  }
-
-  /** @type {ItemsShower} */
-  const showDiscountedItemsOnListView = (main) => {
-    const table = main.querySelector('table')
-    const rows = Array.from(table.querySelectorAll('tr'))
-    rows
-      .filter(row => row.querySelector('td'))
-      .forEach(row => {
-        const price = row.querySelector('.price')
-        const discount = price.querySelector('.tx-sp')
-        const show = !!discount
-        const display = show ? 'table-row' : 'none'
-        row.style.display = display
-      })
+  /**
+   * @param {HTMLElement} main
+   * @returns {HTMLElement}
+   */
+  const findMenuElement = (main) => {
+    return main.querySelector('.d-rcol.selector')
   }
 
   const main = () => {
