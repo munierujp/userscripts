@@ -212,26 +212,20 @@
     }
   }
 
-  /**
-   * @param {HTMLTableRowElement} row
-   * @returns {boolean}
-   */
-  const isDataRow = (row) => {
-    return !!row.querySelector('td')
-  }
-
   /** @type {CreateShowItemsFunctionFunction} */
   const createShowDiscountedItemsFunctionsOnListView = (main) => {
     const table = main.querySelector('table')
-    const rows = Array.from(table.querySelectorAll('tr')).filter(isDataRow)
+    const rows = Array.from(table.querySelectorAll('tr'))
     return () => {
-      rows.forEach(row => {
-        const price = row.querySelector('.price')
-        const discount = price.querySelector('.tx-sp')
-        const show = !!discount
-        const display = show ? 'table-row' : 'none'
-        row.style.display = display
-      })
+      rows
+        .filter(row => row.querySelector('td'))
+        .forEach(row => {
+          const price = row.querySelector('.price')
+          const discount = price.querySelector('.tx-sp')
+          const show = !!discount
+          const display = show ? 'table-row' : 'none'
+          row.style.display = display
+        })
     }
   }
 
