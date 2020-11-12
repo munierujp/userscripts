@@ -30,6 +30,21 @@
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
 
   /**
+   * @param {string} viewType
+   * @returns {viewType is ViewType}
+   */
+  const isViewType = (viewType) => {
+    switch (viewType) {
+      case 'table':
+        return true
+      case 'list':
+        return true
+      default:
+        return false
+    }
+  }
+
+  /**
    * @returns {ViewType}
    */
   const getViewType = () => {
@@ -229,13 +244,13 @@
    * @param {HTMLLIElement[]} items
    */
   const showDiscountedItemsOnTableView = (items) => {
-      items.forEach(item => {
-        const discount = item.querySelector('.txtoff')
-        const show = !!discount
-        const display = show ? 'list-item' : 'none'
-        item.style.display = display
-      })
-    }
+    items.forEach(item => {
+      const discount = item.querySelector('.txtoff')
+      const show = !!discount
+      const display = show ? 'list-item' : 'none'
+      item.style.display = display
+    })
+  }
 
   /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnTableView = () => {
@@ -282,14 +297,14 @@
    * @param {HTMLTableRowElement[]} rows
    */
   const showDiscountedItemsOnListView = (rows) => {
-      rows.forEach(row => {
-        const price = row.querySelector('.price')
-        const discount = price.querySelector('.tx-sp')
-        const show = !!discount
-        const display = show ? 'table-row' : 'none'
-        row.style.display = display
-      })
-    }
+    rows.forEach(row => {
+      const price = row.querySelector('.price')
+      const discount = price.querySelector('.tx-sp')
+      const show = !!discount
+      const display = show ? 'table-row' : 'none'
+      row.style.display = display
+    })
+  }
 
   /** @type {AppendFilterMenuFunction} */
   const appendFilterMenuOnListView = () => {
