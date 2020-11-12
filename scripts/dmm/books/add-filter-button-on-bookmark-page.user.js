@@ -15,8 +15,6 @@
 // @grant        none
 // ==/UserScript==
 
-// TODO: URLパラメーター対応（show=discountedなどの場合、デフォルトでセール中表示にする）
-
 (function () {
   'use strict'
 
