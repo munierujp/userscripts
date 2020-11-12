@@ -21,6 +21,7 @@
   /** @typedef {'table' | 'list'} ViewType */
   /** @typedef {'all' | 'discounted'} FilterType */
   /** @typedef {(main: HTMLElement) => void} ItemsShower */
+  /** @typedef {(main: HTMLElement) => void} FilterMenuAppender */
 
   const CLASS_CURRENT = 'current'
   const LABEL_ALL = 'すべて'
@@ -229,6 +230,18 @@
     return main.querySelector('.d-rcol.selector')
   }
 
+  /**
+   * @param {FilterType} filterType
+   * @returns {FilterMenuAppender}
+   */
+  const getFilterMenuAppender = (filterType) => {
+    return (main) => {
+      const menu = findMenuElement(main)
+      const filterMenu = createFilterMenuElement(filterType)
+      menu.appendChild(filterMenu)
+    }
+  }
+
   const main = () => {
     console.debug('start')
     const params = new URLSearchParams(location.search)
@@ -247,9 +260,8 @@
       showDiscountedItems(main)
     }
 
-    const menu = findMenuElement(main)
-    const filterMenu = createFilterMenuElement(filterType)
-    menu.appendChild(filterMenu)
+    const appendFilterMenu = getFilterMenuAppender(filterType)
+    appendFilterMenu(main)
   }
 
   main()
