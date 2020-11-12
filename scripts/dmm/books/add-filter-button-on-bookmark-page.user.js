@@ -198,23 +198,18 @@
     return filterMenu
   }
 
-  /**
-   * @param {HTMLLIElement[]} items
-   */
-  const showDiscountedItemsOnTableView = (items) => {
-    items.forEach(item => {
-      const discount = item.querySelector('.txtoff')
-      const show = !!discount
-      const display = show ? 'list-item' : 'none'
-      item.style.display = display
-    })
-  }
-
   /** @type {CreateShowItemsFunctionFunction} */
   const createShowDiscountedItemsFunctionOnTableView = (main) => {
     const list = main.querySelector('#list')
     const items = Array.from(list.querySelectorAll('li'))
-    return () => showDiscountedItemsOnTableView(items)
+    return () => {
+      items.forEach(item => {
+        const discount = item.querySelector('.txtoff')
+        const show = !!discount
+        const display = show ? 'list-item' : 'none'
+        item.style.display = display
+      })
+    }
   }
 
   /**
