@@ -172,16 +172,6 @@
   }
 
   /**
-   * @param {string} text
-   * @returns {HTMLSpanElement}
-   */
-  const createMenuLabelElement = (text) => {
-    const label = document.createElement('span')
-    label.textContent = text
-    return label
-  }
-
-  /**
    * @param {Object} params
    * @param {ShowType} params.showType
    */
@@ -189,7 +179,8 @@
     showType
   }) => {
     const filterMenu = document.createElement('div')
-    const label = createMenuLabelElement('絞り込み')
+    const label = document.createElement('span')
+    label.textContent = '絞り込み'
     filterMenu.appendChild(label)
     const buttonList = createButtonListElement({
       showType
