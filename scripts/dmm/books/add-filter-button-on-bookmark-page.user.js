@@ -194,7 +194,6 @@
     }
   }
 
-  // TODO: リファクタリング
   /**
    * @param {FilterType} filterType
    * @returns {HTMLUListElement}
