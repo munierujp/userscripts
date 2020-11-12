@@ -235,6 +235,18 @@
     })
   }
 
+  /** @type {CreateShowItemsFunctionsFunction} */
+  const createShowItemsFunctionsOnTableView = (main) => {
+    const list = main.querySelector('#list')
+    const items = Array.from(list.querySelectorAll('li'))
+    const showAllItems = () => showAllItemsOnTableView(items)
+    const showDiscountedItems = () => showDiscountedItemsOnTableView(items)
+    return {
+      showAllItems,
+      showDiscountedItems
+    }
+  }
+
   /**
    * @param {HTMLTableRowElement} row
    * @returns {boolean}
@@ -298,10 +310,10 @@
     const main = getMainElement()
 
     if (view === 'table') {
-      const list = main.querySelector('#list')
-      const items = Array.from(list.querySelectorAll('li'))
-      const showAllItems = () => showAllItemsOnTableView(items)
-      const showDiscountedItems = () => showDiscountedItemsOnTableView(items)
+      const {
+        showAllItems,
+        showDiscountedItems
+      } = createShowItemsFunctionsOnTableView(main)
       const filterMenu = createFilterMenuElement({
         showAllItems,
         showDiscountedItems
