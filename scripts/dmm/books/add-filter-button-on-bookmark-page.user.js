@@ -30,11 +30,11 @@
   const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
 
   /**
-   * @param {string} viewType
-   * @returns {viewType is ViewType}
+   * @param {string} value
+   * @returns {value is ViewType}
    */
-  const isViewType = (viewType) => {
-    switch (viewType) {
+  const isViewType = (value) => {
+    switch (value) {
       case 'table':
         return true
       case 'list':
