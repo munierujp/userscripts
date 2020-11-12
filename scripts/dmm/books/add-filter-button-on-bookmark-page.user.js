@@ -131,17 +131,16 @@
   /**
    * @param {Object} params
    * @param {string} params.text
-   * @param {FilterType} params.filterType
+   * @param {URL} params.url
    * @returns {HTMLLIElement}
    */
   const createNotCurrentButtonElement = ({
     text,
-    filterType
+    url
   }) => {
     const button = document.createElement('li')
     button.style.width = 'auto'
     const label = document.createElement('a')
-    const url = createUrl(filterType)
     label.href = url.toString()
     label.style['padding-left'] = '8px'
     label.style['padding-right'] = '8px'
@@ -163,13 +162,13 @@
       buttonList.appendChild(allButton)
       const discountedButton = createNotCurrentButtonElement({
         text: 'セール中',
-        filterType: 'discounted'
+        url: createUrl('discounted')
       })
       buttonList.appendChild(discountedButton)
     } else if (filterType === 'discounted') {
       const allButton = createNotCurrentButtonElement({
         text: 'すべて',
-        filterType: 'all'
+        url: createUrl('all')
       })
       buttonList.appendChild(allButton)
       const discountedButton = createCurrentButtonElement('セール中')
