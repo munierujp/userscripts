@@ -208,7 +208,7 @@
     const main = getMainElement()
 
     if (filterType === 'discounted') {
-      switch (viewType) {
+      switch (view) {
         case 'table':
           showDiscountedItemsOnTableView(main)
           break
