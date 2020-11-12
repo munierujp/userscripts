@@ -24,7 +24,6 @@
   /** @typedef {'all' | 'discounted'} ShowType */
   /** @typedef {() => void} ShowItemsFunction */
   /** @typedef {{ showAllItems: ShowItemsFunction, showDiscountedItems: ShowItemsFunction }} ShowItemsFunctions */
-  /** @typedef {(main: HTMLElement) => ShowItemsFunctions} CreateShowItemsFunctionsFunction */
   /** @typedef {(main: HTMLElement) => ShowItemsFunction} CreateShowItemsFunctionFunction */
 
   const CLASS_CURRENT = 'current'
