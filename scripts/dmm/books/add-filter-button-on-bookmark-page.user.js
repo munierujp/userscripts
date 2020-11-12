@@ -128,6 +128,15 @@
   }
 
   /**
+   * @param {ShowType} showType
+   */
+  const updateShowType = (showType) => {
+    const params = new URLSearchParams(location.search)
+    params.set('show', showType)
+    location.search = params.toString()
+  }
+
+  /**
    * @param {Object} params
    * @param {ShowType} params.showType
    * @returns {HTMLUListElement}
@@ -148,9 +157,7 @@
         return
       }
 
-      const params = new URLSearchParams(location.search)
-      params.set('show', 'all')
-      location.search = params.toString()
+      updateShowType('all')
     })
 
     discountedButton.addEventListener('click', () => {
@@ -158,9 +165,7 @@
         return
       }
 
-      const params = new URLSearchParams(location.search)
-      params.set('show', 'discounted')
-      location.search = params.toString()
+      updateShowType('discounted')
     })
 
     return buttonList
