@@ -23,8 +23,6 @@
   /** @typedef {(main: HTMLElement) => void} ItemsShower */
 
   const CLASS_CURRENT = 'current'
-  const CURSOR_BUTTON_CURRENT = 'auto'
-  const CURSOR_BUTTON_NOT_CURRENT = 'pointer'
 
   /**
    * @param {string} value
@@ -110,7 +108,6 @@
     const button = document.createElement('li')
     button.classList.add(CLASS_CURRENT)
     button.style.width = 'auto'
-    button.style.cursor = CURSOR_BUTTON_CURRENT
     const label = document.createElement('span')
     label.style['padding-left'] = '8px'
     label.style['padding-right'] = '8px'
@@ -143,7 +140,6 @@
   }) => {
     const button = document.createElement('li')
     button.style.width = 'auto'
-    button.style.cursor = CURSOR_BUTTON_NOT_CURRENT
     const label = document.createElement('a')
     const url = createUrl(filterType)
     label.href = url.toString()
