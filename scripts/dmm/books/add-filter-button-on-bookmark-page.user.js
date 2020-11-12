@@ -90,6 +90,19 @@
   }
 
   /**
+   * @param {ViewType} view
+   * @returns {ItemsShower}
+   */
+  const getDiscountedItemsShower = (view) => {
+    switch (view) {
+      case 'table':
+        return showDiscountedItemsOnTableView
+      case 'list':
+        return showDiscountedItemsOnListView
+    }
+  }
+
+  /**
    * @param {string} text
    * @returns {HTMLLIElement}
    */
@@ -207,14 +220,8 @@
     const main = getMainElement()
 
     if (filterType === 'discounted') {
-      switch (view) {
-        case 'table':
-          showDiscountedItemsOnTableView(main)
-          break
-        case 'list':
-          showDiscountedItemsOnListView(main)
-          break
-      }
+      const showDiscountedItems = getDiscountedItemsShower(view)
+      showDiscountedItems(main)
     }
 
     const filterMenu = createFilterMenuElement(filterType)
