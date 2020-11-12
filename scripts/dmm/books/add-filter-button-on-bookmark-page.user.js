@@ -22,7 +22,6 @@
 
   /** @typedef {'table' | 'list'} ViewType */
   /** @typedef {'all' | 'discounted'} ShowType */
-  /** @typedef {() => void} AppendFilterMenuFunction */
   /** @typedef {() => void} ShowItemsFunction */
   /** @typedef {{ showAllItems: ShowItemsFunction, showDiscountedItems: ShowItemsFunction }} ShowItemsFunctions */
   /** @typedef {(main: HTMLElement) => ShowItemsFunctions} CreateShowItemsFunctionsFunction */
