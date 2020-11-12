@@ -193,19 +193,6 @@
       })
   }
 
-  /**
-   * @param {ViewType} viewType
-   * @returns {ItemsShower}
-   */
-  const getDiscountedItemsShower = (viewType) => {
-    switch (viewType) {
-      case 'table':
-        return showDiscountedItemsOnTableView
-      case 'list':
-        return showDiscountedItemsOnListView
-    }
-  }
-
   const main = () => {
     console.debug('start')
     const params = new URLSearchParams(location.search)
@@ -221,8 +208,14 @@
     const main = getMainElement()
 
     if (filterType === 'discounted') {
-      const showDiscountedItems = getDiscountedItemsShower(view)
-      showDiscountedItems(main)
+      switch (viewType) {
+        case 'table':
+          showDiscountedItemsOnTableView(main)
+          break
+        case 'list':
+          showDiscountedItemsOnListView(main)
+          break
+      }
     }
 
     const filterMenu = createFilterMenuElement(filterType)
