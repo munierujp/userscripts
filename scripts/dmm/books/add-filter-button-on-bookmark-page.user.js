@@ -45,6 +45,21 @@
   }
 
   /**
+   * @param {string} value
+   * @returns {value is ShowType}
+   */
+  const isShowType = (value) => {
+    switch (value) {
+      case 'all':
+        return true
+      case 'discounted':
+        return true
+      default:
+        return false
+    }
+  }
+
+  /**
    * @returns {HTMLElement}
    */
   const getMainElement = () => {
