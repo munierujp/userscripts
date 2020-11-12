@@ -302,19 +302,6 @@
     menu.appendChild(filterMenu)
   }
 
-  /**
-   * @param {ViewType} viewType
-   * @returns {AppendFilterMenuFunction}
-   */
-  const getAppendFilterMenuFunction = (viewType) => {
-    switch (viewType) {
-      case 'table':
-        return appendFilterMenuOnTableView
-      case 'list':
-        return appendFilterMenuOnListView
-    }
-  }
-
   const main = () => {
     console.debug('start')
     const params = new URLSearchParams(location.search)
@@ -324,8 +311,14 @@
       throw new Error(`Invalid view. view=${view}`)
     }
 
-    const appendFilterMenu = getAppendFilterMenuFunction(view)
-    appendFilterMenu()
+    switch (view) {
+      case 'table':
+        appendFilterMenuOnTableView()
+        break
+      case 'list':
+        appendFilterMenuOnListView()
+        break
+    }
   }
 
   main()
