@@ -298,11 +298,11 @@
   }
 
   /**
-   * @param {ViewType} view
+   * @param {ViewType} viewType
    * @returns {CreateShowItemsFunctionsFunction}
    */
-  const getCreateShowItemsFunctions = (view) => {
-    switch (view) {
+  const getCreateShowItemsFunctions = (viewType) => {
+    switch (viewType) {
       case 'table':
         return createShowItemsFunctionsOnTableView
       case 'list':
@@ -325,6 +325,7 @@
       showAllItems,
       showDiscountedItems
     } = createShowItemsFunctions(main)
+
     const filterMenu = createFilterMenuElement({
       showAllItems,
       showDiscountedItems
