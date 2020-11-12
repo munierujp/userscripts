@@ -311,13 +311,10 @@
       throw new Error(`Invalid view. view=${view}`)
     }
 
-    switch (view) {
-      case 'table':
-        appendFilterMenuOnTableView()
-        break
-      case 'list':
-        appendFilterMenuOnListView()
-        break
+    if (view === 'table') {
+      appendFilterMenuOnTableView()
+    } else if (view === 'list') {
+      appendFilterMenuOnListView()
     }
   }
 
