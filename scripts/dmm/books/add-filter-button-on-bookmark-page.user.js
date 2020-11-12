@@ -287,21 +287,6 @@
     })
   }
 
-  /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnListView = () => {
-    const main = getMainElement()
-    const table = main.querySelector('table')
-    const rows = findDataRowElements(table)
-    const showAllItems = () => showAllItemsOnListView(rows)
-    const showDiscountedItems = () => showDiscountedItemsOnListView(rows)
-    const filterMenu = createFilterMenuElement({
-      showAllItems,
-      showDiscountedItems
-    })
-    const menu = findMenuElement(main)
-    menu.appendChild(filterMenu)
-  }
-
   const main = () => {
     console.debug('start')
     const params = new URLSearchParams(location.search)
@@ -314,7 +299,17 @@
     if (view === 'table') {
       appendFilterMenuOnTableView()
     } else if (view === 'list') {
-      appendFilterMenuOnListView()
+      const main = getMainElement()
+      const table = main.querySelector('table')
+      const rows = findDataRowElements(table)
+      const showAllItems = () => showAllItemsOnListView(rows)
+      const showDiscountedItems = () => showDiscountedItemsOnListView(rows)
+      const filterMenu = createFilterMenuElement({
+        showAllItems,
+        showDiscountedItems
+      })
+      const menu = findMenuElement(main)
+      menu.appendChild(filterMenu)
     }
   }
 
