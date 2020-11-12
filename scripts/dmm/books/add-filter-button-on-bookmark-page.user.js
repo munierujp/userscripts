@@ -233,21 +233,6 @@
     })
   }
 
-  /** @type {AppendFilterMenuFunction} */
-  const appendFilterMenuOnTableView = () => {
-    const main = getMainElement()
-    const list = main.querySelector('#list')
-    const items = Array.from(list.querySelectorAll('li'))
-    const showAllItems = () => showAllItemsOnTableView(items)
-    const showDiscountedItems = () => showDiscountedItemsOnTableView(items)
-    const filterMenu = createFilterMenuElement({
-      showAllItems,
-      showDiscountedItems
-    })
-    const menu = findMenuElement(main)
-    menu.appendChild(filterMenu)
-  }
-
   /**
    * @param {HTMLTableRowElement} row
    * @returns {boolean}
@@ -296,10 +281,20 @@
       throw new Error(`Invalid view. view=${view}`)
     }
 
+    const main = getMainElement()
+
     if (view === 'table') {
-      appendFilterMenuOnTableView()
+      const list = main.querySelector('#list')
+      const items = Array.from(list.querySelectorAll('li'))
+      const showAllItems = () => showAllItemsOnTableView(items)
+      const showDiscountedItems = () => showDiscountedItemsOnTableView(items)
+      const filterMenu = createFilterMenuElement({
+        showAllItems,
+        showDiscountedItems
+      })
+      const menu = findMenuElement(main)
+      menu.appendChild(filterMenu)
     } else if (view === 'list') {
-      const main = getMainElement()
       const table = main.querySelector('table')
       const rows = findDataRowElements(table)
       const showAllItems = () => showAllItemsOnListView(rows)
