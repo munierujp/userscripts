@@ -89,14 +89,33 @@
   }
 
   /**
-   * @param {string} text
+   * @param {FilterType} filterType
+   * @returns {URL}
+   */
+  const createUrl = (filterType) => {
+    const params = new URLSearchParams(location.search)
+    params.set('filter', filterType)
+    const url = new URL(location.href)
+    url.search = params.toString()
+    return url
+  }
+
+  /**
+   * @param {Object} params
+   * @param {string} params.text
+   * @param {FilterType} params.filterType
    * @returns {HTMLLIElement}
    */
-  const createNotCurrentButtonElement = (text) => {
+  const createNotCurrentButtonElement = ({
+    text,
+    filterType
+  }) => {
     const button = document.createElement('li')
     button.style.width = 'auto'
     button.style.cursor = CURSOR_BUTTON_NOT_CURRENT
-    const label = document.createElement('span')
+    const label = document.createElement('a')
+    const url = createUrl(filterType)
+    label.href = url.toString()
     label.style['padding-left'] = '8px'
     label.style['padding-right'] = '8px'
     label.textContent = text
@@ -104,52 +123,31 @@
     return button
   }
 
-  /**
-   * @param {HTMLElement} element
-   * @returns {boolean}
-   */
-  const isCurrentElement = (element) => {
-    return element.classList.contains(CLASS_CURRENT)
-  }
-
-  /**
-   * @param {FilterType} filterType
-   */
-  const updateFilterType = (filterType) => {
-    const params = new URLSearchParams(location.search)
-    params.set('filter', filterType)
-    location.search = params.toString()
-  }
-
-  // TODO: clickイベントではなく、リンクでもいいかも
+  // TODO: リファクタリング
   /**
    * @param {FilterType} filterType
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = (filterType) => {
     const buttonList = document.createElement('ul')
-    const createAllButton = filterType === 'all' ? createCurrentButtonElement : createNotCurrentButtonElement
-    const allButton = createAllButton('すべて')
-    buttonList.appendChild(allButton)
-    const createDiscountedButton = filterType === 'discounted' ? createCurrentButtonElement : createNotCurrentButtonElement
-    const discountedButton = createDiscountedButton('セール中')
-    buttonList.appendChild(discountedButton)
 
-    allButton.addEventListener('click', () => {
-      if (isCurrentElement(allButton)) {
-        return
-      }
-
-      updateFilterType('all')
-    })
-
-    discountedButton.addEventListener('click', () => {
-      if (isCurrentElement(discountedButton)) {
-        return
-      }
-
-      updateFilterType('discounted')
-    })
+    if (filterType === 'all') {
+      const allButton = createCurrentButtonElement('すべて')
+      buttonList.appendChild(allButton)
+      const discountedButton = createNotCurrentButtonElement({
+        text: 'セール中',
+        filterType: 'discounted'
+      })
+      buttonList.appendChild(discountedButton)
+    } else if (filterType === 'discounted') {
+      const allButton = createNotCurrentButtonElement({
+        text: 'すべて',
+        filterType: 'all'
+      })
+      buttonList.appendChild(allButton)
+      const discountedButton = createCurrentButtonElement('セール中')
+      buttonList.appendChild(discountedButton)
+    }
 
     return buttonList
   }
