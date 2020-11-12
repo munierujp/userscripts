@@ -78,8 +78,7 @@
   /** @type {ItemsShower} */
   const showDiscountedItemsOnListView = (main) => {
     const table = main.querySelector('table')
-    const rows = Array.from(table.querySelectorAll('tr'))
-    rows
+    Array.from(table.querySelectorAll('tr'))
       .filter(row => row.querySelector('td'))
       .forEach(row => {
         const price = row.querySelector('.price')
