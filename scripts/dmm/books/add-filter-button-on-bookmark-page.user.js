@@ -234,24 +234,19 @@
     return rows.filter(isDataRow)
   }
 
-  /**
-   * @param {HTMLTableRowElement[]} rows
-   */
-  const showDiscountedItemsOnListView = (rows) => {
-    rows.forEach(row => {
-      const price = row.querySelector('.price')
-      const discount = price.querySelector('.tx-sp')
-      const show = !!discount
-      const display = show ? 'table-row' : 'none'
-      row.style.display = display
-    })
-  }
-
   /** @type {CreateShowItemsFunctionFunction} */
   const createShowDiscountedItemsFunctionsOnListView = (main) => {
     const table = main.querySelector('table')
     const rows = findDataRowElements(table)
-    return () => showDiscountedItemsOnListView(rows)
+    return () => {
+      rows.forEach(row => {
+        const price = row.querySelector('.price')
+        const discount = price.querySelector('.tx-sp')
+        const show = !!discount
+        const display = show ? 'table-row' : 'none'
+        row.style.display = display
+      })
+    }
   }
 
   /**
