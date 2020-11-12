@@ -45,23 +45,6 @@
   }
 
   /**
-   * @returns {ViewType}
-   */
-  const getViewType = () => {
-    const params = new URLSearchParams(location.search)
-    const view = params.get('view')
-
-    switch (view) {
-      case 'table':
-        return 'table'
-      case 'list':
-        return 'list'
-      default:
-        throw new Error('Failed to get view type.')
-    }
-  }
-
-  /**
    * @returns {ShowType}
    */
   const getShowType = () => {
@@ -336,9 +319,14 @@
 
   const main = () => {
     console.debug('start')
-    const viewType = getViewType()
-    console.debug(`viewType=${viewType}`)
-    const appendFilterMenu = getAppendFilterMenuFunction(viewType)
+    const params = new URLSearchParams(location.search)
+    const view = params.get('view')
+
+    if (!isViewType(view)) {
+      throw new Error(`Invalid view. view=${view}`)
+    }
+
+    const appendFilterMenu = getAppendFilterMenuFunction(view)
     appendFilterMenu()
   }
 
