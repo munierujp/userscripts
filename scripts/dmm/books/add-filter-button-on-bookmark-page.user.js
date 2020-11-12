@@ -160,12 +160,9 @@
   }
 
   /**
-   * @param {Object} params
-   * @param {ShowType} params.showType
+   * @param {ShowType} showType
    */
-  const createFilterMenuElement = ({
-    showType
-  }) => {
+  const createFilterMenuElement = (showType) => {
     const filterMenu = document.createElement('div')
     const label = document.createElement('span')
     label.textContent = '絞り込み'
@@ -239,9 +236,7 @@
       showDiscountedItems()
     }
 
-    const filterMenu = createFilterMenuElement({
-      showType
-    })
+    const filterMenu = createFilterMenuElement(showType)
     const menu = findMenuElement(main)
     menu.appendChild(filterMenu)
   }
