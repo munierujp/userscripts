@@ -146,18 +146,22 @@
 
   /**
    * @param {Object} params
+   * @param {ShowType} params.showType
    * @param {ShowItemsFunction} params.showAllItems
    * @param {ShowItemsFunction} params.showDiscountedItems
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = ({
+    showType,
     showAllItems,
     showDiscountedItems
   }) => {
     const buttonList = document.createElement('ul')
-    const allButton = createCurrentButtonElement('すべて')
+    const createAllButton = showType === 'all' ? createCurrentButtonElement : createNotCurrentButtonElement
+    const allButton = createAllButton('すべて')
     buttonList.appendChild(allButton)
-    const discountedButton = createNotCurrentButtonElement('セール中')
+    const createDiscountedButton = showType === 'discounted' ? createCurrentButtonElement : createNotCurrentButtonElement
+    const discountedButton = createDiscountedButton('セール中')
     buttonList.appendChild(discountedButton)
 
     allButton.addEventListener('click', () => {
@@ -195,10 +199,12 @@
 
   /**
    * @param {Object} params
+   * @param {ShowType} params.showType
    * @param {ShowItemsFunction} params.showAllItems
    * @param {ShowItemsFunction} params.showDiscountedItems
    */
   const createFilterMenuElement = ({
+    showType,
     showAllItems,
     showDiscountedItems
   }) => {
@@ -206,6 +212,7 @@
     const label = createMenuLabelElement('絞り込み')
     filterMenu.appendChild(label)
     const buttonList = createButtonListElement({
+      showType,
       showAllItems,
       showDiscountedItems
     })
@@ -326,7 +333,15 @@
       showDiscountedItems
     } = createShowItemsFunctions(main)
 
+    const show = params.get('show')
+    const showType = isShowType(show) ? show : 'all'
+
+    if (showType === 'discounted') {
+      showDiscountedItems()
+    }
+
     const filterMenu = createFilterMenuElement({
+      showType,
       showAllItems,
       showDiscountedItems
     })
