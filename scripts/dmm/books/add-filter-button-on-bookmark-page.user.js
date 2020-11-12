@@ -129,32 +129,12 @@
   }
 
   /**
-   * @param {HTMLElement} button
-   */
-  const deactivateButton = (button) => {
-    button.classList.add(CLASS_CURRENT)
-    button.style.cursor = CURSOR_BUTTON_CURRENT
-  }
-
-  /**
-   * @param {HTMLElement} button
-   */
-  const activateButton = (button) => {
-    button.classList.remove(CLASS_CURRENT)
-    button.style.cursor = CURSOR_BUTTON_NOT_CURRENT
-  }
-
-  /**
    * @param {Object} params
    * @param {ShowType} params.showType
-   * @param {ShowItemsFunction} params.showAllItems
-   * @param {ShowItemsFunction} params.showDiscountedItems
    * @returns {HTMLUListElement}
    */
   const createButtonListElement = ({
-    showType,
-    showAllItems,
-    showDiscountedItems
+    showType
   }) => {
     const buttonList = document.createElement('ul')
     const createAllButton = showType === 'all' ? createCurrentButtonElement : createNotCurrentButtonElement
@@ -169,9 +149,9 @@
         return
       }
 
-      deactivateButton(allButton)
-      activateButton(discountedButton)
-      showAllItems()
+      const params = new URLSearchParams(location.search)
+      params.set('show', 'all')
+      location.search = params.toString()
     })
 
     discountedButton.addEventListener('click', () => {
@@ -179,9 +159,9 @@
         return
       }
 
-      deactivateButton(discountedButton)
-      activateButton(allButton)
-      showDiscountedItems()
+      const params = new URLSearchParams(location.search)
+      params.set('show', 'discounted')
+      location.search = params.toString()
     })
 
     return buttonList
@@ -200,21 +180,15 @@
   /**
    * @param {Object} params
    * @param {ShowType} params.showType
-   * @param {ShowItemsFunction} params.showAllItems
-   * @param {ShowItemsFunction} params.showDiscountedItems
    */
   const createFilterMenuElement = ({
-    showType,
-    showAllItems,
-    showDiscountedItems
+    showType
   }) => {
     const filterMenu = document.createElement('div')
     const label = createMenuLabelElement('絞り込み')
     filterMenu.appendChild(label)
     const buttonList = createButtonListElement({
-      showType,
-      showAllItems,
-      showDiscountedItems
+      showType
     })
     filterMenu.appendChild(buttonList)
     return filterMenu
@@ -329,7 +303,6 @@
     const main = getMainElement()
     const createShowItemsFunctions = getCreateShowItemsFunctions(view)
     const {
-      showAllItems,
       showDiscountedItems
     } = createShowItemsFunctions(main)
 
@@ -341,9 +314,7 @@
     }
 
     const filterMenu = createFilterMenuElement({
-      showType,
-      showAllItems,
-      showDiscountedItems
+      showType
     })
     const menu = findMenuElement(main)
     menu.appendChild(filterMenu)
