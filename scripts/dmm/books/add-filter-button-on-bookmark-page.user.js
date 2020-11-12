@@ -101,10 +101,13 @@
   }
 
   /**
-   * @param {string} text
+   * @param {Object} params
+   * @param {string} params.text
    * @returns {HTMLLIElement}
    */
-  const createCurrentButtonElement = (text) => {
+  const createCurrentButtonElement = ({
+    text
+  }) => {
     const button = document.createElement('li')
     button.classList.add(CLASS_CURRENT)
     button.style.width = 'auto'
@@ -158,7 +161,9 @@
     const buttonList = document.createElement('ul')
 
     if (filterType === 'all') {
-      const allButton = createCurrentButtonElement('すべて')
+      const allButton = createCurrentButtonElement({
+        text: 'すべて'
+      })
       buttonList.appendChild(allButton)
       const discountedButton = createNotCurrentButtonElement({
         text: 'セール中',
@@ -171,7 +176,9 @@
         url: createUrl('all')
       })
       buttonList.appendChild(allButton)
-      const discountedButton = createCurrentButtonElement('セール中')
+      const discountedButton = createCurrentButtonElement({
+        text: 'セール中'
+      })
       buttonList.appendChild(discountedButton)
     }
 
