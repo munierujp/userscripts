@@ -23,6 +23,7 @@
   /** @typedef {(main: HTMLElement) => void} ItemsShower */
 
   const CLASS_CURRENT = 'current'
+  const LABEL_ALL = 'すべて'
 
   /**
    * @param {string} value
@@ -162,7 +163,7 @@
 
     if (filterType === 'all') {
       const allButton = createCurrentButtonElement({
-        text: 'すべて'
+        text: LABEL_ALL
       })
       buttonList.appendChild(allButton)
       const discountedButton = createNotCurrentButtonElement({
@@ -172,7 +173,7 @@
       buttonList.appendChild(discountedButton)
     } else if (filterType === 'discounted') {
       const allButton = createNotCurrentButtonElement({
-        text: 'すべて',
+        text: LABEL_ALL,
         url: createUrl('all')
       })
       buttonList.appendChild(allButton)
