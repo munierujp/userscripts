@@ -154,6 +154,26 @@
     return button
   }
 
+  /**
+   * @param {FilterType} filterType
+   * @returns {HTMLLIElement}
+   */
+  const createAllButtonElement = (filterType) => {
+    const text = LABEL_ALL
+
+    switch (filterType) {
+      case 'all':
+        return createCurrentButtonElement({
+          text
+        })
+      case 'discounted':
+        return createNotCurrentButtonElement({
+          text,
+          url: createUrl('all')
+        })
+    }
+  }
+
   // TODO: リファクタリング
   /**
    * @param {FilterType} filterType
@@ -163,9 +183,7 @@
     const buttonList = document.createElement('ul')
 
     if (filterType === 'all') {
-      const allButton = createCurrentButtonElement({
-        text: LABEL_ALL
-      })
+      const allButton = createAllButtonElement(filterType)
       buttonList.appendChild(allButton)
       const discountedButton = createNotCurrentButtonElement({
         text: LABEL_DISCOUNTED,
@@ -173,10 +191,7 @@
       })
       buttonList.appendChild(discountedButton)
     } else if (filterType === 'discounted') {
-      const allButton = createNotCurrentButtonElement({
-        text: LABEL_ALL,
-        url: createUrl('all')
-      })
+      const allButton = createAllButtonElement(filterType)
       buttonList.appendChild(allButton)
       const discountedButton = createCurrentButtonElement({
         text: LABEL_DISCOUNTED
