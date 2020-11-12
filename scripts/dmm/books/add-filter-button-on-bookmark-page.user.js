@@ -19,9 +19,8 @@
   'use strict'
 
   /** @typedef {'table' | 'list'} ViewType */
-  /** @typedef {'all' | 'discounted'} ShowType */
+  /** @typedef {'all' | 'discounted'} FilterType */
   /** @typedef {(main: HTMLElement) => void} ItemsShower */
-  /** @typedef {(main: HTMLElement) => ItemsShower} ItemsShowerCreator */
 
   const CLASS_CURRENT = 'current'
   const CURSOR_BUTTON_CURRENT = 'auto'
@@ -44,9 +43,9 @@
 
   /**
    * @param {string} value
-   * @returns {value is ShowType}
+   * @returns {value is FilterType}
    */
-  const isShowType = (value) => {
+  const isFilterType = (value) => {
     switch (value) {
       case 'all':
         return true
@@ -117,24 +116,24 @@
   }
 
   /**
-   * @param {ShowType} showType
+   * @param {FilterType} filterType
    */
-  const updateShowType = (showType) => {
+  const updateFilterType = (filterType) => {
     const params = new URLSearchParams(location.search)
-    params.set('show', showType)
+    params.set('filter', filterType)
     location.search = params.toString()
   }
 
   /**
-   * @param {ShowType} showType
+   * @param {FilterType} filterType
    * @returns {HTMLUListElement}
    */
-  const createButtonListElement = (showType) => {
+  const createButtonListElement = (filterType) => {
     const buttonList = document.createElement('ul')
-    const createAllButton = showType === 'all' ? createCurrentButtonElement : createNotCurrentButtonElement
+    const createAllButton = filterType === 'all' ? createCurrentButtonElement : createNotCurrentButtonElement
     const allButton = createAllButton('すべて')
     buttonList.appendChild(allButton)
-    const createDiscountedButton = showType === 'discounted' ? createCurrentButtonElement : createNotCurrentButtonElement
+    const createDiscountedButton = filterType === 'discounted' ? createCurrentButtonElement : createNotCurrentButtonElement
     const discountedButton = createDiscountedButton('セール中')
     buttonList.appendChild(discountedButton)
 
@@ -143,7 +142,7 @@
         return
       }
 
-      updateShowType('all')
+      updateFilterType('all')
     })
 
     discountedButton.addEventListener('click', () => {
@@ -151,22 +150,22 @@
         return
       }
 
-      updateShowType('discounted')
+      updateFilterType('discounted')
     })
 
     return buttonList
   }
 
   /**
-   * @param {ShowType} showType
+   * @param {FilterType} filterType
    * @returns {HTMLElement}
    */
-  const createFilterMenuElement = (showType) => {
+  const createFilterMenuElement = (filterType) => {
     const filterMenu = document.createElement('div')
     const label = document.createElement('span')
     label.textContent = '絞り込み'
     filterMenu.appendChild(label)
-    const buttonList = createButtonListElement(showType)
+    const buttonList = createButtonListElement(filterType)
     filterMenu.appendChild(buttonList)
     return filterMenu
   }
@@ -223,14 +222,14 @@
     const main = getMainElement()
     const showDiscountedItems = getDiscountedItemsShower(view)
 
-    const show = params.get('show')
-    const showType = isShowType(show) ? show : 'all'
+    const filter = params.get('filter')
+    const filterType = isFilterType(filter) ? filter : 'all'
 
-    if (showType === 'discounted') {
+    if (filterType === 'discounted') {
       showDiscountedItems(main)
     }
 
-    const filterMenu = createFilterMenuElement(showType)
+    const filterMenu = createFilterMenuElement(filterType)
     const menu = findMenuElement(main)
     menu.appendChild(filterMenu)
   }
