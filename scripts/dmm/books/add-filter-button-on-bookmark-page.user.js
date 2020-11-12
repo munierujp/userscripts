@@ -219,9 +219,9 @@
     const filterType = isFilterType(filter) ? filter : 'all'
 
     const main = getMainElement()
-    const showDiscountedItems = getDiscountedItemsShower(view)
 
     if (filterType === 'discounted') {
+      const showDiscountedItems = getDiscountedItemsShower(view)
       showDiscountedItems(main)
     }
 
