@@ -216,7 +216,6 @@
 
     const filter = params.get('filter')
     const filterType = isFilterType(filter) ? filter : 'all'
-
     const main = getMainElement()
 
     if (filterType === 'discounted') {
@@ -224,8 +223,8 @@
       showDiscountedItems(main)
     }
 
-    const filterMenu = createFilterMenuElement(filterType)
     const menu = findMenuElement(main)
+    const filterMenu = createFilterMenuElement(filterType)
     menu.appendChild(filterMenu)
   }
 
