@@ -24,6 +24,8 @@
   /** @typedef {'all' | 'discounted'} ShowType */
   /** @typedef {() => void} AppendFilterMenuFunction */
   /** @typedef {() => void} ShowItemsFunction */
+  /** @typedef {{ showAllItems: ShowItemsFunction, showDiscountedItems: ShowItemsFunction }} ShowItemsFunctions */
+  /** @typedef {(main: HTMLElement) => ShowItemsFunctions} CreateShowItemsFunctionsFunction */
 
   const CLASS_CURRENT = 'current'
   const CURSOR_BUTTON_CURRENT = 'auto'
@@ -272,6 +274,18 @@
     })
   }
 
+  /** @type {CreateShowItemsFunctionsFunction} */
+  const createShowItemsFunctionsOnListView = (main) => {
+    const table = main.querySelector('table')
+    const rows = findDataRowElements(table)
+    const showAllItems = () => showAllItemsOnListView(rows)
+    const showDiscountedItems = () => showDiscountedItemsOnListView(rows)
+    return {
+      showAllItems,
+      showDiscountedItems
+    }
+  }
+
   const main = () => {
     console.debug('start')
     const params = new URLSearchParams(location.search)
@@ -295,10 +309,10 @@
       const menu = findMenuElement(main)
       menu.appendChild(filterMenu)
     } else if (view === 'list') {
-      const table = main.querySelector('table')
-      const rows = findDataRowElements(table)
-      const showAllItems = () => showAllItemsOnListView(rows)
-      const showDiscountedItems = () => showDiscountedItemsOnListView(rows)
+      const {
+        showAllItems,
+        showDiscountedItems
+      } = createShowItemsFunctionsOnListView(main)
       const filterMenu = createFilterMenuElement({
         showAllItems,
         showDiscountedItems
