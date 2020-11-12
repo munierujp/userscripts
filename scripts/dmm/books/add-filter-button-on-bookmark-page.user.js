@@ -25,6 +25,7 @@
   /** @typedef {() => void} ShowItemsFunction */
   /** @typedef {{ showAllItems: ShowItemsFunction, showDiscountedItems: ShowItemsFunction }} ShowItemsFunctions */
   /** @typedef {(main: HTMLElement) => ShowItemsFunctions} CreateShowItemsFunctionsFunction */
+  /** @typedef {(main: HTMLElement) => ShowItemsFunction} CreateShowItemsFunctionFunction */
 
   const CLASS_CURRENT = 'current'
   const CURSOR_BUTTON_CURRENT = 'auto'
@@ -197,15 +198,6 @@
   /**
    * @param {HTMLLIElement[]} items
    */
-  const showAllItemsOnTableView = (items) => {
-    items.forEach(item => {
-      item.style.display = 'list-item'
-    })
-  }
-
-  /**
-   * @param {HTMLLIElement[]} items
-   */
   const showDiscountedItemsOnTableView = (items) => {
     items.forEach(item => {
       const discount = item.querySelector('.txtoff')
@@ -215,16 +207,11 @@
     })
   }
 
-  /** @type {CreateShowItemsFunctionsFunction} */
-  const createShowItemsFunctionsOnTableView = (main) => {
+  /** @type {CreateShowItemsFunctionFunction} */
+  const createShowDiscountedItemsFunctionOnTableView = (main) => {
     const list = main.querySelector('#list')
     const items = Array.from(list.querySelectorAll('li'))
-    const showAllItems = () => showAllItemsOnTableView(items)
-    const showDiscountedItems = () => showDiscountedItemsOnTableView(items)
-    return {
-      showAllItems,
-      showDiscountedItems
-    }
+    return () => showDiscountedItemsOnTableView(items)
   }
 
   /**
@@ -247,15 +234,6 @@
   /**
    * @param {HTMLTableRowElement[]} rows
    */
-  const showAllItemsOnListView = (rows) => {
-    rows.forEach(row => {
-      row.style.display = 'table-row'
-    })
-  }
-
-  /**
-   * @param {HTMLTableRowElement[]} rows
-   */
   const showDiscountedItemsOnListView = (rows) => {
     rows.forEach(row => {
       const price = row.querySelector('.price')
@@ -266,28 +244,23 @@
     })
   }
 
-  /** @type {CreateShowItemsFunctionsFunction} */
-  const createShowItemsFunctionsOnListView = (main) => {
+  /** @type {CreateShowItemsFunctionFunction} */
+  const createShowDiscountedItemsFunctionsOnListView = (main) => {
     const table = main.querySelector('table')
     const rows = findDataRowElements(table)
-    const showAllItems = () => showAllItemsOnListView(rows)
-    const showDiscountedItems = () => showDiscountedItemsOnListView(rows)
-    return {
-      showAllItems,
-      showDiscountedItems
-    }
+    return () => showDiscountedItemsOnListView(rows)
   }
 
   /**
    * @param {ViewType} viewType
-   * @returns {CreateShowItemsFunctionsFunction}
+   * @returns {CreateShowItemsFunctionFunction}
    */
-  const getCreateShowItemsFunctions = (viewType) => {
+  const getCreateShowDiscountedItemsFunctions = (viewType) => {
     switch (viewType) {
       case 'table':
-        return createShowItemsFunctionsOnTableView
+        return createShowDiscountedItemsFunctionOnTableView
       case 'list':
-        return createShowItemsFunctionsOnListView
+        return createShowDiscountedItemsFunctionsOnListView
     }
   }
 
@@ -301,10 +274,8 @@
     }
 
     const main = getMainElement()
-    const createShowItemsFunctions = getCreateShowItemsFunctions(view)
-    const {
-      showDiscountedItems
-    } = createShowItemsFunctions(main)
+    const createShowDiscountedItemsFunctions = getCreateShowDiscountedItemsFunctions(view)
+    const showDiscountedItems = createShowDiscountedItemsFunctions(main)
 
     const show = params.get('show')
     const showType = isShowType(show) ? show : 'all'
