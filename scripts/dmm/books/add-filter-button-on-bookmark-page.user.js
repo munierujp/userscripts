@@ -22,7 +22,7 @@
 
   /** @typedef {'table' | 'list'} ViewType */
   /** @typedef {'all' | 'discounted'} ShowType */
-  /** @typedef {() => void} ItemsShower */
+  /** @typedef {(main: HTMLElement) => void} ItemsShower */
   /** @typedef {(main: HTMLElement) => ItemsShower} ItemsShowerCreator */
 
   const CLASS_CURRENT = 'current'
@@ -173,47 +173,43 @@
     return filterMenu
   }
 
-  /** @type {ItemsShowerCreator} */
-  const createDiscountedItemsShowerForTableView = (main) => {
+  /** @type {ItemsShower} */
+  const showDiscountedItemsOnTableView = (main) => {
     const list = main.querySelector('#list')
     const items = Array.from(list.querySelectorAll('li'))
-    return () => {
-      items.forEach(item => {
-        const discount = item.querySelector('.txtoff')
-        const show = !!discount
-        const display = show ? 'list-item' : 'none'
-        item.style.display = display
-      })
-    }
+    items.forEach(item => {
+      const discount = item.querySelector('.txtoff')
+      const show = !!discount
+      const display = show ? 'list-item' : 'none'
+      item.style.display = display
+    })
   }
 
-  /** @type {ItemsShowerCreator} */
-  const createDiscountedItemsShowerForListView = (main) => {
+  /** @type {ItemsShower} */
+  const showDiscountedItemsOnListView = (main) => {
     const table = main.querySelector('table')
     const rows = Array.from(table.querySelectorAll('tr'))
-    return () => {
-      rows
-        .filter(row => row.querySelector('td'))
-        .forEach(row => {
-          const price = row.querySelector('.price')
-          const discount = price.querySelector('.tx-sp')
-          const show = !!discount
-          const display = show ? 'table-row' : 'none'
-          row.style.display = display
-        })
-    }
+    rows
+      .filter(row => row.querySelector('td'))
+      .forEach(row => {
+        const price = row.querySelector('.price')
+        const discount = price.querySelector('.tx-sp')
+        const show = !!discount
+        const display = show ? 'table-row' : 'none'
+        row.style.display = display
+      })
   }
 
   /**
    * @param {ViewType} viewType
-   * @returns {ItemsShowerCreator}
+   * @returns {ItemsShower}
    */
-  const getDiscountedItemsShowerCreator = (viewType) => {
+  const getDiscountedItemsShower = (viewType) => {
     switch (viewType) {
       case 'table':
-        return createDiscountedItemsShowerForTableView
+        return showDiscountedItemsOnTableView
       case 'list':
-        return createDiscountedItemsShowerForListView
+        return showDiscountedItemsOnListView
     }
   }
 
@@ -227,14 +223,13 @@
     }
 
     const main = getMainElement()
-    const createDiscountedItemsShower = getDiscountedItemsShowerCreator(view)
-    const showDiscountedItems = createDiscountedItemsShower(main)
+    const showDiscountedItems = getDiscountedItemsShower(view)
 
     const show = params.get('show')
     const showType = isShowType(show) ? show : 'all'
 
     if (showType === 'discounted') {
-      showDiscountedItems()
+      showDiscountedItems(main)
     }
 
     const filterMenu = createFilterMenuElement(showType)
