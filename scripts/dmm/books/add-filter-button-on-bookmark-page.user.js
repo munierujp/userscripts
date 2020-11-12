@@ -220,19 +220,10 @@
     return !!row.querySelector('td')
   }
 
-  /**
-   * @param {HTMLTableElement} table
-   * @returns {HTMLTableRowElement[]}
-   */
-  const findDataRowElements = (table) => {
-    const rows = Array.from(table.querySelectorAll('tr'))
-    return rows.filter(isDataRow)
-  }
-
   /** @type {CreateShowItemsFunctionFunction} */
   const createShowDiscountedItemsFunctionsOnListView = (main) => {
     const table = main.querySelector('table')
-    const rows = findDataRowElements(table)
+    const rows = Array.from(table.querySelectorAll('tr')).filter(isDataRow)
     return () => {
       rows.forEach(row => {
         const price = row.querySelector('.price')
