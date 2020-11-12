@@ -75,9 +75,11 @@
    * @param {string} text
    * @returns {HTMLLIElement}
    */
-  const createButtonElement = (text) => {
+  const createCurrentButtonElement = (text) => {
     const button = document.createElement('li')
+    button.classList.add(CLASS_CURRENT)
     button.style.width = 'auto'
+    button.style.cursor = CURSOR_BUTTON_CURRENT
     const label = document.createElement('span')
     label.style['padding-left'] = '8px'
     label.style['padding-right'] = '8px'
@@ -90,20 +92,15 @@
    * @param {string} text
    * @returns {HTMLLIElement}
    */
-  const createCurrentButtonElement = (text) => {
-    const button = createButtonElement(text)
-    button.classList.add(CLASS_CURRENT)
-    button.style.cursor = CURSOR_BUTTON_CURRENT
-    return button
-  }
-
-  /**
-   * @param {string} text
-   * @returns {HTMLLIElement}
-   */
   const createNotCurrentButtonElement = (text) => {
-    const button = createButtonElement(text)
+    const button = document.createElement('li')
+    button.style.width = 'auto'
     button.style.cursor = CURSOR_BUTTON_NOT_CURRENT
+    const label = document.createElement('span')
+    label.style['padding-left'] = '8px'
+    label.style['padding-right'] = '8px'
+    label.textContent = text
+    button.appendChild(label)
     return button
   }
 
@@ -124,6 +121,7 @@
     location.search = params.toString()
   }
 
+  // TODO: clickイベントではなく、リンクでもいいかも
   /**
    * @param {FilterType} filterType
    * @returns {HTMLUListElement}
