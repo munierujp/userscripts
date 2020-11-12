@@ -24,6 +24,7 @@
 
   const CLASS_CURRENT = 'current'
   const LABEL_ALL = 'すべて'
+  const LABEL_DISCOUNTED = 'セール中'
 
   /**
    * @param {string} value
@@ -167,7 +168,7 @@
       })
       buttonList.appendChild(allButton)
       const discountedButton = createNotCurrentButtonElement({
-        text: 'セール中',
+        text: LABEL_DISCOUNTED,
         url: createUrl('discounted')
       })
       buttonList.appendChild(discountedButton)
@@ -178,7 +179,7 @@
       })
       buttonList.appendChild(allButton)
       const discountedButton = createCurrentButtonElement({
-        text: 'セール中'
+        text: LABEL_DISCOUNTED
       })
       buttonList.appendChild(discountedButton)
     }
