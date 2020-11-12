@@ -128,13 +128,10 @@
   }
 
   /**
-   * @param {Object} params
-   * @param {ShowType} params.showType
+   * @param {ShowType} showType
    * @returns {HTMLUListElement}
    */
-  const createButtonListElement = ({
-    showType
-  }) => {
+  const createButtonListElement = (showType) => {
     const buttonList = document.createElement('ul')
     const createAllButton = showType === 'all' ? createCurrentButtonElement : createNotCurrentButtonElement
     const allButton = createAllButton('すべて')
@@ -173,9 +170,7 @@
     const label = document.createElement('span')
     label.textContent = '絞り込み'
     filterMenu.appendChild(label)
-    const buttonList = createButtonListElement({
-      showType
-    })
+    const buttonList = createButtonListElement(showType)
     filterMenu.appendChild(buttonList)
     return filterMenu
   }
