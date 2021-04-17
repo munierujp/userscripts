@@ -221,7 +221,7 @@ ${SELECTOR_DROPDOWN_MENU} {
    * @returns {HTMLButtonElement}
    */
   const getOperationButtonElement = () => {
-    return document.querySelector('button[aria-label="操作"]')
+    return document.querySelector('button[aria-label="アクション/操作"]')
   }
 
   const openDropdownMenuElement = () => {
