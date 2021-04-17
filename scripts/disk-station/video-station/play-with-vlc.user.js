@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Play with VLC
 // @namespace    https://github.com/munierujp/
-// @version      1.0.3
+// @version      1.0.4
 // @description  Play with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -221,7 +221,7 @@ ${SELECTOR_DROPDOWN_MENU} {
    * @returns {HTMLButtonElement}
    */
   const getOperationButtonElement = () => {
-    return document.querySelector('button[aria-label="操作"]')
+    return document.querySelector('button[aria-label="アクション/操作"]')
   }
 
   const openDropdownMenuElement = () => {
