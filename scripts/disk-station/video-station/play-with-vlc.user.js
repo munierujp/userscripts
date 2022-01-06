@@ -152,7 +152,7 @@
         label,
         value
       }))
-      .filter(({ label }) => label === 'ファイルのパス')
+      .filter(({ label }) => label === 'ファイル パス')
       .map(({ value }) => value)
       .find(filePath => filePath)
   }
