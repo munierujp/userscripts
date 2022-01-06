@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         Play with VLC
 // @namespace    https://github.com/munierujp/
-// @version      1.0.4
+// @version      1.0.5
 // @description  Play with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
