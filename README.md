@@ -8,10 +8,10 @@ My User Scripts
 
 ### Video Station
 
-- [play-with-vlc.user.js](https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-with-vlc.user.js)
+- [play-with-vlc.user.js](https://github.com/munierujp/userscripts/raw/master/scripts/disk-station/video-station/play-with-vlc.user.js)
 
 ## DMM
 
 ### Books
 
-- [add-filter-button-on-bookmark-page.user.js](https://munierujp.github.io/userscripts/scripts/dmm/books/add-filter-button-on-bookmark-page.user.js)
+- [add-filter-button-on-bookmark-page.user.js](https://github.com/munierujp/userscripts/raw/master/scripts/dmm/books/add-filter-button-on-bookmark-page.user.js)
