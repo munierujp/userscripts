@@ -3,12 +3,12 @@
 // ==UserScript==
 // @name         Play with VLC
 // @namespace    https://github.com/munierujp/
-// @version      1.0.5
+// @version      1.0.6
 // @description  Play with VLC on Video Station of DiskStation
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
-// @updateURL    https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-with-vlc.user.js
-// @downloadURL  https://munierujp.github.io/userscripts/scripts/disk-station/video-station/play-with-vlc.user.js
+// @updateURL    https://github.com/munierujp/userscripts/raw/master/scripts/disk-station/video-station/play-with-vlc.user.js
+// @downloadURL  https://github.com/munierujp/userscripts/raw/master/scripts/disk-station/video-station/play-with-vlc.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        *://diskstation.local/*
 // @grant        none
