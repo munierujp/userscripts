@@ -3,12 +3,12 @@
 // ==UserScript==
 // @name        Add filter button on bookmark page
 // @namespace    https://github.com/munierujp/
-// @version      1.2.0
+// @version      1.2.1
 // @description   Add filter button on bookmark page on DMM Books
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
-// @updateURL    https://munierujp.github.io/userscripts/scripts/dmm/books/add-filter-button-on-bookmark-page.user.js
-// @downloadURL  https://munierujp.github.io/userscriptsscripts/dmm/books/add-filter-button-on-bookmark-page.user.js
+// @updateURL    https://github.com/munierujp/userscripts/raw/master/scripts/dmm/books/add-filter-button-on-bookmark-page.user.js
+// @downloadURL  https://github.com/munierujp/userscripts/raw/master/scripts/dmm/books/add-filter-button-on-bookmark-page.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        https://book.dmm.com/bookmark/*
 // @match        https://book.dmm.co.jp/bookmark/*
