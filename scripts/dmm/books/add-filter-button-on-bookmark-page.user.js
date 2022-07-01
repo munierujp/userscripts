@@ -1,7 +1,7 @@
 // @ts-check
 
 // ==UserScript==
-// @name        フィルターボタンを追加
+// @name        ブックマークページにフィルターボタンを追加
 // @namespace    https://github.com/munierujp/
 // @version      1.2.2
 // @description   DMMブックスのブックマークページにフィルターボタンを追加します。

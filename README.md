@@ -14,4 +14,4 @@ My User Scripts
 
 ### DMMブックス
 
-- [フィルターボタンを追加](https://github.com/munierujp/userscripts/raw/master/scripts/dmm/books/add-filter-button-on-bookmark-page.user.js)
+- [ブックマークページにフィルターボタンを追加](https://github.com/munierujp/userscripts/raw/master/scripts/dmm/books/add-filter-button-on-bookmark-page.user.js)
