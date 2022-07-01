@@ -1,10 +1,10 @@
 // @ts-check
 
 // ==UserScript==
-// @name        Add filter button on bookmark page
+// @name        ブックマークページにフィルターボタンを追加
 // @namespace    https://github.com/munierujp/
-// @version      1.2.1
-// @description   Add filter button on bookmark page on DMM Books
+// @version      1.2.2
+// @description   DMMブックスのブックマークページにフィルターボタンを追加します。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/scripts/dmm/books/add-filter-button-on-bookmark-page.user.js
@@ -61,12 +61,14 @@
    * @returns {HTMLElement}
    */
   const getMainElement = () => {
+    // @ts-ignore
     return document.getElementById('main-bmk')
   }
 
   /** @type {ItemsShower} */
   const showDiscountedItemsOnTableView = (main) => {
     const list = main.querySelector('#list')
+    // @ts-ignore
     const items = Array.from(list.querySelectorAll('li'))
     items.forEach(item => {
       const discount = item.querySelector('.txtoff')
@@ -79,10 +81,12 @@
   /** @type {ItemsShower} */
   const showDiscountedItemsOnListView = (main) => {
     const table = main.querySelector('table')
+    // @ts-ignore
     const rows = Array.from(table.querySelectorAll('tr'))
     const dataRows = rows.filter(row => row.querySelector('td'))
     dataRows.forEach(row => {
       const price = row.querySelector('.price')
+      // @ts-ignore
       const discount = price.querySelector('.tx-sp')
       const show = !!discount
       const display = show ? 'table-row' : 'none'
@@ -227,6 +231,7 @@
    * @returns {HTMLElement}
    */
   const findMenuElement = (main) => {
+    // @ts-ignore
     return main.querySelector('.d-rcol.selector')
   }
 
@@ -247,11 +252,13 @@
     const params = new URLSearchParams(location.search)
     const view = params.get('view')
 
+    // @ts-ignore
     if (!isViewType(view)) {
       throw new Error(`Invalid view. view=${view}`)
     }
 
     const filter = params.get('filter')
+    // @ts-ignore
     const filterType = isFilterType(filter) ? filter : 'all'
     const main = getMainElement()
 
