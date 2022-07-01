@@ -8,7 +8,7 @@ My User Scripts
 
 ### Video Station
 
-- [play-with-vlc.user.js](https://github.com/munierujp/userscripts/raw/master/scripts/disk-station/video-station/play-with-vlc.user.js)
+- [VLCで再生](https://github.com/munierujp/userscripts/raw/master/scripts/disk-station/video-station/play-with-vlc.user.js)
 
 ## DMM
 

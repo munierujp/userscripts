@@ -1,10 +1,10 @@
 // @ts-check
 
 // ==UserScript==
-// @name         Play with VLC
+// @name         VLCで再生
 // @namespace    https://github.com/munierujp/
-// @version      1.0.6
-// @description  Play with VLC on Video Station of DiskStation
+// @version      1.0.7
+// @description  DiskStationのVideo Stationで動画をVLCで再生します。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/scripts/disk-station/video-station/play-with-vlc.user.js
@@ -94,6 +94,7 @@
    * @returns {HTMLElementFinder}
    */
   const createHTMLElementFinder = (filter) => {
+    // @ts-ignore
     return records => {
       return records
         .map(toAddedHTMLElements)
@@ -144,6 +145,7 @@
    * @returns {string}
    */
   const findFilePath = (dialog) => {
+    // @ts-ignore
     return Array.from(dialog.querySelectorAll('tr'))
       .map(row => Array.from(row.querySelectorAll('td')))
       .filter(({ length }) => length >= 2)
@@ -162,6 +164,7 @@
    * @returns {HTMLButtonElement}
    */
   const findCloseButtonElement = (dialog) => {
+    // @ts-ignore
     return dialog.querySelector('button[aria-label="閉じる"]')
   }
 
@@ -221,6 +224,7 @@ ${SELECTOR_DROPDOWN_MENU} {
    * @returns {HTMLButtonElement}
    */
   const getOperationButtonElement = () => {
+    // @ts-ignore
     return document.querySelector('button[aria-label="アクション/操作"]')
   }
 
@@ -233,6 +237,7 @@ ${SELECTOR_DROPDOWN_MENU} {
    * @returns {HTMLElement}
    */
   const getDropdownMenuElement = () => {
+    // @ts-ignore
     return document.querySelector(SELECTOR_DROPDOWN_MENU)
   }
 
@@ -251,6 +256,7 @@ ${SELECTOR_DROPDOWN_MENU} {
   const findVideoInfoDialogLinkElement = (dropdownMenu) => {
     /** @type {HTMLAnchorElement[]} */
     const links = Array.from(dropdownMenu.querySelectorAll('a.x-menu-list-item'))
+    // @ts-ignore
     return links.find(isVideoInfoDialogLinkElement)
   }
 
@@ -312,6 +318,7 @@ ${SELECTOR_DROPDOWN_MENU} {
 
       console.debug('start observing #sds-desktop')
       observeAddingHTMLElement({
+        // @ts-ignore
         target: document.getElementById('sds-desktop'),
         options: {
           childList: true
@@ -364,6 +371,7 @@ ${SELECTOR_DROPDOWN_MENU} {
    */
   const replaceElement = (element, newElement) => {
     element.style.display = 'none'
+    // @ts-ignore
     element.parentElement.insertBefore(newElement, element)
   }
 
