@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "My User Scripts",
   "private": true,
-  "scripts": {
-    "prepare": "husky install"
-  },
   "devDependencies": {
     "eslint": "8.19.0",
     "eslint-config-standard": "16.0.3",
