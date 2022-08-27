@@ -4,7 +4,7 @@ My User Scripts
 
 ## Amazon
 
-- [正規化されたURLにリダイレクト](https://github.com/munierujp/userscripts/raw/master/scripts/disk-station/video-station/redirect-to-normalized-url.user.js)
+- [正規化されたURLにリダイレクト](https://github.com/munierujp/userscripts/raw/master/scripts/amazon/redirect-to-normalized-url.user.js)
 
 ## DiskStation
 
