@@ -2,6 +2,10 @@
 
 My User Scripts
 
+## Amazon
+
+- [正規化されたURLにリダイレクト](https://github.com/munierujp/userscripts/raw/master/scripts/amazon/redirect-to-normalized-url.user.js)
+
 ## DiskStation
 
 ### Video Station
