@@ -4,6 +4,7 @@
 
 ## Amazon
 
+- [内部リンクを正規化](https://github.com/munierujp/userscripts/raw/master/scripts/amazon/normalize-internal-links.user.js)
 - [正規化されたURLにリダイレクト](https://github.com/munierujp/userscripts/raw/master/scripts/amazon/redirect-to-normalized-url.user.js)
 
 ## DiskStation
