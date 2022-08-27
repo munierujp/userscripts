@@ -1,6 +1,6 @@
 # userscripts
 
-My User Scripts
+ユーザースクリプト
 
 ## Amazon
 
