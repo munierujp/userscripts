@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name        内部リンクを正規化
 // @namespace    https://github.com/munierujp/
-// @version      0.1.0
+// @version      0.2.0
 // @description   Amazonの内部リンクを正規化します。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -19,17 +19,11 @@
 
   /**
    * @param {string} path
-   * @returns {string}
+   * @returns {string | undefined}
    */
-  const normalizePath = (path) => {
-    const matched = path.match(/^\/(([^/]+)\/)?dp\/([^?/]+)([?/].+)?/)
-
-    if (!matched) {
-      return path
-    }
-
-    const [, , , asin] = matched
-    return `/dp/${asin}`
+  const extractAsin = (path) => {
+    const matched = path.match(/^\/(gp\/product|(([^/]+)\/)?dp)\/([^?/]+)([?/].+)?/)
+    return matched?.[4]
   }
 
   const main = () => {
@@ -37,11 +31,17 @@
       .forEach(element => {
         const href = element.getAttribute('href')
 
-        if (!href || !href.startsWith('/')) {
+        if (href === null || !href.startsWith('/')) {
           return
         }
 
-        const normalizedPath = normalizePath(href)
+        const asin = extractAsin(href)
+
+        if (asin === undefined) {
+          return
+        }
+
+        const normalizedPath = `/dp/${asin}`
 
         if (normalizedPath !== href) {
           element.setAttribute('href', normalizedPath)
