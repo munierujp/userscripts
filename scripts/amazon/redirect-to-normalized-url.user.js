@@ -3,15 +3,16 @@
 // ==UserScript==
 // @name        正規化されたURLにリダイレクト
 // @namespace    https://github.com/munierujp/
-// @version      0.1.0
+// @version      0.2.0
 // @description   Amazonで正規化されたURLにリダイレクトします。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/scripts/amazon/redirect-to-normalized-url.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/scripts/amazon/redirect-to-normalized-url.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
-// @match        https://www.amazon.co.jp/dp/*
 // @match        https://www.amazon.co.jp/*/dp/*
+// @match        https://www.amazon.co.jp/dp/*
+// @match        https://www.amazon.co.jp/gp/product/*
 // @grant        none
 // ==/UserScript==
 
@@ -20,24 +21,24 @@
 
   /**
    * @param {string} url
-   * @returns {string}
+   * @returns {string | undefined}
    */
-  const normalizeUrl = (url) => {
-    const matched = url.match(/^https?:\/\/www\.amazon\.co\.jp\/(([^/]+)\/)?dp\/([^?/]+)([?/].+)?/)
-
-    if (matched === null) {
-      throw new Error(`Invalid URL. url=${url}`)
-    }
-
-    const [, , , asin] = matched
-    return `https://www.amazon.co.jp/dp/${asin}`
+  const extractAsin = (url) => {
+    const matched = url.match(/^https?:\/\/www\.amazon\.co\.jp\/(gp\/product|(([^/]+)\/)?dp)\/([^?/]+)([?/].+)?/)
+    return matched?.[4]
   }
 
   const main = () => {
     const url = location.href
-    const normalizedUrl = normalizeUrl(url)
+    const asin = extractAsin(url)
 
-    if (url !== normalizedUrl) {
+    if (asin === undefined) {
+      return
+    }
+
+    const normalizedUrl = `https://www.amazon.co.jp/dp/${asin}`
+
+    if (normalizedUrl !== url) {
       location.href = normalizedUrl
     }
   }
