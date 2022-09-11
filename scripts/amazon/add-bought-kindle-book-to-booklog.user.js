@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name        Kindle本の購入完了時にブクログに登録
 // @namespace    https://github.com/munierujp/
-// @version      0.1.0
+// @version      0.1.1
 // @description   AmazonでKindle本の購入完了時にブクログに読書状況を積読として登録します。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -20,8 +20,6 @@
 
   /** AmazonでKindle本を購入したイベント */
   const EVENT_AMAZON_BOUGHT = 'amazon_bought'
-  /** ブクログの本棚に登録したイベント */
-  const EVENT_BOOKLOG_ADDED = 'booklog_added'
   /** ブクログの準備が完了したイベント */
   const EVENT_BOOKLOG_READY = 'booklog_ready'
   /** Amazonのオリジン */
@@ -33,12 +31,12 @@
    * @param {URL} url
    * @returns {string | undefined}
    */
-  const extractAsin = (url) => {
+  const extractAsinOnAmazon = (url) => {
     return url.searchParams.get('asin') ?? undefined
   }
 
   const processAmazon = () => {
-    const asin = extractAsin(new URL(location.href))
+    const asin = extractAsinOnAmazon(new URL(location.href))
 
     if (asin === undefined) {
       throw new Error('ASIN is missing.')
@@ -47,41 +45,23 @@
     const booklogWindow = window.open(`${ORIGIN_BOOKLOG}/item/1/${asin}`, '_blank') ?? undefined
 
     if (booklogWindow === undefined) {
-      throw new Error('Failed to open window.')
+      throw new Error('Failed to open new window.')
     }
 
-    window.addEventListener('message', (event) => {
-      if (event.origin !== ORIGIN_BOOKLOG) {
-        return
-      }
-
-      switch (event.data) {
-        case EVENT_BOOKLOG_READY:
-          booklogWindow.postMessage(EVENT_AMAZON_BOUGHT, ORIGIN_BOOKLOG)
-          break
-        case EVENT_BOOKLOG_ADDED:
-          booklogWindow.close()
-          break
+    window.addEventListener('message', ({ data, origin }) => {
+      if (origin === ORIGIN_BOOKLOG && data === EVENT_BOOKLOG_READY) {
+        booklogWindow.postMessage(EVENT_AMAZON_BOUGHT, ORIGIN_BOOKLOG)
       }
     })
   }
 
   const processBooklog = () => {
     window.opener.postMessage(EVENT_BOOKLOG_READY, ORIGIN_AMAZON)
-    window.addEventListener('message', (event) => {
-      if (event.origin !== ORIGIN_AMAZON) {
-        return
-      }
-
-      if (event.data === EVENT_AMAZON_BOUGHT) {
+    window.addEventListener('message', ({ data, origin }) => {
+      if (origin === ORIGIN_AMAZON && data === EVENT_AMAZON_BOUGHT) {
         /** @type {HTMLAnchorElement | null} */
         const addButton = document.querySelector('a.additem_button[data-status="4"]')
-
-        if (addButton !== null) {
-          addButton.click()
-        }
-
-        window.opener.postMessage(EVENT_BOOKLOG_ADDED, ORIGIN_AMAZON)
+        addButton?.click()
       }
     })
   }
