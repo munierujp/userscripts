@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "My User Scripts",
   "private": true,
+  "scripts": {
+    "lint": "eslint '**/*.{js,ts}'"
+  },
   "devDependencies": {
     "@tsconfig/node16": "1.0.3",
     "@types/node": "16.11.58",
