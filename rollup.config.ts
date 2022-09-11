@@ -10,7 +10,9 @@ const createOptions = (id: string): RollupOptions => {
       format: 'iife',
       banner: async () => await readFile(`src/${id}/meta.txt`, 'utf8')
     },
-    plugins: [typescript()]
+    plugins: [
+      typescript()
+    ]
   }
 }
 
