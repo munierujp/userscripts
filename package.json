@@ -4,6 +4,7 @@
   "description": "My User Scripts",
   "private": true,
   "scripts": {
+    "build": "webpack --mode=production",
     "lint": "eslint '**/*.{js,ts}'"
   },
   "engines": {
