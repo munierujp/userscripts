@@ -4,7 +4,7 @@
   "description": "My User Scripts",
   "private": true,
   "scripts": {
-    "build": "webpack --mode=production",
+    "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "clean": "rimraf dist",
     "lint": "eslint '**/*.{js,ts}'",
     "prebuild": "npm run clean"
