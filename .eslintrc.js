@@ -1,3 +1,13 @@
+const importOrderRules = {
+  'sort-imports': 'off',
+  'import/order': ['error', {
+    alphabetize: {
+      order: 'asc',
+      caseInsensitive: true
+    }
+  }]
+}
+
 module.exports = {
   extends: [
     'standard-with-typescript',
@@ -13,6 +23,7 @@ module.exports = {
     browser: true
   },
   rules: {
+    ...importOrderRules,
     'tsdoc/syntax': 'warn'
   }
 }
