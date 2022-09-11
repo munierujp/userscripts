@@ -6,6 +6,9 @@
   "scripts": {
     "lint": "eslint '**/*.{js,ts}'"
   },
+  "engines": {
+    "node": "16.11.1"
+  },
   "devDependencies": {
     "@tsconfig/node16": "1.0.3",
     "@types/node": "16.11.58",
