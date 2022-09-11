@@ -20,6 +20,7 @@
     "eslint-config-standard-with-typescript": "22.0.0",
     "eslint-plugin-eslint-comments": "3.2.0",
     "eslint-plugin-tsdoc": "0.2.16",
+    "eslint-plugin-unicorn": "43.0.2",
     "rimraf": "3.0.2",
     "rollup": "2.79.0",
     "typescript": "4.8.3"
