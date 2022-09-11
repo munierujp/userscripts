@@ -1,7 +1,10 @@
 module.exports = {
   extends: [
-    'standard'
+    'standard-with-typescript'
   ],
+  parserOptions: {
+    project: './tsconfig.json'
+  },
   env: {
     browser: true
   }
