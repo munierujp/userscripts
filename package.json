@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode=production",
     "clean": "rimraf dist",
-    "lint": "eslint '**/*.{js,ts}'"
+    "lint": "eslint '**/*.{js,ts}'",
+    "prebuild": "npm run clean"
   },
   "engines": {
     "node": "16.11.1"
