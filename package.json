@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "webpack --mode=production",
+    "clean": "rimraf dist",
     "lint": "eslint '**/*.{js,ts}'"
   },
   "engines": {
