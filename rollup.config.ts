@@ -1,4 +1,4 @@
-import { readFile } from 'fs/promises'
+import { readFile } from 'node:fs/promises'
 import typescript from '@rollup/plugin-typescript'
 import type { RollupOptions } from 'rollup'
 
