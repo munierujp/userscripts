@@ -1,9 +1,7 @@
-// @ts-check
-
 // ==UserScript==
 // @name        サイト内リンクを現在のタブで開く
 // @namespace    https://github.com/munierujp/
-// @version      0.1.1
+// @version      0.2.0
 // @description   Amazonでサイト内リンクを現在のタブで開きます。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -13,28 +11,17 @@
 // @match        https://www.amazon.co.jp/*
 // @grant        none
 // ==/UserScript==
-
 (function () {
-  'use strict'
+    'use strict';
 
-  /**
-   * @param {HTMLAnchorElement} element
-   * @returns {boolean}
-   */
-  const isInternalLink = (element) => {
-    const href = element.getAttribute('href')
-    return href !== null && href.startsWith('/')
-  }
+    const isInternalLink = (element) => {
+        const href = element.getAttribute('href');
+        return href?.startsWith('/') ?? false;
+    };
 
-  const main = () => {
     Array.from(document.getElementsByTagName('a'))
-      .filter(element => isInternalLink(element))
-      .filter(element => {
-        const target = element.getAttribute('target')
-        return target && target === '_blank'
-      })
-      .forEach(element => element.removeAttribute('target'))
-  }
+        .filter(element => isInternalLink(element))
+        .filter(element => element.getAttribute('target') === '_blank')
+        .forEach(element => element.removeAttribute('target'));
 
-  main()
-})()
+})();
