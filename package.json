@@ -9,10 +9,12 @@
   "devDependencies": {
     "@tsconfig/node16": "1.0.3",
     "@types/node": "16.11.58",
+    "@types/webpack": "5.28.0",
     "eslint": "8.23.0",
     "eslint-config-standard-with-typescript": "22.0.0",
     "eslint-plugin-eslint-comments": "3.2.0",
     "eslint-plugin-tsdoc": "0.2.16",
-    "typescript": "4.8.3"
+    "typescript": "4.8.3",
+    "webpack": "5.28.0"
   }
 }
