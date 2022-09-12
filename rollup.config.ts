@@ -21,7 +21,8 @@ const config: RollupOptions[] = [
   createOptions('amazon/normalize-internal-links'),
   createOptions('amazon/open-internal-links-in-current-tab'),
   createOptions('amazon/redirect-to-normalized-url'),
-  createOptions('dmm/books/add-filter-button-on-bookmark-page')
+  createOptions('dmm/books/add-filter-button-on-bookmark-page'),
+  createOptions('disk-station/video-station/play-with-vlc')
 ]
 
 export default config
