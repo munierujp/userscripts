@@ -38,8 +38,8 @@
         if (asin === undefined) {
             throw new Error('ASIN is missing.');
         }
-        const booklogWindow = window.open(`${Origin.BOOKLOG}/item/1/${asin}`, '_blank');
-        if (booklogWindow === null) {
+        const booklogWindow = window.open(`${Origin.BOOKLOG}/item/1/${asin}`, '_blank') ?? undefined;
+        if (booklogWindow === undefined) {
             throw new Error('Failed to open new window.');
         }
         window.addEventListener('message', ({ data, origin }) => {

@@ -9,9 +9,9 @@ export const processAmazon = (): void => {
     throw new Error('ASIN is missing.')
   }
 
-  const booklogWindow = window.open(`${Origin.BOOKLOG}/item/1/${asin}`, '_blank')
+  const booklogWindow = window.open(`${Origin.BOOKLOG}/item/1/${asin}`, '_blank') ?? undefined
 
-  if (booklogWindow === null) {
+  if (booklogWindow === undefined) {
     throw new Error('Failed to open new window.')
   }
 
