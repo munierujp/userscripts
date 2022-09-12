@@ -1,23 +1,16 @@
 name: test
-on:
-  pull_request:
-    branches: [ master ]
+on: [pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ['16.11.1']
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install dependencies
-      run: npm ci
-    - name: Test
+        node-version: '16.11.1'
+    - run: npm ci
+    - run: npm run build --if-present
+    - name: test
       uses: ArtiomTr/jest-coverage-report-action@v2
       with:
         test-script: npm test
