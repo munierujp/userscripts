@@ -2,5 +2,10 @@ import { findOperationButtonElement } from './findOperationButtonElement'
 
 export const openDropdownMenuElement = (): void => {
   const operationButton = findOperationButtonElement()
-  operationButton?.click()
+
+  if (operationButton === undefined) {
+    throw new Error('Missing operation button element.')
+  }
+
+  operationButton.click()
 }

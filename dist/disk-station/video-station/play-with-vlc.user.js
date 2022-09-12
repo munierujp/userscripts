@@ -49,7 +49,10 @@
 
     const closeVideoInfoDialog = (dialog) => {
         const closeButton = findCloseButtonElement(dialog);
-        closeButton?.click();
+        if (closeButton === undefined) {
+            throw new Error('Missing close button element.');
+        }
+        closeButton.click();
     };
 
     const findFilePath = (dialog) => {
@@ -139,7 +142,10 @@
 
     const openDropdownMenuElement = () => {
         const operationButton = findOperationButtonElement();
-        operationButton?.click();
+        if (operationButton === undefined) {
+            throw new Error('Missing operation button element.');
+        }
+        operationButton.click();
     };
 
     const showDropdownMenuElement = (menuStyle) => {
@@ -225,7 +231,7 @@
 
     const replaceElement = (element, newElement) => {
         element.style.display = 'none';
-        element.parentElement?.insertBefore(newElement, element);
+        element.before(newElement);
     };
 
     const updatePlayButton = () => {
