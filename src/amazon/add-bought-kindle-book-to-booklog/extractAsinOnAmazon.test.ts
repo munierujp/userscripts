@@ -10,7 +10,7 @@ describe('extractAsinOnAmazon', () => {
     expect(actual).toBe(expected)
   })
 
-  it('returns undefined if it does not exist', () => {
+  it('returns undefined if ASIN does not exist', () => {
     const url = new URL('https://www.amazon.co.jp/kindle-dbs/thankYouPage')
 
     const actual = extractAsinOnAmazon(url)
