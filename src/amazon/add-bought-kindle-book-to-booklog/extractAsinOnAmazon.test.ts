@@ -1,4 +1,4 @@
-import { extractAsinOnAmazon } from "./extractAsinOnAmazon"
+import { extractAsinOnAmazon } from './extractAsinOnAmazon'
 
 describe('extractAsinOnAmazon', () => {
   it('returns ASIN if it exists', () => {
