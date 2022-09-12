@@ -10,7 +10,4 @@ jobs:
         node-version: '16.11.1'
     - run: npm ci
     - run: npm run build --if-present
-    - name: test
-      uses: ArtiomTr/jest-coverage-report-action@v2
-      with:
-        test-script: npm test
+    - run: npm test
