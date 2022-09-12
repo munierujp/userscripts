@@ -20,7 +20,8 @@ const config: RollupOptions[] = [
   createOptions('amazon/add-bought-kindle-book-to-booklog'),
   createOptions('amazon/normalize-internal-links'),
   createOptions('amazon/open-internal-links-in-current-tab'),
-  createOptions('amazon/redirect-to-normalized-url')
+  createOptions('amazon/redirect-to-normalized-url'),
+  createOptions('dmm/books/add-filter-button-on-bookmark-page')
 ]
 
 export default config
