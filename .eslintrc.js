@@ -33,7 +33,8 @@ module.exports = {
   extends: [
     'standard-with-typescript',
     'plugin:unicorn/recommended',
-    'plugin:eslint-comments/recommended'
+    'plugin:eslint-comments/recommended',
+    'plugin:jest/recommended'
   ],
   plugins: [
     'tsdoc'
