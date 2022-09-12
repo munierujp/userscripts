@@ -1,5 +1,6 @@
 import { EventType } from './EventType'
 import { extractAsinOnAmazon } from './extractAsinOnAmazon'
+import { openTab } from './openTab'
 import { Origin } from './Origin'
 
 export const processAmazon = (): void => {
@@ -9,15 +10,15 @@ export const processAmazon = (): void => {
     throw new Error('ASIN is missing.')
   }
 
-  const booklogWindow = window.open(`${Origin.BOOKLOG}/item/1/${asin}`, '_blank') ?? undefined
+  const booklogTab = openTab(`${Origin.BOOKLOG}/item/1/${asin}`)
 
-  if (booklogWindow === undefined) {
+  if (booklogTab === undefined) {
     throw new Error('Failed to open new window.')
   }
 
   window.addEventListener('message', ({ data, origin }) => {
     if (origin === Origin.BOOKLOG && data === EventType.BOOKLOG_READY) {
-      booklogWindow.postMessage(EventType.AMAZON_BOUGHT, Origin.BOOKLOG)
+      booklogTab.postMessage(EventType.AMAZON_BOUGHT, Origin.BOOKLOG)
     }
   })
 }
