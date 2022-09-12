@@ -15,59 +15,6 @@
 (function () {
     'use strict';
 
-    const FilterType = {
-        ALL: 'all',
-        DISCOUNTED: 'discounted'
-    };
-    const values$1 = Object.values(FilterType);
-    const isFilterType = (value) => values$1.includes(value);
-
-    const findMainElement = () => {
-        return document.getElementById('main-bmk') ?? undefined;
-    };
-
-    const showDiscountedItemsOnListView = (main) => {
-        const table = main.querySelector('table') ?? undefined;
-        if (table === undefined) {
-            throw new Error('Missing table element.');
-        }
-        const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td'));
-        dataRows.forEach(row => {
-            const discount = row.querySelector('.price .tx-sp');
-            const display = discount !== undefined ? 'table-row' : 'none';
-            row.style.display = display;
-        });
-    };
-
-    const showDiscountedItemsOnTableView = (main) => {
-        const list = main.querySelector('#list') ?? undefined;
-        if (list === undefined) {
-            throw new Error('Missing list element.');
-        }
-        const items = Array.from(list.querySelectorAll('li'));
-        items.forEach(item => {
-            const discount = item.querySelector('.txtoff') ?? undefined;
-            const display = discount !== undefined ? 'list-item' : 'none';
-            item.style.display = display;
-        });
-    };
-
-    const ViewType = {
-        LIST: 'list',
-        TABLE: 'table'
-    };
-    const values = Object.values(ViewType);
-    const isViewType = (value) => values.includes(value);
-
-    const getDiscountedItemsShower = (view) => {
-        switch (view) {
-            case ViewType.TABLE:
-                return showDiscountedItemsOnTableView;
-            case ViewType.LIST:
-                return showDiscountedItemsOnListView;
-        }
-    };
-
     const createCurrentButtonElement = (text) => {
         const label = document.createElement('span');
         label.style.paddingLeft = '8px';
@@ -99,6 +46,13 @@
         url.search = params.toString();
         return url;
     };
+
+    const FilterType = {
+        ALL: 'all',
+        DISCOUNTED: 'discounted'
+    };
+    const values$1 = Object.values(FilterType);
+    const isFilterType = (value) => values$1.includes(value);
 
     const TEXT$1 = 'すべて';
     const createAllButtonElement = (filterType) => {
@@ -149,7 +103,7 @@
         return main.querySelector('.d-rcol.selector') ?? undefined;
     };
 
-    const getFilterMenuAppender = (filterType) => {
+    const createFilterMenuAppender = (filterType) => {
         return (main) => {
             const menu = findMenuElement(main);
             if (menu === undefined) {
@@ -158,6 +112,52 @@
             const filterMenu = createFilterMenuElement(filterType);
             menu.append(filterMenu);
         };
+    };
+
+    const findMainElement = () => {
+        return document.getElementById('main-bmk') ?? undefined;
+    };
+
+    const showDiscountedItemsOnListView = (main) => {
+        const table = main.querySelector('table') ?? undefined;
+        if (table === undefined) {
+            throw new Error('Missing table element.');
+        }
+        const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td'));
+        dataRows.forEach(row => {
+            const discount = row.querySelector('.price .tx-sp');
+            const display = discount !== undefined ? 'table-row' : 'none';
+            row.style.display = display;
+        });
+    };
+
+    const showDiscountedItemsOnTableView = (main) => {
+        const list = main.querySelector('#list') ?? undefined;
+        if (list === undefined) {
+            throw new Error('Missing list element.');
+        }
+        const items = Array.from(list.querySelectorAll('li'));
+        items.forEach(item => {
+            const discount = item.querySelector('.txtoff') ?? undefined;
+            const display = discount !== undefined ? 'list-item' : 'none';
+            item.style.display = display;
+        });
+    };
+
+    const ViewType = {
+        LIST: 'list',
+        TABLE: 'table'
+    };
+    const values = Object.values(ViewType);
+    const isViewType = (value) => values.includes(value);
+
+    const getDiscountedItemsShower = (view) => {
+        switch (view) {
+            case ViewType.TABLE:
+                return showDiscountedItemsOnTableView;
+            case ViewType.LIST:
+                return showDiscountedItemsOnListView;
+        }
     };
 
     const params = new URLSearchParams(location.search);
@@ -175,7 +175,7 @@
         const showDiscountedItems = getDiscountedItemsShower(view);
         showDiscountedItems(main);
     }
-    const appendFilterMenu = getFilterMenuAppender(filterType);
+    const appendFilterMenu = createFilterMenuAppender(filterType);
     appendFilterMenu(main);
 
 })();

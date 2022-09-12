@@ -2,7 +2,7 @@ import { createFilterMenuElement } from './createFilterMenuElement'
 import { FilterType } from './FilterType'
 import { findMenuElement } from './findMenuElement'
 
-export const getFilterMenuAppender = (filterType: FilterType): (main: HTMLElement) => void => {
+export const createFilterMenuAppender = (filterType: FilterType): (main: HTMLElement) => void => {
   return (main) => {
     const menu = findMenuElement(main)
 

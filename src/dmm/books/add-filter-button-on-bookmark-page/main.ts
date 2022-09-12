@@ -1,10 +1,10 @@
+import { createFilterMenuAppender } from './createFilterMenuAppender'
 import {
   FilterType,
   isFilterType
 } from './FilterType'
 import { findMainElement } from './findMainElement'
 import { getDiscountedItemsShower } from './getDiscountedItemsShower'
-import { getFilterMenuAppender } from './getFilterMenuAppender'
 import { isViewType } from './ViewType'
 
 const params = new URLSearchParams(location.search)
@@ -27,5 +27,5 @@ if (filterType === FilterType.DISCOUNTED) {
   showDiscountedItems(main)
 }
 
-const appendFilterMenu = getFilterMenuAppender(filterType)
+const appendFilterMenu = createFilterMenuAppender(filterType)
 appendFilterMenu(main)
