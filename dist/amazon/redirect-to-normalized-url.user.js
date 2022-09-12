@@ -1,9 +1,7 @@
-// @ts-check
-
 // ==UserScript==
 // @name        正規化されたURLにリダイレクト
 // @namespace    https://github.com/munierujp/
-// @version      0.2.1
+// @version      0.3.0
 // @description   Amazonで正規化されたURLにリダイレクトします。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
@@ -15,33 +13,20 @@
 // @match        https://www.amazon.co.jp/gp/product/*
 // @grant        none
 // ==/UserScript==
-
 (function () {
-  'use strict'
+    'use strict';
 
-  /**
-   * @param {string} url
-   * @returns {string | undefined}
-   */
-  const extractAsin = (url) => {
-    const matched = url.match(/^https?:\/\/www\.amazon\.co\.jp\/(gp\/product|(([^/]+)\/)?dp)\/([^?/]+)([?/].+)?/)
-    return matched?.[4]
-  }
+    const extractAsin = (url) => {
+        return url.match(/^https?:\/\/www\.amazon\.co\.jp\/(gp\/product|(([^/]+)\/)?dp)\/([^/?]+)([/?].+)?/)?.[4];
+    };
 
-  const main = () => {
-    const url = location.href
-    const asin = extractAsin(url)
-
-    if (asin === undefined) {
-      return
+    const url = location.href;
+    const asin = extractAsin(url);
+    if (asin !== undefined) {
+        const normalizedUrl = `https://www.amazon.co.jp/dp/${asin}`;
+        if (normalizedUrl !== url) {
+            location.href = normalizedUrl;
+        }
     }
 
-    const normalizedUrl = `https://www.amazon.co.jp/dp/${asin}`
-
-    if (normalizedUrl !== url) {
-      location.href = normalizedUrl
-    }
-  }
-
-  main()
-})()
+})();

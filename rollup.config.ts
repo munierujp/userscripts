@@ -19,7 +19,8 @@ const createOptions = (id: string): RollupOptions => {
 const config: RollupOptions[] = [
   createOptions('amazon/add-bought-kindle-book-to-booklog'),
   createOptions('amazon/normalize-internal-links'),
-  createOptions('amazon/open-internal-links-in-current-tab')
+  createOptions('amazon/open-internal-links-in-current-tab'),
+  createOptions('amazon/redirect-to-normalized-url')
 ]
 
 export default config
