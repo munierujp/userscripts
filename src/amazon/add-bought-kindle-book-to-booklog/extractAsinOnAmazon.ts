@@ -1,3 +1,3 @@
-export const extractAsinOnAmazon = (url: URL): string | null => {
-  return url.searchParams.get('asin')
+export const extractAsinOnAmazon = (url: URL): string | undefined => {
+  return url.searchParams.get('asin') ?? undefined
 }

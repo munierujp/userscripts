@@ -30,11 +30,11 @@
     };
 
     const extractAsinOnAmazon = (url) => {
-        return url.searchParams.get('asin');
+        return url.searchParams.get('asin') ?? undefined;
     };
 
     const processAmazon = () => {
-        const asin = extractAsinOnAmazon(new URL(location.href)) ?? undefined;
+        const asin = extractAsinOnAmazon(new URL(location.href));
         if (asin === undefined) {
             throw new Error('ASIN is missing.');
         }

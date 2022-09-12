@@ -3,7 +3,7 @@ import { extractAsinOnAmazon } from './extractAsinOnAmazon'
 import { Origin } from './Origin'
 
 export const processAmazon = (): void => {
-  const asin = extractAsinOnAmazon(new URL(location.href)) ?? undefined
+  const asin = extractAsinOnAmazon(new URL(location.href))
 
   if (asin === undefined) {
     throw new Error('ASIN is missing.')
