@@ -16,6 +16,7 @@
     "@jest/types": "29.0.3",
     "@rollup/plugin-typescript": "8.5.0",
     "@tsconfig/node16": "1.0.3",
+    "@types/jest": "29.0.1",
     "@types/node": "16.11.58",
     "eslint": "8.23.0",
     "eslint-config-standard-with-typescript": "22.0.0",
