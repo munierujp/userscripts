@@ -18,6 +18,7 @@ const createOptions = (id: string): RollupOptions => {
 
 const config: RollupOptions[] = [
   createOptions('amazon/add-bought-kindle-book-to-booklog'),
+  createOptions('amazon/normalize-internal-links'),
   createOptions('amazon/open-internal-links-in-current-tab')
 ]
 
