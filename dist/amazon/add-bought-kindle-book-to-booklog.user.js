@@ -33,18 +33,14 @@
         return url.searchParams.get('asin') ?? undefined;
     };
 
-    const openTab = (url) => {
-        return window.open(url, '_blank') ?? undefined;
-    };
-
     const processAmazon = () => {
         const asin = extractAsinOnAmazon(new URL(location.href));
         if (asin === undefined) {
             throw new Error('ASIN is missing.');
         }
-        const booklogTab = openTab(`${Origin.BOOKLOG}/item/1/${asin}`);
+        const booklogTab = window.open(`${Origin.BOOKLOG}/item/1/${asin}`, '_blank') ?? undefined;
         if (booklogTab === undefined) {
-            throw new Error('Failed to open new window.');
+            throw new Error('Failed to open new tab.');
         }
         window.addEventListener('message', ({ data, origin }) => {
             if (origin === Origin.BOOKLOG && data === EventType.BOOKLOG_READY) {
