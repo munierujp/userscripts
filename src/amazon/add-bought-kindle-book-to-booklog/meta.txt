@@ -8,7 +8,7 @@
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/amazon/add-bought-kindle-book-to-booklog.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/amazon/add-bought-kindle-book-to-booklog.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
-// @match        https://www.amazon.co.jp/kindle-dbs/thankYouPage?*
-// @match        https://booklog.jp/item/1/*
+// @match        *://booklog.jp/item/1/*
+// @match        *://www.amazon.co.jp/kindle-dbs/thankYouPage?*
 // @grant        none
 // ==/UserScript==

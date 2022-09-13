@@ -8,8 +8,8 @@
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/dmm/books/add-filter-button-on-bookmark-page.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/dmm/books/add-filter-button-on-bookmark-page.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
-// @match        https://book.dmm.com/bookmark/*
-// @match        https://book.dmm.co.jp/bookmark/*
+// @match        *://book.dmm.co.jp/bookmark/*
+// @match        *://book.dmm.com/bookmark/*
 // @grant        none
 // ==/UserScript==
 (function () {
@@ -114,10 +114,6 @@
         };
     };
 
-    const findMainElement = () => {
-        return document.getElementById('main-bmk') ?? undefined;
-    };
-
     const showDiscountedItemsOnListView = (main) => {
         const table = main.querySelector('table') ?? undefined;
         if (table === undefined) {
@@ -125,7 +121,7 @@
         }
         const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td'));
         dataRows.forEach(row => {
-            const discount = row.querySelector('.price .tx-sp');
+            const discount = row.querySelector('.price .tx-sp') ?? undefined;
             const display = discount !== undefined ? 'table-row' : 'none';
             row.style.display = display;
         });
@@ -167,7 +163,7 @@
     }
     const filter = params.get('filter');
     const filterType = isFilterType(filter) ? filter : FilterType.ALL;
-    const main = findMainElement();
+    const main = document.getElementById('main-bmk') ?? undefined;
     if (main === undefined) {
         throw new Error('Missing main element.');
     }

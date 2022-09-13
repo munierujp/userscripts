@@ -8,6 +8,6 @@
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/amazon/normalize-internal-links.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/amazon/normalize-internal-links.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
-// @match        https://www.amazon.co.jp/*
+// @match        *://www.amazon.co.jp/*
 // @grant        none
 // ==/UserScript==

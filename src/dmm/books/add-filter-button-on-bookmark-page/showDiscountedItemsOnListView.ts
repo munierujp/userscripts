@@ -7,7 +7,7 @@ export const showDiscountedItemsOnListView = (main: HTMLElement): void => {
 
   const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td'))
   dataRows.forEach(row => {
-    const discount = row.querySelector('.price .tx-sp')
+    const discount = row.querySelector('.price .tx-sp') ?? undefined
     const display = discount !== undefined ? 'table-row' : 'none'
     row.style.display = display
   })

@@ -8,9 +8,9 @@
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/amazon/redirect-to-normalized-url.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/amazon/redirect-to-normalized-url.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
-// @match        https://www.amazon.co.jp/*/dp/*
-// @match        https://www.amazon.co.jp/dp/*
-// @match        https://www.amazon.co.jp/gp/product/*
+// @match        *://www.amazon.co.jp/*/dp/*
+// @match        *://www.amazon.co.jp/dp/*
+// @match        *://www.amazon.co.jp/gp/product/*
 // @grant        none
 // ==/UserScript==
 (function () {
@@ -22,11 +22,12 @@
 
     const url = location.href;
     const asin = extractAsin(url);
-    if (asin !== undefined) {
-        const normalizedUrl = `https://www.amazon.co.jp/dp/${asin}`;
-        if (normalizedUrl !== url) {
-            location.href = normalizedUrl;
-        }
+    if (asin === undefined) {
+        throw new Error('Missing ASIN.');
+    }
+    const normalizedUrl = `https://www.amazon.co.jp/dp/${asin}`;
+    if (normalizedUrl !== url) {
+        location.href = normalizedUrl;
     }
 
 })();

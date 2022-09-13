@@ -3,7 +3,6 @@ import {
   FilterType,
   isFilterType
 } from './FilterType'
-import { findMainElement } from './findMainElement'
 import { getDiscountedItemsShower } from './getDiscountedItemsShower'
 import { isViewType } from './ViewType'
 
@@ -16,7 +15,7 @@ if (!isViewType(view)) {
 
 const filter = params.get('filter')
 const filterType = isFilterType(filter) ? filter : FilterType.ALL
-const main = findMainElement()
+const main = document.getElementById('main-bmk') ?? undefined
 
 if (main === undefined) {
   throw new Error('Missing main element.')
