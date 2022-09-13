@@ -11,7 +11,7 @@ describe('extractAsinOnAmazon', () => {
   })
 
   it('returns undefined if ASIN does not exist', () => {
-    const url = new URL('https://www.amazon.co.jp/kindle-dbs/thankYouPage')
+    const url = new URL('https://www.amazon.co.jp/kindle-dbs/thankYouPage?')
 
     const actual = extractAsinOnAmazon(url)
 
