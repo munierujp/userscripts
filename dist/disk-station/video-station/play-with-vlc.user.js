@@ -206,16 +206,22 @@
         });
     };
 
+    const handleError = (error) => {
+        throw error;
+    };
+
+    const onClickButton = async () => {
+        const filePath = await fetchFilePath();
+        const url = createUrl(filePath);
+        window.open(url);
+    };
     const createPlayWithVlcButton = (playButton) => {
         const playWithVlcButton = playButton.cloneNode(true);
         if (!(playWithVlcButton instanceof HTMLElement)) {
             throw new TypeError('Failed to clone node.');
         }
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        playWithVlcButton.addEventListener('click', async () => {
-            const filePath = await fetchFilePath();
-            const url = createUrl(filePath);
-            window.open(url);
+        playWithVlcButton.addEventListener('click', () => {
+            onClickButton().catch(handleError);
         });
         return playWithVlcButton;
     };
