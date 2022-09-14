@@ -1,4 +1,4 @@
-export const showDiscountedItemsOnTableView = (main: HTMLElement): void => {
+export const showDiscountedItemsOnTableView = (main: Element): void => {
   const list = main.querySelector('#list')
 
   if (list === null) {
