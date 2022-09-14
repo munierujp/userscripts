@@ -3,7 +3,7 @@ import { showDiscountedItemsOnListView } from './showDiscountedItemsOnListView'
 import { showDiscountedItemsOnTableView } from './showDiscountedItemsOnTableView'
 import { ViewType } from './ViewType'
 
-export const getDiscountedItemsShower = (view: ViewType): (main: HTMLElement) => void => {
+export const getDiscountedItemsShower = (view: ViewType): (main: Element) => void => {
   switch (view) {
     case ViewType.TABLE:
       return showDiscountedItemsOnTableView
