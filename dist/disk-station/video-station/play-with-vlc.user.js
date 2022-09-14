@@ -34,28 +34,6 @@
         return encodeURI(`vlc:///Volumes${filePath}`);
     };
 
-    const findCloseButtonElement = (dialog) => {
-        return dialog.querySelector('button[aria-label="閉じる"]') ?? undefined;
-    };
-
-    const closeVideoInfoDialog = (dialog) => {
-        const closeButton = findCloseButtonElement(dialog);
-        if (closeButton === undefined) {
-            throw new Error('Missing close button element.');
-        }
-        closeButton.click();
-    };
-
-    const findFilePath = (dialog) => {
-        return Array.from(dialog.querySelectorAll('tr'))
-            .map(row => Array.from(row.querySelectorAll('td')))
-            .filter(({ length }) => length >= 2)
-            .map(cells => cells.map(({ textContent }) => textContent ?? undefined))
-            .filter(([label]) => label === 'ファイル パス')
-            .map(([, value]) => value)
-            .find(value => value !== undefined);
-    };
-
     const findVideoInfoDialogStyleElement = () => {
         const element = document.getElementById(ID.VIDEO_INFO_DIALOG);
         return element instanceof HTMLStyleElement ? element : undefined;
@@ -116,6 +94,37 @@
         showDropdownMenuElement(dropdownMenuStyle);
     };
 
+    class VideoInfoDialog {
+        constructor(element) {
+            this.element = element;
+        }
+        static fromMutations(mutations) {
+            const videoInfoDialog = mutations
+                .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof HTMLElement))
+                .find(({ classList }) => classList.contains('video-info-dialog'));
+            if (videoInfoDialog === undefined) {
+                return undefined;
+            }
+            return new VideoInfoDialog(videoInfoDialog);
+        }
+        findFilePath() {
+            return Array.from(this.element.querySelectorAll('tr'))
+                .map(row => Array.from(row.querySelectorAll('td')))
+                .filter(({ length }) => length >= 2)
+                .map(cells => cells.map(({ textContent }) => textContent ?? undefined))
+                .filter(([label]) => label === 'ファイル パス')
+                .map(([, value]) => value)
+                .find(value => value !== undefined);
+        }
+        close() {
+            const closeButton = this.element.querySelector('button[aria-label="閉じる"]');
+            if (closeButton === null) {
+                throw new Error('Missing close button element.');
+            }
+            closeButton.click();
+        }
+    }
+
     const fetchFilePath = async () => {
         const desktop = document.getElementById('sds-desktop');
         if (desktop === null) {
@@ -127,19 +136,17 @@
         }
         return await new Promise(resolve => {
             const observer = new MutationObserver((mutations, observer) => {
-                const videoInfoDialog = mutations
-                    .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof HTMLElement))
-                    .find(({ classList }) => classList.contains('video-info-dialog'));
+                const videoInfoDialog = VideoInfoDialog.fromMutations(mutations);
                 if (videoInfoDialog === undefined) {
                     return;
                 }
                 // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
                 observer.disconnect();
-                const filePath = findFilePath(videoInfoDialog);
+                const filePath = videoInfoDialog.findFilePath();
                 if (filePath === undefined) {
                     throw new Error('Missing file path.');
                 }
-                closeVideoInfoDialog(videoInfoDialog);
+                videoInfoDialog.close();
                 resolve(filePath);
             });
             observer.observe(desktop, {

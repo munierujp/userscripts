@@ -1,7 +1,6 @@
-import { closeVideoInfoDialog } from './closeVideoInfoDialog'
-import { findFilePath } from './findFilePath'
 import { findVideoInfoDialogStyleElement } from './findVideoInfoDialogStyleElement'
 import { openVideoInfoDialog } from './openVideoInfoDialog'
+import { VideoInfoDialog } from './VideoInfoDialog'
 
 export const fetchFilePath = async (): Promise<string> => {
   const desktop = document.getElementById('sds-desktop')
@@ -18,9 +17,7 @@ export const fetchFilePath = async (): Promise<string> => {
 
   return await new Promise(resolve => {
     const observer = new MutationObserver((mutations, observer) => {
-      const videoInfoDialog = mutations
-        .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node): node is HTMLElement => node instanceof HTMLElement))
-        .find(({ classList }) => classList.contains('video-info-dialog'))
+      const videoInfoDialog = VideoInfoDialog.fromMutations(mutations)
 
       if (videoInfoDialog === undefined) {
         return
@@ -28,13 +25,13 @@ export const fetchFilePath = async (): Promise<string> => {
 
       // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
       observer.disconnect()
-      const filePath = findFilePath(videoInfoDialog)
+      const filePath = videoInfoDialog.findFilePath()
 
       if (filePath === undefined) {
         throw new Error('Missing file path.')
       }
 
-      closeVideoInfoDialog(videoInfoDialog)
+      videoInfoDialog.close()
       resolve(filePath)
     })
     observer.observe(desktop, {
