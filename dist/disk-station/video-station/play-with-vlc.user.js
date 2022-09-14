@@ -123,7 +123,6 @@
       }
   }
 
-  // TODO: リファクタリング
   const fetchFilePath = async () => {
       const desktop = document.getElementById('sds-desktop');
       if (desktop === null) {
