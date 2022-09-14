@@ -1,12 +1,13 @@
-import { createStyleElement } from './createStyleElement'
-
 const ID = 'jp-munieru-style-dropdown-menu'
 
 export class DropdownMenuStyle {
   constructor (private readonly element: HTMLStyleElement) {}
 
   static create (): DropdownMenuStyle {
-    const element = createStyleElement(ID)
+    const element = document.createElement('style')
+    element.id = ID
+    element.type = 'text/css'
+
     document.head.append(element)
     return new DropdownMenuStyle(element)
   }

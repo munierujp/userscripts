@@ -1,4 +1,3 @@
-import { findVideoInfoDialogStyleElement } from './findVideoInfoDialogStyleElement'
 import { openVideoInfoDialog } from './openVideoInfoDialog'
 import { VideoInfoDialog } from './VideoInfoDialog'
 
@@ -8,12 +7,6 @@ export const fetchFilePath = async (): Promise<string> => {
 
   if (desktop === null) {
     throw new Error('Missing desktop element.')
-  }
-
-  const videoInfoDialogStyle = findVideoInfoDialogStyleElement()
-
-  if (videoInfoDialogStyle === undefined) {
-    throw new Error('Missing video info dialog style element.')
   }
 
   return await new Promise(resolve => {
