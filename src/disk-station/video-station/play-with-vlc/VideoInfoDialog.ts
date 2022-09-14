@@ -1,6 +1,5 @@
 import { DropdownMenuStyle } from './DropdownMenuStyle'
 import { findActionButtonElement } from './findActionButtonElement'
-import { findOperationButtonElement } from './findOperationButtonElement'
 import { findVideoInfoDialogLinkElement } from './findVideoInfoDialogLinkElement'
 
 export class VideoInfoDialog {
@@ -40,9 +39,9 @@ export class VideoInfoDialog {
     }
 
     dropdownMenuStyle.hideDropdownMenu()
-    const operationButton = findOperationButtonElement()
+    const operationButton = document.querySelector<HTMLButtonElement>('button[aria-label="アクション/操作"]')
 
-    if (operationButton === undefined) {
+    if (operationButton === null) {
       throw new Error('Missing operation button element.')
     }
 

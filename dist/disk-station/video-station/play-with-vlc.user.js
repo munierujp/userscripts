@@ -63,11 +63,6 @@
   };
 
   // TODO: リファクタリング
-  const findOperationButtonElement = () => {
-      return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
-  };
-
-  // TODO: リファクタリング
   const findVideoInfoDialogLinkElement = () => {
       const links = Array.from(document.querySelectorAll('a.x-menu-list-item'));
       return links.find(({ textContent }) => textContent === 'メディア情報を表示');
@@ -102,8 +97,8 @@
               throw new Error('Missing video info dialog link element.');
           }
           dropdownMenuStyle.hideDropdownMenu();
-          const operationButton = findOperationButtonElement();
-          if (operationButton === undefined) {
+          const operationButton = document.querySelector('button[aria-label="アクション/操作"]');
+          if (operationButton === null) {
               throw new Error('Missing operation button element.');
           }
           operationButton.click();
