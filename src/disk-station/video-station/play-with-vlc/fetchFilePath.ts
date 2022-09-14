@@ -1,4 +1,3 @@
-import { openVideoInfoDialog } from './openVideoInfoDialog'
 import { VideoInfoDialog } from './VideoInfoDialog'
 
 // TODO: リファクタリング
@@ -31,6 +30,6 @@ export const fetchFilePath = async (): Promise<string> => {
     observer.observe(desktop, {
       childList: true
     })
-    openVideoInfoDialog()
+    VideoInfoDialog.open()
   })
 }

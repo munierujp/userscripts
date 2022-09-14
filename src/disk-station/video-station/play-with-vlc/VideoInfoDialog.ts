@@ -1,3 +1,8 @@
+import { DropdownMenuStyle } from './DropdownMenuStyle'
+import { findActionButtonElement } from './findActionButtonElement'
+import { findOperationButtonElement } from './findOperationButtonElement'
+import { findVideoInfoDialogLinkElement } from './findVideoInfoDialogLinkElement'
+
 export class VideoInfoDialog {
   constructor (private readonly element: HTMLElement) {}
 
@@ -11,6 +16,39 @@ export class VideoInfoDialog {
     }
 
     return new VideoInfoDialog(videoInfoDialog)
+  }
+
+  // TODO: リファクタリング
+  static open (): void {
+    const dropdownMenuStyle = DropdownMenuStyle.find()
+
+    if (dropdownMenuStyle === undefined) {
+      throw new Error('Missing dropdown menu style element.')
+    }
+
+    const actionButton = findActionButtonElement()
+
+    if (actionButton === undefined) {
+      throw new Error('Missing action button element.')
+    }
+
+    actionButton.click()
+    const videoInfoDialogLink = findVideoInfoDialogLinkElement()
+
+    if (videoInfoDialogLink === undefined) {
+      throw new Error('Missing video info dialog link element.')
+    }
+
+    dropdownMenuStyle.hideDropdownMenu()
+    const operationButton = findOperationButtonElement()
+
+    if (operationButton === undefined) {
+      throw new Error('Missing operation button element.')
+    }
+
+    operationButton.click()
+    videoInfoDialogLink.click()
+    dropdownMenuStyle.showDropdownMenu()
   }
 
   findFilePath (): string | undefined {
