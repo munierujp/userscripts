@@ -4,11 +4,11 @@ import { findOperationButtonElement } from './findOperationButtonElement'
 import { findVideoInfoDialogLinkElement } from './findVideoInfoDialogLinkElement'
 
 export class VideoInfoDialog {
-  constructor (private readonly element: HTMLElement) {}
+  constructor (private readonly element: Element) {}
 
   static fromMutations (mutations: MutationRecord[]): VideoInfoDialog | undefined {
     const videoInfoDialog = mutations
-      .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node): node is HTMLElement => node instanceof HTMLElement))
+      .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node): node is Element => node instanceof Element))
       .find(({ classList }) => classList.contains('video-info-dialog'))
 
     if (videoInfoDialog === undefined) {

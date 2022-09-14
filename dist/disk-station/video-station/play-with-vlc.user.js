@@ -79,7 +79,7 @@
       }
       static fromMutations(mutations) {
           const videoInfoDialog = mutations
-              .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof HTMLElement))
+              .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof Element))
               .find(({ classList }) => classList.contains('video-info-dialog'));
           if (videoInfoDialog === undefined) {
               return undefined;
