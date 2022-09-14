@@ -21,11 +21,6 @@
         return style;
     };
 
-    const appendStyleElement = (id) => {
-        const style = createStyleElement(id);
-        document.head.append(style);
-    };
-
     const isVideoStationPage = (url) => {
         return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance';
     };
@@ -190,11 +185,11 @@
     };
 
     // TODO: サムネイル上の小さい再生ボタンも書き換える
-    const ID_DROPDOWN_MENU_STYLE = 'jp-munieru-style-dropdown-menu';
-    const ID_VIDEO_INFO_DIALOG_STYLE = 'jp-munieru-style-video-info-dialog';
     if (isVideoStationPage(new URL(location.href))) {
-        appendStyleElement(ID_DROPDOWN_MENU_STYLE);
-        appendStyleElement(ID_VIDEO_INFO_DIALOG_STYLE);
+        const dropdownMenuStyle = createStyleElement('jp-munieru-style-dropdown-menu');
+        document.head.append(dropdownMenuStyle);
+        const videoInfoDialogStyle = createStyleElement('jp-munieru-style-video-info-dialog');
+        document.head.append(videoInfoDialogStyle);
         updatePlayButton();
     }
 
