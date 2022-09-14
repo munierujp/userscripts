@@ -1,10 +1,14 @@
 // TODO: サムネイル上の小さい再生ボタンも書き換える
 
-import { appendStyleElements } from './appendStyleElements'
+import { appendStyleElement } from './appendStyleElement'
 import { isVideoStationPage } from './isVideoStationPage'
 import { updatePlayButton } from './updatePlayButton'
 
+const ID_DROPDOWN_MENU_STYLE = 'jp-munieru-style-dropdown-menu'
+const ID_VIDEO_INFO_DIALOG_STYLE = 'jp-munieru-style-video-info-dialog'
+
 if (isVideoStationPage(new URL(location.href))) {
-  appendStyleElements()
+  appendStyleElement(ID_DROPDOWN_MENU_STYLE)
+  appendStyleElement(ID_VIDEO_INFO_DIALOG_STYLE)
   updatePlayButton()
 }
