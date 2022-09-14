@@ -1,5 +1,3 @@
-export const isVideoStationPage = (): boolean => {
-  const params = new URLSearchParams(location.search)
-  const appId = params.get('launchApp')
-  return appId === 'SYNO.SDS.VideoStation.AppInstance'
+export const isVideoStationPage = (url: URL): boolean => {
+  return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance'
 }

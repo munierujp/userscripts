@@ -4,7 +4,7 @@ import { appendStyleElements } from './appendStyleElements'
 import { isVideoStationPage } from './isVideoStationPage'
 import { updatePlayButton } from './updatePlayButton'
 
-if (isVideoStationPage()) {
+if (isVideoStationPage(new URL(location.href))) {
   appendStyleElements()
   updatePlayButton()
 }

@@ -33,10 +33,8 @@
         appendStyleElement(ID_VIDEO_INFO_DIALOG_STYLE);
     };
 
-    const isVideoStationPage = () => {
-        const params = new URLSearchParams(location.search);
-        const appId = params.get('launchApp');
-        return appId === 'SYNO.SDS.VideoStation.AppInstance';
+    const isVideoStationPage = (url) => {
+        return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance';
     };
 
     const createUrl = (filePath) => {
@@ -256,7 +254,7 @@
     };
 
     // TODO: サムネイル上の小さい再生ボタンも書き換える
-    if (isVideoStationPage()) {
+    if (isVideoStationPage(new URL(location.href))) {
         appendStyleElements();
         updatePlayButton();
     }
