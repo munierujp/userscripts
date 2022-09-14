@@ -1,6 +1,5 @@
 import { createUrl } from './createUrl'
 import { fetchFilePath } from './fetchFilePath'
-import { handleError } from './handleError'
 
 const onClickButton = async (): Promise<void> => {
   const filePath = await fetchFilePath()
@@ -16,7 +15,9 @@ export const createPlayWithVlcButton = (playButton: HTMLElement): HTMLElement =>
   }
 
   playWithVlcButton.addEventListener('click', () => {
-    onClickButton().catch(handleError)
+    onClickButton().catch(error => {
+      throw error
+    })
   })
   return playWithVlcButton
 }

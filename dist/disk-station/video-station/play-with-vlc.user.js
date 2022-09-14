@@ -156,10 +156,6 @@
         });
     };
 
-    const handleError = (error) => {
-        throw error;
-    };
-
     const onClickButton = async () => {
         const filePath = await fetchFilePath();
         const url = createUrl(filePath);
@@ -171,7 +167,9 @@
             throw new TypeError('Failed to clone node.');
         }
         playWithVlcButton.addEventListener('click', () => {
-            onClickButton().catch(handleError);
+            onClickButton().catch(error => {
+                throw error;
+            });
         });
         return playWithVlcButton;
     };
