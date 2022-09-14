@@ -1,3 +1,4 @@
+// TODO: リファクタリング
 // TODO: サムネイル上の小さい再生ボタンも書き換える
 
 import { createStyleElement } from './createStyleElement'

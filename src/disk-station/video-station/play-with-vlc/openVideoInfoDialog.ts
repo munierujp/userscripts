@@ -5,6 +5,7 @@ import { findVideoInfoDialogLinkElement } from './findVideoInfoDialogLinkElement
 import { hideDropdownMenuElement } from './hideDropdownMenuElement'
 import { showDropdownMenuElement } from './showDropdownMenuElement'
 
+// TODO: リファクタリング
 export const openVideoInfoDialog = (): void => {
   const dropdownMenuStyle = findDropdownMenuStyleElement()
 

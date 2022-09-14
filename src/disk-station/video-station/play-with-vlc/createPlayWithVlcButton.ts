@@ -1,6 +1,7 @@
 import { createUrl } from './createUrl'
 import { fetchFilePath } from './fetchFilePath'
 
+// TODO: リファクタリング
 const onClickButton = async (): Promise<void> => {
   const filePath = await fetchFilePath()
   const url = createUrl(filePath)
