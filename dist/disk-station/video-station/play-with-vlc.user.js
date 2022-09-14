@@ -177,8 +177,8 @@
 
     const fetchFilePath = async () => {
         return await new Promise(resolve => {
-            const target = document.getElementById('sds-desktop') ?? undefined;
-            if (target === undefined) {
+            const target = document.getElementById('sds-desktop');
+            if (target === null) {
                 throw new Error('Missing target element.');
             }
             const videoInfoDialogStyle = findVideoInfoDialogStyleElement();

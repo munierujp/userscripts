@@ -7,17 +7,17 @@ import { getDiscountedItemsShower } from './getDiscountedItemsShower'
 import { isViewType } from './ViewType'
 
 const params = new URLSearchParams(location.search)
-const view = params.get('view') ?? undefined
+const view = params.get('view')
 
 if (!isViewType(view)) {
-  throw new Error(`Invalid view. view=${view ?? 'undefined'}`)
+  throw new Error(`Invalid view. view=${String(view)}`)
 }
 
 const filter = params.get('filter')
 const filterType = isFilterType(filter) ? filter : FilterType.ALL
-const main = document.getElementById('main-bmk') ?? undefined
+const main = document.getElementById('main-bmk')
 
-if (main === undefined) {
+if (main === null) {
   throw new Error('Missing main element.')
 }
 

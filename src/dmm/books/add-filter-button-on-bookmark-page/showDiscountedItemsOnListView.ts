@@ -1,14 +1,14 @@
 export const showDiscountedItemsOnListView = (main: HTMLElement): void => {
-  const table = main.querySelector('table') ?? undefined
+  const table = main.querySelector('table')
 
-  if (table === undefined) {
+  if (table === null) {
     throw new Error('Missing table element.')
   }
 
   const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td'))
   dataRows.forEach(row => {
-    const discount = row.querySelector('.price .tx-sp') ?? undefined
-    const display = discount !== undefined ? 'table-row' : 'none'
+    const discount = row.querySelector('.price .tx-sp')
+    const display = discount !== null ? 'table-row' : 'none'
     row.style.display = display
   })
 }

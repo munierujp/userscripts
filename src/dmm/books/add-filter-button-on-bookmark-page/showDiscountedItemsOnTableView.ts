@@ -1,14 +1,14 @@
 export const showDiscountedItemsOnTableView = (main: HTMLElement): void => {
-  const list = main.querySelector('#list') ?? undefined
+  const list = main.querySelector('#list')
 
-  if (list === undefined) {
+  if (list === null) {
     throw new Error('Missing list element.')
   }
 
   const items = Array.from(list.querySelectorAll('li'))
   items.forEach(item => {
-    const discount = item.querySelector('.txtoff') ?? undefined
-    const display = discount !== undefined ? 'list-item' : 'none'
+    const discount = item.querySelector('.txtoff')
+    const display = discount !== null ? 'list-item' : 'none'
     item.style.display = display
   })
 }

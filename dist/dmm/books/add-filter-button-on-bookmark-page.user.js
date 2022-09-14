@@ -115,27 +115,27 @@
     };
 
     const showDiscountedItemsOnListView = (main) => {
-        const table = main.querySelector('table') ?? undefined;
-        if (table === undefined) {
+        const table = main.querySelector('table');
+        if (table === null) {
             throw new Error('Missing table element.');
         }
         const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td'));
         dataRows.forEach(row => {
-            const discount = row.querySelector('.price .tx-sp') ?? undefined;
-            const display = discount !== undefined ? 'table-row' : 'none';
+            const discount = row.querySelector('.price .tx-sp');
+            const display = discount !== null ? 'table-row' : 'none';
             row.style.display = display;
         });
     };
 
     const showDiscountedItemsOnTableView = (main) => {
-        const list = main.querySelector('#list') ?? undefined;
-        if (list === undefined) {
+        const list = main.querySelector('#list');
+        if (list === null) {
             throw new Error('Missing list element.');
         }
         const items = Array.from(list.querySelectorAll('li'));
         items.forEach(item => {
-            const discount = item.querySelector('.txtoff') ?? undefined;
-            const display = discount !== undefined ? 'list-item' : 'none';
+            const discount = item.querySelector('.txtoff');
+            const display = discount !== null ? 'list-item' : 'none';
             item.style.display = display;
         });
     };
@@ -157,14 +157,14 @@
     };
 
     const params = new URLSearchParams(location.search);
-    const view = params.get('view') ?? undefined;
+    const view = params.get('view');
     if (!isViewType(view)) {
-        throw new Error(`Invalid view. view=${view ?? 'undefined'}`);
+        throw new Error(`Invalid view. view=${String(view)}`);
     }
     const filter = params.get('filter');
     const filterType = isFilterType(filter) ? filter : FilterType.ALL;
-    const main = document.getElementById('main-bmk') ?? undefined;
-    if (main === undefined) {
+    const main = document.getElementById('main-bmk');
+    if (main === null) {
         throw new Error('Missing main element.');
     }
     if (filterType === FilterType.DISCOUNTED) {

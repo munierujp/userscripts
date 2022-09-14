@@ -2,9 +2,9 @@ import { extractAsin } from './extractAsin'
 
 Array.from(document.getElementsByTagName('a'))
   .forEach(element => {
-    const href = element.getAttribute('href') ?? undefined
+    const href = element.getAttribute('href')
 
-    if (href === undefined || !href.startsWith('/')) {
+    if (href === null || !href.startsWith('/')) {
       return
     }
 

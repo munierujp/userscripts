@@ -9,9 +9,9 @@ import { showVideoInfoDialog } from './showVideoInfoDialog'
 
 export const fetchFilePath = async (): Promise<string> => {
   return await new Promise(resolve => {
-    const target = document.getElementById('sds-desktop') ?? undefined
+    const target = document.getElementById('sds-desktop')
 
-    if (target === undefined) {
+    if (target === null) {
       throw new Error('Missing target element.')
     }
 

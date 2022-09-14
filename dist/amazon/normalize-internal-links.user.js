@@ -20,8 +20,8 @@
 
     Array.from(document.getElementsByTagName('a'))
         .forEach(element => {
-        const href = element.getAttribute('href') ?? undefined;
-        if (href === undefined || !href.startsWith('/')) {
+        const href = element.getAttribute('href');
+        if (href === null || !href.startsWith('/')) {
             return;
         }
         const asin = extractAsin(href);
