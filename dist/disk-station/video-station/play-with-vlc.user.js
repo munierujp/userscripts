@@ -21,6 +21,11 @@
         return style;
     };
 
+    const ID = {
+        DROPDOWN_MENU_STYLE: 'jp-munieru-style-dropdown-menu',
+        VIDEO_INFO_DIALOG: 'jp-munieru-style-video-info-dialog'
+    };
+
     const isVideoStationPage = (url) => {
         return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance';
     };
@@ -52,7 +57,7 @@
     };
 
     const findVideoInfoDialogStyleElement = () => {
-        const element = document.getElementById('jp-munieru-style-video-info-dialog');
+        const element = document.getElementById(ID.VIDEO_INFO_DIALOG);
         return element instanceof HTMLStyleElement ? element : undefined;
     };
 
@@ -61,7 +66,7 @@
     };
 
     const findDropdownMenuStyleElement = () => {
-        const element = document.getElementById('jp-munieru-style-dropdown-menu');
+        const element = document.getElementById(ID.DROPDOWN_MENU_STYLE);
         return element instanceof HTMLStyleElement ? element : undefined;
     };
 
@@ -186,9 +191,9 @@
 
     // TODO: サムネイル上の小さい再生ボタンも書き換える
     if (isVideoStationPage(new URL(location.href))) {
-        const dropdownMenuStyle = createStyleElement('jp-munieru-style-dropdown-menu');
+        const dropdownMenuStyle = createStyleElement(ID.DROPDOWN_MENU_STYLE);
         document.head.append(dropdownMenuStyle);
-        const videoInfoDialogStyle = createStyleElement('jp-munieru-style-video-info-dialog');
+        const videoInfoDialogStyle = createStyleElement(ID.VIDEO_INFO_DIALOG);
         document.head.append(videoInfoDialogStyle);
         updatePlayButton();
     }
