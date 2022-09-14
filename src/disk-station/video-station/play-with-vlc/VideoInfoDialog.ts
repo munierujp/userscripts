@@ -1,5 +1,4 @@
 import { DropdownMenuStyle } from './DropdownMenuStyle'
-import { findActionButtonElement } from './findActionButtonElement'
 import { findVideoInfoDialogLinkElement } from './findVideoInfoDialogLinkElement'
 
 export class VideoInfoDialog {
@@ -25,9 +24,9 @@ export class VideoInfoDialog {
       throw new Error('Missing dropdown menu style element.')
     }
 
-    const actionButton = findActionButtonElement()
+    const actionButton = document.querySelector<HTMLButtonElement>('button[aria-label="アクション/操作"]')
 
-    if (actionButton === undefined) {
+    if (actionButton === null) {
       throw new Error('Missing action button element.')
     }
 
