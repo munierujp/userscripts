@@ -47,6 +47,11 @@
       return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance';
   };
 
+  const cloneNode = (node) => {
+      const clonedNode = node.cloneNode(true);
+      return clonedNode;
+  };
+
   // TODO: リファクタリング
   const createUrl = (filePath) => {
       return encodeURI(`vlc:///Volumes${filePath}`);
@@ -150,17 +155,13 @@
       });
   };
 
-  // TODO: リファクタリング
   const onClickButton = async () => {
       const filePath = await fetchFilePath();
       const url = createUrl(filePath);
       window.open(url);
   };
   const createPlayWithVlcButton = (playButton) => {
-      const playWithVlcButton = playButton.cloneNode(true);
-      if (!(playWithVlcButton instanceof HTMLElement)) {
-          throw new TypeError('Failed to clone node.');
-      }
+      const playWithVlcButton = cloneNode(playButton);
       playWithVlcButton.addEventListener('click', () => {
           onClickButton().catch(error => {
               throw error;
