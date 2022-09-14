@@ -21,6 +21,33 @@
         return style;
     };
 
+    const ID$1 = 'jp-munieru-style-dropdown-menu';
+    class DropdownMenuStyle {
+        constructor(element) {
+            this.element = element;
+        }
+        static create() {
+            const element = createStyleElement(ID$1);
+            document.head.append(element);
+            return new DropdownMenuStyle(element);
+        }
+        static find() {
+            const element = document.getElementById(ID$1);
+            return element instanceof HTMLStyleElement ? new DropdownMenuStyle(element) : undefined;
+        }
+        hideDropdownMenu() {
+            this.element.textContent = `
+.syno-ux-menu.syno-vs2-dropdown-menu {
+  display: none !important;
+  visibility: hidden !important;
+}
+`;
+        }
+        showDropdownMenu() {
+            this.element.textContent = '';
+        }
+    }
+
     const ID = {
         DROPDOWN_MENU_STYLE: 'jp-munieru-style-dropdown-menu',
         VIDEO_INFO_DIALOG: 'jp-munieru-style-video-info-dialog'
@@ -30,48 +57,36 @@
         return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance';
     };
 
+    // TODO: リファクタリング
     const createUrl = (filePath) => {
         return encodeURI(`vlc:///Volumes${filePath}`);
     };
 
+    // TODO: リファクタリング
     const findVideoInfoDialogStyleElement = () => {
         const element = document.getElementById(ID.VIDEO_INFO_DIALOG);
         return element instanceof HTMLStyleElement ? element : undefined;
     };
 
+    // TODO: リファクタリング
     const findActionButtonElement = () => {
         return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
     };
 
-    const findDropdownMenuStyleElement = () => {
-        const element = document.getElementById(ID.DROPDOWN_MENU_STYLE);
-        return element instanceof HTMLStyleElement ? element : undefined;
-    };
-
+    // TODO: リファクタリング
     const findOperationButtonElement = () => {
         return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
     };
 
+    // TODO: リファクタリング
     const findVideoInfoDialogLinkElement = () => {
         const links = Array.from(document.querySelectorAll('a.x-menu-list-item'));
         return links.find(({ textContent }) => textContent === 'メディア情報を表示');
     };
 
-    const hideDropdownMenuElement = (style) => {
-        style.textContent = `
-.syno-ux-menu.syno-vs2-dropdown-menu {
-  display: none !important;
-  visibility: hidden !important;
-}
-`;
-    };
-
-    const showDropdownMenuElement = (menuStyle) => {
-        menuStyle.textContent = '';
-    };
-
+    // TODO: リファクタリング
     const openVideoInfoDialog = () => {
-        const dropdownMenuStyle = findDropdownMenuStyleElement();
+        const dropdownMenuStyle = DropdownMenuStyle.find();
         if (dropdownMenuStyle === undefined) {
             throw new Error('Missing dropdown menu style element.');
         }
@@ -84,14 +99,14 @@
         if (videoInfoDialogLink === undefined) {
             throw new Error('Missing video info dialog link element.');
         }
-        hideDropdownMenuElement(dropdownMenuStyle);
+        dropdownMenuStyle.hideDropdownMenu();
         const operationButton = findOperationButtonElement();
         if (operationButton === undefined) {
             throw new Error('Missing operation button element.');
         }
         operationButton.click();
         videoInfoDialogLink.click();
-        showDropdownMenuElement(dropdownMenuStyle);
+        dropdownMenuStyle.showDropdownMenu();
     };
 
     class VideoInfoDialog {
@@ -125,6 +140,7 @@
         }
     }
 
+    // TODO: リファクタリング
     const fetchFilePath = async () => {
         const desktop = document.getElementById('sds-desktop');
         if (desktop === null) {
@@ -156,6 +172,7 @@
         });
     };
 
+    // TODO: リファクタリング
     const onClickButton = async () => {
         const filePath = await fetchFilePath();
         const url = createUrl(filePath);
@@ -174,6 +191,7 @@
         return playWithVlcButton;
     };
 
+    // TODO: リファクタリング
     const updatePlayButton = () => {
         const observer = new MutationObserver((mutations, observer) => {
             const playButton = mutations
@@ -194,10 +212,9 @@
         });
     };
 
-    // TODO: サムネイル上の小さい再生ボタンも書き換える
+    // TODO: リファクタリング
     if (isVideoStationPage(new URL(location.href))) {
-        const dropdownMenuStyle = createStyleElement(ID.DROPDOWN_MENU_STYLE);
-        document.head.append(dropdownMenuStyle);
+        DropdownMenuStyle.create();
         const videoInfoDialogStyle = createStyleElement(ID.VIDEO_INFO_DIALOG);
         document.head.append(videoInfoDialogStyle);
         updatePlayButton();

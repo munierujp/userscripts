@@ -1,13 +1,11 @@
+import { DropdownMenuStyle } from './DropdownMenuStyle'
 import { findActionButtonElement } from './findActionButtonElement'
-import { findDropdownMenuStyleElement } from './findDropdownMenuStyleElement'
 import { findOperationButtonElement } from './findOperationButtonElement'
 import { findVideoInfoDialogLinkElement } from './findVideoInfoDialogLinkElement'
-import { hideDropdownMenuElement } from './hideDropdownMenuElement'
-import { showDropdownMenuElement } from './showDropdownMenuElement'
 
 // TODO: リファクタリング
 export const openVideoInfoDialog = (): void => {
-  const dropdownMenuStyle = findDropdownMenuStyleElement()
+  const dropdownMenuStyle = DropdownMenuStyle.find()
 
   if (dropdownMenuStyle === undefined) {
     throw new Error('Missing dropdown menu style element.')
@@ -26,7 +24,7 @@ export const openVideoInfoDialog = (): void => {
     throw new Error('Missing video info dialog link element.')
   }
 
-  hideDropdownMenuElement(dropdownMenuStyle)
+  dropdownMenuStyle.hideDropdownMenu()
   const operationButton = findOperationButtonElement()
 
   if (operationButton === undefined) {
@@ -35,5 +33,5 @@ export const openVideoInfoDialog = (): void => {
 
   operationButton.click()
   videoInfoDialogLink.click()
-  showDropdownMenuElement(dropdownMenuStyle)
+  dropdownMenuStyle.showDropdownMenu()
 }
