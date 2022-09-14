@@ -63,52 +63,13 @@
             .find(value => value !== undefined);
     };
 
-    const createHTMLElementFinder = (filter) => {
-        return mutations => {
-            return mutations
-                .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof HTMLElement))
-                .find(element => filter(element));
-        };
-    };
-
-    const isVideoInfoDialogElement = (element) => {
-        return element.classList.contains('video-info-dialog');
-    };
-
-    const findVideoInfoDialogElement = createHTMLElementFinder(element => {
-        return isVideoInfoDialogElement(element);
-    });
-
     const findVideoInfoDialogStyleElement = () => {
         const element = document.getElementById('jp-munieru-style-video-info-dialog');
         return element instanceof HTMLStyleElement ? element : undefined;
     };
 
-    const hideVideoInfoDialog = (style) => {
-        style.textContent = `
-.video-info-dialog {
-  display: none !important;
-  visibility: hidden !important;
-}
-`;
-    };
-
-    // TODO: Promise化
-    const observeAddingHTMLElement = ({ target, options, find, callback }) => {
-        const observer = new MutationObserver((mutations, observer) => {
-            const element = find(mutations);
-            if (element !== undefined) {
-                // NOTE: コストが高いので先に止める
-                observer.disconnect();
-                callback(element);
-            }
-        });
-        observer.observe(target, options);
-    };
-
-    const SELECTOR_DROPDOWN_MENU = '.syno-ux-menu.syno-vs2-dropdown-menu';
-    const findDropdownMenuElement = () => {
-        return document.querySelector(SELECTOR_DROPDOWN_MENU) ?? undefined;
+    const findActionButtonElement = () => {
+        return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
     };
 
     const findDropdownMenuStyleElement = () => {
@@ -116,13 +77,13 @@
         return element instanceof HTMLStyleElement ? element : undefined;
     };
 
-    const isVideoInfoDialogLinkElement = (element) => {
-        return element.textContent === 'メディア情報を表示';
+    const findOperationButtonElement = () => {
+        return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
     };
 
-    const findVideoInfoDialogLinkElement = (dropdownMenu) => {
-        const links = Array.from(dropdownMenu.querySelectorAll('a.x-menu-list-item'));
-        return links.find(link => isVideoInfoDialogLinkElement(link));
+    const findVideoInfoDialogLinkElement = () => {
+        const links = Array.from(document.querySelectorAll('a.x-menu-list-item'));
+        return links.find(({ textContent }) => textContent === 'メディア情報を表示');
     };
 
     const hideDropdownMenuElement = (style) => {
@@ -134,72 +95,63 @@
 `;
     };
 
-    const findOperationButtonElement = () => {
-        return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
-    };
-
-    const openDropdownMenuElement = () => {
-        const operationButton = findOperationButtonElement();
-        if (operationButton === undefined) {
-            throw new Error('Missing operation button element.');
-        }
-        operationButton.click();
-    };
-
     const showDropdownMenuElement = (menuStyle) => {
         menuStyle.textContent = '';
     };
 
     const openVideoInfoDialog = () => {
-        const menuStyle = findDropdownMenuStyleElement();
-        if (menuStyle === undefined) {
-            throw new Error('Missing menu style element.');
+        const dropdownMenuStyle = findDropdownMenuStyleElement();
+        if (dropdownMenuStyle === undefined) {
+            throw new Error('Missing dropdown menu style element.');
         }
-        const menu = findDropdownMenuElement();
-        if (menu === undefined) {
-            throw new Error('Missing menu element.');
+        const actionButton = findActionButtonElement();
+        if (actionButton === undefined) {
+            throw new Error('Missing action button element.');
         }
-        const link = findVideoInfoDialogLinkElement(menu);
-        if (link === undefined) {
+        actionButton.click();
+        const videoInfoDialogLink = findVideoInfoDialogLinkElement();
+        if (videoInfoDialogLink === undefined) {
             throw new Error('Missing video info dialog link element.');
         }
-        hideDropdownMenuElement(menuStyle);
-        openDropdownMenuElement();
-        link.click();
-        showDropdownMenuElement(menuStyle);
-    };
-
-    const showVideoInfoDialog = (menuStyle) => {
-        menuStyle.textContent = '';
+        hideDropdownMenuElement(dropdownMenuStyle);
+        const operationButton = findOperationButtonElement();
+        if (operationButton === undefined) {
+            throw new Error('Missing operation button element.');
+        }
+        operationButton.click();
+        videoInfoDialogLink.click();
+        showDropdownMenuElement(dropdownMenuStyle);
     };
 
     const fetchFilePath = async () => {
+        const desktop = document.getElementById('sds-desktop');
+        if (desktop === null) {
+            throw new Error('Missing desktop element.');
+        }
+        const videoInfoDialogStyle = findVideoInfoDialogStyleElement();
+        if (videoInfoDialogStyle === undefined) {
+            throw new Error('Missing video info dialog style element.');
+        }
         return await new Promise(resolve => {
-            const target = document.getElementById('sds-desktop');
-            if (target === null) {
-                throw new Error('Missing target element.');
-            }
-            const videoInfoDialogStyle = findVideoInfoDialogStyleElement();
-            if (videoInfoDialogStyle === undefined) {
-                throw new Error('Missing video info dialog style element.');
-            }
-            observeAddingHTMLElement({
-                target,
-                options: {
-                    childList: true
-                },
-                find: findVideoInfoDialogElement,
-                callback: (dialog) => {
-                    const filePath = findFilePath(dialog);
-                    if (filePath === undefined) {
-                        throw new Error('Missing file path.');
-                    }
-                    closeVideoInfoDialog(dialog);
-                    showVideoInfoDialog(videoInfoDialogStyle);
-                    resolve(filePath);
+            const observer = new MutationObserver((mutations, observer) => {
+                const videoInfoDialog = mutations
+                    .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof HTMLElement))
+                    .find(({ classList }) => classList.contains('video-info-dialog'));
+                if (videoInfoDialog === undefined) {
+                    return;
                 }
+                // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
+                observer.disconnect();
+                const filePath = findFilePath(videoInfoDialog);
+                if (filePath === undefined) {
+                    throw new Error('Missing file path.');
+                }
+                closeVideoInfoDialog(videoInfoDialog);
+                resolve(filePath);
             });
-            hideVideoInfoDialog(videoInfoDialogStyle);
+            observer.observe(desktop, {
+                childList: true
+            });
             openVideoInfoDialog();
         });
     };
@@ -224,32 +176,23 @@
         return playWithVlcButton;
     };
 
-    const isPlayButtonElement = (element) => {
-        const { classList } = element;
-        return classList.contains('x-btn') && classList.contains('play');
-    };
-
-    const findPlayButtonElement = createHTMLElementFinder(element => {
-        return isPlayButtonElement(element);
-    });
-
-    const replaceElement = (element, newElement) => {
-        element.style.display = 'none';
-        element.before(newElement);
-    };
-
     const updatePlayButton = () => {
-        observeAddingHTMLElement({
-            target: document.body,
-            options: {
-                childList: true,
-                subtree: true
-            },
-            find: findPlayButtonElement,
-            callback: (playButton) => {
-                const playWithVlcButton = createPlayWithVlcButton(playButton);
-                replaceElement(playButton, playWithVlcButton);
+        const observer = new MutationObserver((mutations, observer) => {
+            const playButton = mutations
+                .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof HTMLElement))
+                .find(({ classList }) => classList.contains('x-btn') && classList.contains('play'));
+            if (playButton === undefined) {
+                return;
             }
+            // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
+            observer.disconnect();
+            const playWithVlcButton = createPlayWithVlcButton(playButton);
+            playButton.style.display = 'none';
+            playButton.before(playWithVlcButton);
+        });
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
         });
     };
 

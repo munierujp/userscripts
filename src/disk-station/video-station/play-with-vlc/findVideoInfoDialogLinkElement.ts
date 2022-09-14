@@ -1,6 +1,4 @@
-import { isVideoInfoDialogLinkElement } from './isVideoInfoDialogLinkElement'
-
-export const findVideoInfoDialogLinkElement = (dropdownMenu: HTMLElement): HTMLAnchorElement | undefined => {
-  const links = Array.from(dropdownMenu.querySelectorAll<HTMLAnchorElement>('a.x-menu-list-item'))
-  return links.find(link => isVideoInfoDialogLinkElement(link))
+export const findVideoInfoDialogLinkElement = (): HTMLAnchorElement | undefined => {
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('a.x-menu-list-item'))
+  return links.find(({ textContent }) => textContent === 'メディア情報を表示')
 }
