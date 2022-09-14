@@ -1,7 +1,7 @@
 import { createButtonListElement } from './createButtonListElement'
 import { FilterType } from './FilterType'
 
-export const createFilterMenuElement = (filterType: FilterType): HTMLElement => {
+export const createFilterMenuElement = (filterType: FilterType): HTMLDivElement => {
   const label = document.createElement('span')
   label.textContent = '絞り込み'
   const buttonList = createButtonListElement(filterType)
