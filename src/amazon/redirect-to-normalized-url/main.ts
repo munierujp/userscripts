@@ -1,3 +1,4 @@
+import { createUrl } from './createUrl'
 import { extractAsin } from './extractAsin'
 
 const url = location.href
@@ -7,7 +8,7 @@ if (asin === undefined) {
   throw new Error('Missing ASIN.')
 }
 
-const normalizedUrl = `https://www.amazon.co.jp/dp/${asin}`
+const normalizedUrl = createUrl(asin)
 
 if (normalizedUrl !== url) {
   location.href = normalizedUrl
