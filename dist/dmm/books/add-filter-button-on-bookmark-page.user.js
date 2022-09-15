@@ -80,7 +80,7 @@
         }
     };
 
-    const createButtonListElement = (filterType) => {
+    const createButtonList = (filterType) => {
         const allButton = createAllButton(filterType);
         const discountedButton = createDiscountedButtonElement(filterType);
         const buttonList = document.createElement('ul');
@@ -92,7 +92,7 @@
     const createFilterMenuElement = (filterType) => {
         const label = document.createElement('span');
         label.textContent = '絞り込み';
-        const buttonList = createButtonListElement(filterType);
+        const buttonList = createButtonList(filterType);
         const filterMenu = document.createElement('div');
         filterMenu.append(label);
         filterMenu.append(buttonList);
