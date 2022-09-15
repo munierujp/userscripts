@@ -1,3 +1,5 @@
+// TODO: リファクタリング
+
 import { createButtonList } from './createButtonList'
 import { FilterType } from './FilterType'
 

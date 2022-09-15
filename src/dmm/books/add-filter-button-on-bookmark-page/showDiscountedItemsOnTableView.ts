@@ -1,3 +1,5 @@
+// TODO: リファクタリング
+
 export const showDiscountedItemsOnTableView = (main: Element): void => {
   const list = main.querySelector('#list')
 

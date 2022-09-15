@@ -1,3 +1,5 @@
+// TODO: リファクタリング
+
 export const createCurrentButton = (text: string): HTMLLIElement => {
   const label = document.createElement('span')
   label.style.paddingLeft = '8px'

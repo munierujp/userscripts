@@ -1,3 +1,4 @@
+// TODO: リファクタリング
 
 import { showDiscountedItemsOnListView } from './showDiscountedItemsOnListView'
 import { showDiscountedItemsOnTableView } from './showDiscountedItemsOnTableView'

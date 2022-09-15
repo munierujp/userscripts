@@ -1,3 +1,5 @@
+// TODO: リファクタリング
+
 import { FilterType } from './FilterType'
 
 export const createUrl = (filterType: FilterType): URL => {

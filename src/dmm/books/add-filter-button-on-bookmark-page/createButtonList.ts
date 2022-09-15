@@ -1,3 +1,5 @@
+// TODO: リファクタリング
+
 import { createAllButton } from './createAllButton'
 import { createDiscountedButton } from './createDiscountedButton'
 import { FilterType } from './FilterType'
