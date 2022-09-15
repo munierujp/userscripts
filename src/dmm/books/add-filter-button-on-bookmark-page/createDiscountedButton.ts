@@ -5,7 +5,7 @@ import { FilterType } from './FilterType'
 
 const TEXT = 'セール中'
 
-export const createDiscountedButtonElement = (filterType: FilterType): HTMLLIElement => {
+export const createDiscountedButton = (filterType: FilterType): HTMLLIElement => {
   switch (filterType) {
     case FilterType.ALL:
       return createNotCurrentButtonElement({

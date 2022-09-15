@@ -68,7 +68,7 @@
     };
 
     const TEXT = 'セール中';
-    const createDiscountedButtonElement = (filterType) => {
+    const createDiscountedButton = (filterType) => {
         switch (filterType) {
             case FilterType.ALL:
                 return createNotCurrentButtonElement({
@@ -82,7 +82,7 @@
 
     const createButtonList = (filterType) => {
         const allButton = createAllButton(filterType);
-        const discountedButton = createDiscountedButtonElement(filterType);
+        const discountedButton = createDiscountedButton(filterType);
         const buttonList = document.createElement('ul');
         buttonList.append(allButton);
         buttonList.append(discountedButton);
