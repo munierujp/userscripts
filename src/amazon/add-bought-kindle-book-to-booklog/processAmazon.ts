@@ -1,9 +1,9 @@
 import { EventType } from './EventType'
-import { extractAsinOnAmazon } from './extractAsinOnAmazon'
+import { extractAsin } from './extractAsin'
 import { Origin } from './Origin'
 
 export const processAmazon = (): void => {
-  const asin = extractAsinOnAmazon(new URL(location.href))
+  const asin = extractAsin(new URL(location.href))
 
   if (asin === undefined) {
     throw new Error('ASIN is missing.')

@@ -16,25 +16,21 @@
     'use strict';
 
     const Origin = {
-        /** Amazon */
         AMAZON: 'https://www.amazon.co.jp',
-        /** ブクログ */
         BOOKLOG: 'https://booklog.jp'
     };
 
     const EventType = {
-        /** AmazonでKindle本を購入 */
         AMAZON_BOUGHT: 'amazon_bought',
-        /** ブクログの準備が完了 */
         BOOKLOG_READY: 'booklog_ready'
     };
 
-    const extractAsinOnAmazon = (url) => {
+    const extractAsin = (url) => {
         return url.searchParams.get('asin') ?? undefined;
     };
 
     const processAmazon = () => {
-        const asin = extractAsinOnAmazon(new URL(location.href));
+        const asin = extractAsin(new URL(location.href));
         if (asin === undefined) {
             throw new Error('ASIN is missing.');
         }
