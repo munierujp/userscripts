@@ -1,5 +1,5 @@
 import { DropdownMenuStyle } from './DropdownMenuStyle'
-import { findVideoInfoDialogLinkElement } from './findVideoInfoDialogLinkElement'
+import { findMediaInfoLink } from './findMediaInfoLink'
 
 export class VideoInfoDialog {
   constructor (private readonly element: Element) {}
@@ -32,13 +32,13 @@ export class VideoInfoDialog {
 
     dropdownMenuStyle.hideDropdownMenu()
     actionButton.click()
-    const videoInfoDialogLink = findVideoInfoDialogLinkElement()
+    const mediaInfoLink = findMediaInfoLink()
 
-    if (videoInfoDialogLink === undefined) {
-      throw new Error('Missing video info dialog link element.')
+    if (mediaInfoLink === undefined) {
+      throw new Error('Missing media info link.')
     }
 
-    videoInfoDialogLink.click()
+    mediaInfoLink.click()
     dropdownMenuStyle.showDropdownMenu()
   }
 

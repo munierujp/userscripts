@@ -58,7 +58,7 @@
   };
 
   // TODO: リファクタリング
-  const findVideoInfoDialogLinkElement = () => {
+  const findMediaInfoLink = () => {
       const links = Array.from(document.querySelectorAll('a.x-menu-list-item'));
       return links.find(({ textContent }) => textContent === 'メディア情報を表示');
   };
@@ -88,11 +88,11 @@
           }
           dropdownMenuStyle.hideDropdownMenu();
           actionButton.click();
-          const videoInfoDialogLink = findVideoInfoDialogLinkElement();
-          if (videoInfoDialogLink === undefined) {
-              throw new Error('Missing video info dialog link element.');
+          const mediaInfoLink = findMediaInfoLink();
+          if (mediaInfoLink === undefined) {
+              throw new Error('Missing media info link.');
           }
-          videoInfoDialogLink.click();
+          mediaInfoLink.click();
           dropdownMenuStyle.showDropdownMenu();
       }
       findFilePath() {
