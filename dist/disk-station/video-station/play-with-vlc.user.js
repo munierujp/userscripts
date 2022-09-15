@@ -86,17 +86,12 @@
           if (actionButton === null) {
               throw new Error('Missing action button element.');
           }
+          dropdownMenuStyle.hideDropdownMenu();
           actionButton.click();
           const videoInfoDialogLink = findVideoInfoDialogLinkElement();
           if (videoInfoDialogLink === undefined) {
               throw new Error('Missing video info dialog link element.');
           }
-          dropdownMenuStyle.hideDropdownMenu();
-          const operationButton = document.querySelector('button[aria-label="アクション/操作"]');
-          if (operationButton === null) {
-              throw new Error('Missing operation button element.');
-          }
-          operationButton.click();
           videoInfoDialogLink.click();
           dropdownMenuStyle.showDropdownMenu();
       }
