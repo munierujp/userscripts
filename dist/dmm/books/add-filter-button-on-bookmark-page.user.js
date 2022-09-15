@@ -27,7 +27,7 @@
         return button;
     };
 
-    const createNotCurrentButtonElement = ({ text, url }) => {
+    const createNotCurrentButton = ({ text, url }) => {
         const label = document.createElement('a');
         label.href = url.toString();
         label.style.paddingLeft = '8px';
@@ -60,7 +60,7 @@
             case FilterType.ALL:
                 return createCurrentButton(TEXT$1);
             case FilterType.DISCOUNTED:
-                return createNotCurrentButtonElement({
+                return createNotCurrentButton({
                     text: TEXT$1,
                     url: createUrl(FilterType.ALL)
                 });
@@ -71,7 +71,7 @@
     const createDiscountedButton = (filterType) => {
         switch (filterType) {
             case FilterType.ALL:
-                return createNotCurrentButtonElement({
+                return createNotCurrentButton({
                     text: TEXT,
                     url: createUrl(FilterType.DISCOUNTED)
                 });

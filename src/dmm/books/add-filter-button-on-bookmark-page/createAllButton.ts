@@ -1,5 +1,5 @@
 import { createCurrentButton } from './createCurrentButton'
-import { createNotCurrentButtonElement } from './createNotCurrentButtonElement'
+import { createNotCurrentButton } from './createNotCurrentButton'
 import { createUrl } from './createUrl'
 import { FilterType } from './FilterType'
 
@@ -10,7 +10,7 @@ export const createAllButton = (filterType: FilterType): HTMLLIElement => {
     case FilterType.ALL:
       return createCurrentButton(TEXT)
     case FilterType.DISCOUNTED:
-      return createNotCurrentButtonElement({
+      return createNotCurrentButton({
         text: TEXT,
         url: createUrl(FilterType.ALL)
       })

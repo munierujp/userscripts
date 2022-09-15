@@ -1,5 +1,5 @@
 
-export const createNotCurrentButtonElement = ({
+export const createNotCurrentButton = ({
   text,
   url
 }: {
