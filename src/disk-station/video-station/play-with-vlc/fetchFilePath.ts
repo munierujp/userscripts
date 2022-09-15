@@ -1,4 +1,4 @@
-import { VideoInfoDialog } from './VideoInfoDialog'
+import { MediaInfoDialog } from './MediaInfoDialog'
 
 export const fetchFilePath = async (): Promise<string> => {
   const desktop = document.getElementById('sds-desktop')
@@ -9,26 +9,26 @@ export const fetchFilePath = async (): Promise<string> => {
 
   return await new Promise(resolve => {
     const observer = new MutationObserver((mutations, observer) => {
-      const videoInfoDialog = VideoInfoDialog.findFromMutations(mutations)
+      const mediaInfoDialog = MediaInfoDialog.findFromMutations(mutations)
 
-      if (videoInfoDialog === undefined) {
+      if (mediaInfoDialog === undefined) {
         return
       }
 
       // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
       observer.disconnect()
-      const filePath = videoInfoDialog.findFilePath()
+      const filePath = mediaInfoDialog.findFilePath()
 
       if (filePath === undefined) {
         throw new Error('Missing file path.')
       }
 
-      videoInfoDialog.close()
+      mediaInfoDialog.close()
       resolve(filePath)
     })
     observer.observe(desktop, {
       childList: true
     })
-    VideoInfoDialog.open()
+    MediaInfoDialog.open()
   })
 }

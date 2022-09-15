@@ -63,7 +63,7 @@
       return links.find(({ textContent }) => textContent === 'メディア情報を表示');
   };
 
-  class VideoInfoDialog {
+  class MediaInfoDialog {
       constructor(element) {
           this.element = element;
       }
@@ -74,7 +74,7 @@
           if (element === undefined) {
               return undefined;
           }
-          return new VideoInfoDialog(element);
+          return new MediaInfoDialog(element);
       }
       // TODO: リファクタリング
       static open() {
@@ -120,23 +120,23 @@
       }
       return await new Promise(resolve => {
           const observer = new MutationObserver((mutations, observer) => {
-              const videoInfoDialog = VideoInfoDialog.findFromMutations(mutations);
-              if (videoInfoDialog === undefined) {
+              const mediaInfoDialog = MediaInfoDialog.findFromMutations(mutations);
+              if (mediaInfoDialog === undefined) {
                   return;
               }
               // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
               observer.disconnect();
-              const filePath = videoInfoDialog.findFilePath();
+              const filePath = mediaInfoDialog.findFilePath();
               if (filePath === undefined) {
                   throw new Error('Missing file path.');
               }
-              videoInfoDialog.close();
+              mediaInfoDialog.close();
               resolve(filePath);
           });
           observer.observe(desktop, {
               childList: true
           });
-          VideoInfoDialog.open();
+          MediaInfoDialog.open();
       });
   };
 

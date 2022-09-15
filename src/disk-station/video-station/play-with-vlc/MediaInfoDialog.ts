@@ -1,10 +1,10 @@
 import { DropdownMenuStyle } from './DropdownMenuStyle'
 import { findMediaInfoLink } from './findMediaInfoLink'
 
-export class VideoInfoDialog {
+export class MediaInfoDialog {
   constructor (private readonly element: Element) {}
 
-  static findFromMutations (mutations: MutationRecord[]): VideoInfoDialog | undefined {
+  static findFromMutations (mutations: MutationRecord[]): MediaInfoDialog | undefined {
     const element = mutations
       .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node): node is Element => node instanceof Element))
       .find(({ classList }) => classList.contains('video-info-dialog'))
@@ -13,7 +13,7 @@ export class VideoInfoDialog {
       return undefined
     }
 
-    return new VideoInfoDialog(element)
+    return new MediaInfoDialog(element)
   }
 
   // TODO: リファクタリング
