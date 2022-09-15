@@ -15,7 +15,7 @@
 (function () {
     'use strict';
 
-    const createCurrentButtonElement = (text) => {
+    const createCurrentButton = (text) => {
         const label = document.createElement('span');
         label.style.paddingLeft = '8px';
         label.style.paddingRight = '8px';
@@ -58,7 +58,7 @@
     const createAllButton = (filterType) => {
         switch (filterType) {
             case FilterType.ALL:
-                return createCurrentButtonElement(TEXT$1);
+                return createCurrentButton(TEXT$1);
             case FilterType.DISCOUNTED:
                 return createNotCurrentButtonElement({
                     text: TEXT$1,
@@ -76,7 +76,7 @@
                     url: createUrl(FilterType.DISCOUNTED)
                 });
             case FilterType.DISCOUNTED:
-                return createCurrentButtonElement(TEXT);
+                return createCurrentButton(TEXT);
         }
     };
 

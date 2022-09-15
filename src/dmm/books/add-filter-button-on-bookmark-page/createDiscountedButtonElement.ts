@@ -1,4 +1,4 @@
-import { createCurrentButtonElement } from './createCurrentButtonElement'
+import { createCurrentButton } from './createCurrentButton'
 import { createNotCurrentButtonElement } from './createNotCurrentButtonElement'
 import { createUrl } from './createUrl'
 import { FilterType } from './FilterType'
@@ -13,6 +13,6 @@ export const createDiscountedButtonElement = (filterType: FilterType): HTMLLIEle
         url: createUrl(FilterType.DISCOUNTED)
       })
     case FilterType.DISCOUNTED:
-      return createCurrentButtonElement(TEXT)
+      return createCurrentButton(TEXT)
   }
 }
