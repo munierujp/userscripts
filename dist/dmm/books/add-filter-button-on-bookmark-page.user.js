@@ -89,7 +89,7 @@
         return buttonList;
     };
 
-    const createFilterMenuElement = (filterType) => {
+    const createFilterMenu = (filterType) => {
         const label = document.createElement('span');
         label.textContent = '絞り込み';
         const buttonList = createButtonList(filterType);
@@ -109,7 +109,7 @@
             if (menu === undefined) {
                 throw new Error('Missing menu.');
             }
-            const filterMenu = createFilterMenuElement(filterType);
+            const filterMenu = createFilterMenu(filterType);
             menu.append(filterMenu);
         };
     };
