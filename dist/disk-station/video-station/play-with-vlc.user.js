@@ -67,14 +67,14 @@
       constructor(element) {
           this.element = element;
       }
-      static fromMutations(mutations) {
-          const videoInfoDialog = mutations
+      static findFromMutations(mutations) {
+          const element = mutations
               .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof Element))
               .find(({ classList }) => classList.contains('video-info-dialog'));
-          if (videoInfoDialog === undefined) {
+          if (element === undefined) {
               return undefined;
           }
-          return new VideoInfoDialog(videoInfoDialog);
+          return new VideoInfoDialog(element);
       }
       // TODO: リファクタリング
       static open() {
@@ -120,7 +120,7 @@
       }
       return await new Promise(resolve => {
           const observer = new MutationObserver((mutations, observer) => {
-              const videoInfoDialog = VideoInfoDialog.fromMutations(mutations);
+              const videoInfoDialog = VideoInfoDialog.findFromMutations(mutations);
               if (videoInfoDialog === undefined) {
                   return;
               }

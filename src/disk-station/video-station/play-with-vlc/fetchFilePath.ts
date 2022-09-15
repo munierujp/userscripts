@@ -9,7 +9,7 @@ export const fetchFilePath = async (): Promise<string> => {
 
   return await new Promise(resolve => {
     const observer = new MutationObserver((mutations, observer) => {
-      const videoInfoDialog = VideoInfoDialog.fromMutations(mutations)
+      const videoInfoDialog = VideoInfoDialog.findFromMutations(mutations)
 
       if (videoInfoDialog === undefined) {
         return
