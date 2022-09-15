@@ -14,24 +14,24 @@
 (function () {
     'use strict';
 
-    const findLinks = () => {
-        return Array.from(document.getElementsByTagName('a'));
+    const createPath = (asin) => {
+        return `/dp/${asin}`;
     };
 
     const extractAsin = (path) => {
         return path.match(/^\/(gp\/product|(([^/]+)\/)?dp)\/([^/?]+)([/?].+)?/)?.[4];
     };
 
-    findLinks().forEach(element => {
+    Array.from(document.querySelectorAll('a[href^="/"]')).forEach(element => {
         const href = element.getAttribute('href');
-        if (href === null || !href.startsWith('/')) {
+        if (href === null) {
             return;
         }
         const asin = extractAsin(href);
         if (asin === undefined) {
             return;
         }
-        const normalizedPath = `/dp/${asin}`;
+        const normalizedPath = createPath(asin);
         if (normalizedPath !== href) {
             element.setAttribute('href', normalizedPath);
         }

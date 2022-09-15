@@ -1,10 +1,10 @@
-import { findLinks } from '../../lib/findLinks'
+import { createPath } from './createPath'
 import { extractAsin } from './extractAsin'
 
-findLinks().forEach(element => {
+Array.from(document.querySelectorAll('a[href^="/"]')).forEach(element => {
   const href = element.getAttribute('href')
 
-  if (href === null || !href.startsWith('/')) {
+  if (href === null) {
     return
   }
 
@@ -14,7 +14,7 @@ findLinks().forEach(element => {
     return
   }
 
-  const normalizedPath = `/dp/${asin}`
+  const normalizedPath = createPath(asin)
 
   if (normalizedPath !== href) {
     element.setAttribute('href', normalizedPath)
