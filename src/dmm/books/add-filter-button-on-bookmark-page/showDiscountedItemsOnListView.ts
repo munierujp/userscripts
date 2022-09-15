@@ -2,7 +2,7 @@ export const showDiscountedItemsOnListView = (main: Element): void => {
   const table = main.querySelector('table')
 
   if (table === null) {
-    throw new Error('Missing table element.')
+    throw new Error('Missing table.')
   }
 
   const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td'))

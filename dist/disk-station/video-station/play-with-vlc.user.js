@@ -48,8 +48,7 @@
   };
 
   const cloneNode = (node) => {
-      const clonedNode = node.cloneNode(true);
-      return clonedNode;
+      return node.cloneNode(true);
   };
 
   // TODO: リファクタリング
@@ -57,10 +56,17 @@
       return encodeURI(`vlc:///Volumes${filePath}`);
   };
 
-  // TODO: リファクタリング
+  const findDesktop = () => {
+      return document.getElementById('sds-desktop') ?? undefined;
+  };
+
+  const findActionButton = () => {
+      return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
+  };
+
   const findMediaInfoLink = () => {
-      const links = Array.from(document.querySelectorAll('a.x-menu-list-item'));
-      return links.find(({ textContent }) => textContent === 'メディア情報を表示');
+      return Array.from(document.querySelectorAll('a.x-menu-list-item'))
+          .find(({ textContent }) => textContent === 'メディア情報を表示');
   };
 
   class MediaInfoDialog {
@@ -80,11 +86,11 @@
       static open() {
           const dropdownMenuStyle = DropdownMenuStyle.find();
           if (dropdownMenuStyle === undefined) {
-              throw new Error('Missing dropdown menu style element.');
+              throw new Error('Missing dropdown menu style.');
           }
-          const actionButton = document.querySelector('button[aria-label="アクション/操作"]');
-          if (actionButton === null) {
-              throw new Error('Missing action button element.');
+          const actionButton = findActionButton();
+          if (actionButton === undefined) {
+              throw new Error('Missing action button.');
           }
           dropdownMenuStyle.hideDropdownMenu();
           actionButton.click();
@@ -107,16 +113,16 @@
       close() {
           const closeButton = this.element.querySelector('button[aria-label="閉じる"]');
           if (closeButton === null) {
-              throw new Error('Missing close button element.');
+              throw new Error('Missing close button.');
           }
           closeButton.click();
       }
   }
 
   const fetchFilePath = async () => {
-      const desktop = document.getElementById('sds-desktop');
-      if (desktop === null) {
-          throw new Error('Missing desktop element.');
+      const desktop = findDesktop();
+      if (desktop === undefined) {
+          throw new Error('Missing desktop.');
       }
       return await new Promise(resolve => {
           const observer = new MutationObserver((mutations, observer) => {

@@ -1,6 +1,5 @@
-import { isInternalLink } from './isInternalLink'
+import { findInternalLinks } from '../../lib/findInternalLinks'
 
-Array.from(document.getElementsByTagName('a'))
-  .filter(element => isInternalLink(element))
+findInternalLinks()
   .filter(element => element.getAttribute('target') === '_blank')
   .forEach(element => element.removeAttribute('target'))

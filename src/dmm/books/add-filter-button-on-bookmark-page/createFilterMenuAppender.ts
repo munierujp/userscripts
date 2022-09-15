@@ -1,13 +1,13 @@
 import { createFilterMenuElement } from './createFilterMenuElement'
 import { FilterType } from './FilterType'
-import { findMenuElement } from './findMenuElement'
+import { findMenu } from './findMenu'
 
 export const createFilterMenuAppender = (filterType: FilterType): (main: Element) => void => {
   return (main) => {
-    const menu = findMenuElement(main)
+    const menu = findMenu(main)
 
     if (menu === undefined) {
-      throw new Error('Missing menu element.')
+      throw new Error('Missing menu.')
     }
 
     const filterMenu = createFilterMenuElement(filterType)

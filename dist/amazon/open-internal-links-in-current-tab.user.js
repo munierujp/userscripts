@@ -14,13 +14,11 @@
 (function () {
     'use strict';
 
-    const isInternalLink = (element) => {
-        const href = element.getAttribute('href');
-        return href?.startsWith('/') ?? false;
+    const findInternalLinks = () => {
+        return Array.from(document.querySelectorAll('a[href^="/"]'));
     };
 
-    Array.from(document.getElementsByTagName('a'))
-        .filter(element => isInternalLink(element))
+    findInternalLinks()
         .filter(element => element.getAttribute('target') === '_blank')
         .forEach(element => element.removeAttribute('target'));
 

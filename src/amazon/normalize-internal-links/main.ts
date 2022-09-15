@@ -1,22 +1,22 @@
+import { findLinks } from '../../lib/findLinks'
 import { extractAsin } from './extractAsin'
 
-Array.from(document.getElementsByTagName('a'))
-  .forEach(element => {
-    const href = element.getAttribute('href')
+findLinks().forEach(element => {
+  const href = element.getAttribute('href')
 
-    if (href === null || !href.startsWith('/')) {
-      return
-    }
+  if (href === null || !href.startsWith('/')) {
+    return
+  }
 
-    const asin = extractAsin(href)
+  const asin = extractAsin(href)
 
-    if (asin === undefined) {
-      return
-    }
+  if (asin === undefined) {
+    return
+  }
 
-    const normalizedPath = `/dp/${asin}`
+  const normalizedPath = `/dp/${asin}`
 
-    if (normalizedPath !== href) {
-      element.setAttribute('href', normalizedPath)
-    }
-  })
+  if (normalizedPath !== href) {
+    element.setAttribute('href', normalizedPath)
+  }
+})

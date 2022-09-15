@@ -14,12 +14,15 @@
 (function () {
     'use strict';
 
+    const findLinks = () => {
+        return Array.from(document.getElementsByTagName('a'));
+    };
+
     const extractAsin = (path) => {
         return path.match(/^\/(gp\/product|(([^/]+)\/)?dp)\/([^/?]+)([/?].+)?/)?.[4];
     };
 
-    Array.from(document.getElementsByTagName('a'))
-        .forEach(element => {
+    findLinks().forEach(element => {
         const href = element.getAttribute('href');
         if (href === null || !href.startsWith('/')) {
             return;

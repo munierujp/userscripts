@@ -1,4 +1,5 @@
 import { DropdownMenuStyle } from './DropdownMenuStyle'
+import { findActionButton } from './findActionButton'
 import { findMediaInfoLink } from './findMediaInfoLink'
 
 export class MediaInfoDialog {
@@ -21,13 +22,13 @@ export class MediaInfoDialog {
     const dropdownMenuStyle = DropdownMenuStyle.find()
 
     if (dropdownMenuStyle === undefined) {
-      throw new Error('Missing dropdown menu style element.')
+      throw new Error('Missing dropdown menu style.')
     }
 
-    const actionButton = document.querySelector<HTMLButtonElement>('button[aria-label="アクション/操作"]')
+    const actionButton = findActionButton()
 
-    if (actionButton === null) {
-      throw new Error('Missing action button element.')
+    if (actionButton === undefined) {
+      throw new Error('Missing action button.')
     }
 
     dropdownMenuStyle.hideDropdownMenu()
@@ -56,7 +57,7 @@ export class MediaInfoDialog {
     const closeButton = this.element.querySelector<HTMLButtonElement>('button[aria-label="閉じる"]')
 
     if (closeButton === null) {
-      throw new Error('Missing close button element.')
+      throw new Error('Missing close button.')
     }
 
     closeButton.click()

@@ -1,4 +1,4 @@
-import { cloneNode } from './cloneNode'
+import { cloneNode } from '../../../lib/cloneNode'
 import { createUrl } from './createUrl'
 import { fetchFilePath } from './fetchFilePath'
 

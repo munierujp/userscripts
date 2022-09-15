@@ -99,25 +99,29 @@
         return filterMenu;
     };
 
-    const findMenuElement = (main) => {
+    const findMenu = (main) => {
         return main.querySelector('.d-rcol.selector') ?? undefined;
     };
 
     const createFilterMenuAppender = (filterType) => {
         return (main) => {
-            const menu = findMenuElement(main);
+            const menu = findMenu(main);
             if (menu === undefined) {
-                throw new Error('Missing menu element.');
+                throw new Error('Missing menu.');
             }
             const filterMenu = createFilterMenuElement(filterType);
             menu.append(filterMenu);
         };
     };
 
+    const findMain = () => {
+        return document.getElementById('main-bmk') ?? undefined;
+    };
+
     const showDiscountedItemsOnListView = (main) => {
         const table = main.querySelector('table');
         if (table === null) {
-            throw new Error('Missing table element.');
+            throw new Error('Missing table.');
         }
         const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td'));
         dataRows.forEach(row => {
@@ -130,7 +134,7 @@
     const showDiscountedItemsOnTableView = (main) => {
         const list = main.querySelector('#list');
         if (list === null) {
-            throw new Error('Missing list element.');
+            throw new Error('Missing list.');
         }
         const items = Array.from(list.querySelectorAll('li'));
         items.forEach(item => {
@@ -163,9 +167,9 @@
     }
     const filter = params.get('filter');
     const filterType = isFilterType(filter) ? filter : FilterType.ALL;
-    const main = document.getElementById('main-bmk');
-    if (main === null) {
-        throw new Error('Missing main element.');
+    const main = findMain();
+    if (main === undefined) {
+        throw new Error('Missing main.');
     }
     if (filterType === FilterType.DISCOUNTED) {
         const showDiscountedItems = getDiscountedItemsShower(view);

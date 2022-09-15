@@ -1,10 +1,11 @@
+import { findDesktop } from './findDesktop'
 import { MediaInfoDialog } from './MediaInfoDialog'
 
 export const fetchFilePath = async (): Promise<string> => {
-  const desktop = document.getElementById('sds-desktop')
+  const desktop = findDesktop()
 
-  if (desktop === null) {
-    throw new Error('Missing desktop element.')
+  if (desktop === undefined) {
+    throw new Error('Missing desktop.')
   }
 
   return await new Promise(resolve => {
