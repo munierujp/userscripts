@@ -1,6 +1,5 @@
 import { createPlayWithVlcButton } from './createPlayWithVlcButton'
 
-// TODO: リファクタリング
 export const updatePlayButton = (): void => {
   const observer = new MutationObserver((mutations, observer) => {
     const playButton = mutations

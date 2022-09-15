@@ -51,7 +51,6 @@
       return node.cloneNode(true);
   };
 
-  // TODO: リファクタリング
   const createUrl = (filePath) => {
       return encodeURI(`vlc:///Volumes${filePath}`);
   };
@@ -82,7 +81,6 @@
           }
           return new MediaInfoDialog(element);
       }
-      // TODO: リファクタリング
       static open() {
           const dropdownMenuStyle = DropdownMenuStyle.find();
           if (dropdownMenuStyle === undefined) {
@@ -161,7 +159,6 @@
       return playWithVlcButton;
   };
 
-  // TODO: リファクタリング
   const updatePlayButton = () => {
       const observer = new MutationObserver((mutations, observer) => {
           const playButton = mutations
@@ -182,7 +179,6 @@
       });
   };
 
-  // TODO: リファクタリング
   if (isVideoStationPage(new URL(location.href))) {
       DropdownMenuStyle.create();
       updatePlayButton();

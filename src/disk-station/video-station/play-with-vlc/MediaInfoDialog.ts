@@ -17,7 +17,6 @@ export class MediaInfoDialog {
     return new MediaInfoDialog(element)
   }
 
-  // TODO: リファクタリング
   static open (): void {
     const dropdownMenuStyle = DropdownMenuStyle.find()
 
