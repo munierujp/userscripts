@@ -14,12 +14,7 @@
 (function () {
     'use strict';
 
-    const findInternalLinks = () => {
-        return Array.from(document.querySelectorAll('a[href^="/"]'));
-    };
-
-    findInternalLinks()
-        .filter(element => element.getAttribute('target') === '_blank')
+    Array.from(document.querySelectorAll('a[href^="/"][target="_blank"]'))
         .forEach(element => element.removeAttribute('target'));
 
 })();
