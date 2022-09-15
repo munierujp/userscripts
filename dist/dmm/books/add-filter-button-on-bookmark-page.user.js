@@ -55,7 +55,7 @@
     const isFilterType = (value) => values$1.includes(value);
 
     const TEXT$1 = 'すべて';
-    const createAllButtonElement = (filterType) => {
+    const createAllButton = (filterType) => {
         switch (filterType) {
             case FilterType.ALL:
                 return createCurrentButtonElement(TEXT$1);
@@ -81,7 +81,7 @@
     };
 
     const createButtonListElement = (filterType) => {
-        const allButton = createAllButtonElement(filterType);
+        const allButton = createAllButton(filterType);
         const discountedButton = createDiscountedButtonElement(filterType);
         const buttonList = document.createElement('ul');
         buttonList.append(allButton);

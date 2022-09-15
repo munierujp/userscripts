@@ -5,7 +5,7 @@ import { FilterType } from './FilterType'
 
 const TEXT = 'すべて'
 
-export const createAllButtonElement = (filterType: FilterType): HTMLLIElement => {
+export const createAllButton = (filterType: FilterType): HTMLLIElement => {
   switch (filterType) {
     case FilterType.ALL:
       return createCurrentButtonElement(TEXT)
