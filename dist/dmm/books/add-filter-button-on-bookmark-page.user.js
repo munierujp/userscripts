@@ -175,14 +175,14 @@
     const params = new URLSearchParams(location.search);
     const view = params.get('view');
     if (!isViewType(view)) {
-        throw new Error(`Invalid view. view=${String(view)}`);
+        throw new Error('Invalid view.');
     }
-    const filter = params.get('filter');
-    const filterType = isFilterType(filter) ? filter : FilterType.All;
     const main = findMain();
     if (main === undefined) {
         throw new Error('Missing main.');
     }
+    const filter = params.get('filter');
+    const filterType = isFilterType(filter) ? filter : FilterType.All;
     if (filterType === FilterType.Discounted) {
         const showDiscountedItems = getDiscountedItemsShower(view);
         showDiscountedItems(main);
