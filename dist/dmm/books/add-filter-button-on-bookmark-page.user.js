@@ -106,24 +106,12 @@
         return filterMenu;
     };
 
-    const findMenu = (main) => {
-        return main.querySelector('.d-rcol.selector') ?? undefined;
-    };
-
-    // TODO: リファクタリング
-    const createFilterMenuAppender = (filterType) => {
-        return (main) => {
-            const menu = findMenu(main);
-            if (menu === undefined) {
-                throw new Error('Missing menu.');
-            }
-            const filterMenu = createFilterMenu(filterType);
-            menu.append(filterMenu);
-        };
-    };
-
     const findMain = () => {
         return document.getElementById('main-bmk') ?? undefined;
+    };
+
+    const findMenu = (main) => {
+        return main.querySelector('.d-rcol.selector') ?? undefined;
     };
 
     // TODO: リファクタリング
@@ -156,12 +144,16 @@
     if (main === undefined) {
         throw new Error('Missing main.');
     }
+    const menu = findMenu(main);
+    if (menu === undefined) {
+        throw new Error('Missing menu.');
+    }
     const filter = params.get('filter');
     const filterType = isFilterType(filter) ? filter : FilterType.All;
     if (filterType === FilterType.Discounted) {
         showDiscountedItems(main);
     }
-    const appendFilterMenu = createFilterMenuAppender(filterType);
-    appendFilterMenu(main);
+    const filterMenu = createFilterMenu(filterType);
+    menu.append(filterMenu);
 
 })();

@@ -1,11 +1,12 @@
 // TODO: リファクタリング
 
-import { createFilterMenuAppender } from './createFilterMenuAppender'
+import { createFilterMenu } from './createFilterMenu'
 import {
   FilterType,
   isFilterType
 } from './FilterType'
 import { findMain } from './findMain'
+import { findMenu } from './findMenu'
 import { showDiscountedItems } from './showDiscountedItems'
 import { isViewType } from './ViewType'
 
@@ -22,6 +23,12 @@ if (main === undefined) {
   throw new Error('Missing main.')
 }
 
+const menu = findMenu(main)
+
+if (menu === undefined) {
+  throw new Error('Missing menu.')
+}
+
 const filter = params.get('filter')
 const filterType = isFilterType(filter) ? filter : FilterType.All
 
@@ -29,5 +36,5 @@ if (filterType === FilterType.Discounted) {
   showDiscountedItems(main)
 }
 
-const appendFilterMenu = createFilterMenuAppender(filterType)
-appendFilterMenu(main)
+const filterMenu = createFilterMenu(filterType)
+menu.append(filterMenu)
