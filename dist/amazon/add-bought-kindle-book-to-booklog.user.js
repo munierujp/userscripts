@@ -15,11 +15,6 @@
 (function () {
     'use strict';
 
-    const Origin = {
-        Amazon: 'https://www.amazon.co.jp',
-        Booklog: 'https://booklog.jp'
-    };
-
     const EventType = {
         AmazonBought: 'amazon_bought',
         BooklogReady: 'booklog_ready'
@@ -29,7 +24,12 @@
         return url.searchParams.get('asin') ?? undefined;
     };
 
-    const processAmazon = () => {
+    const Origin = {
+        Amazon: 'https://www.amazon.co.jp',
+        Booklog: 'https://booklog.jp'
+    };
+
+    const handleAmazon = () => {
         const asin = extractAsin(new URL(location.href));
         if (asin === undefined) {
             throw new Error('ASIN is missing.');
@@ -61,7 +61,7 @@
 
     switch (location.origin) {
         case Origin.Amazon:
-            processAmazon();
+            handleAmazon();
             break;
         case Origin.Booklog:
             processBooklog();

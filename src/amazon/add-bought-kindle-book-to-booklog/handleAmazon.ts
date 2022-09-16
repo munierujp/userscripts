@@ -2,7 +2,7 @@ import { EventType } from './EventType'
 import { extractAsin } from './extractAsin'
 import { Origin } from './Origin'
 
-export const processAmazon = (): void => {
+export const handleAmazon = (): void => {
   const asin = extractAsin(new URL(location.href))
 
   if (asin === undefined) {
