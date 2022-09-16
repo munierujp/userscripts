@@ -3,12 +3,12 @@
 // ==UserScript==
 // @name        正規化されたURLにリダイレクト
 // @namespace    https://github.com/munierujp/
-// @version      0.2.0
+// @version      0.2.1
 // @description   Amazonで正規化されたURLにリダイレクトします。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
-// @updateURL    https://github.com/munierujp/userscripts/raw/master/scripts/amazon/redirect-to-normalized-url.user.js
-// @downloadURL  https://github.com/munierujp/userscripts/raw/master/scripts/amazon/redirect-to-normalized-url.user.js
+// @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/amazon/redirect-to-normalized-url.user.js
+// @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/amazon/redirect-to-normalized-url.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        https://www.amazon.co.jp/*/dp/*
 // @match        https://www.amazon.co.jp/dp/*

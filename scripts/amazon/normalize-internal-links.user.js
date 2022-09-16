@@ -3,12 +3,12 @@
 // ==UserScript==
 // @name        内部リンクを正規化
 // @namespace    https://github.com/munierujp/
-// @version      0.2.0
+// @version      0.2.1
 // @description   Amazonの内部リンクを正規化します。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
-// @updateURL    https://github.com/munierujp/userscripts/raw/master/scripts/amazon/normalize-internal-links.user.js
-// @downloadURL  https://github.com/munierujp/userscripts/raw/master/scripts/amazon/normalize-internal-links.user.js
+// @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/amazon/normalize-internal-links.user.js
+// @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/amazon/normalize-internal-links.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        https://www.amazon.co.jp/*
 // @grant        none
