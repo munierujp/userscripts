@@ -15,6 +15,7 @@
 (function () {
     'use strict';
 
+    // TODO: リファクタリング
     const createCurrentButton = (text) => {
         const label = document.createElement('span');
         label.style.paddingLeft = '8px';
@@ -27,6 +28,7 @@
         return button;
     };
 
+    // TODO: リファクタリング
     const createNotCurrentButton = ({ text, url }) => {
         const label = document.createElement('a');
         label.href = url.toString();
@@ -39,6 +41,7 @@
         return button;
     };
 
+    // TODO: リファクタリング
     const createUrl = (filterType) => {
         const params = new URLSearchParams(location.search);
         params.set('filter', filterType);
@@ -54,6 +57,7 @@
     const values$1 = Object.values(FilterType);
     const isFilterType = (value) => values$1.includes(value);
 
+    // TODO: リファクタリング
     const TEXT$1 = 'すべて';
     const createAllButton = (filterType) => {
         switch (filterType) {
@@ -67,6 +71,7 @@
         }
     };
 
+    // TODO: リファクタリング
     const TEXT = 'セール中';
     const createDiscountedButton = (filterType) => {
         switch (filterType) {
@@ -80,6 +85,7 @@
         }
     };
 
+    // TODO: リファクタリング
     const createButtonList = (filterType) => {
         const allButton = createAllButton(filterType);
         const discountedButton = createDiscountedButton(filterType);
@@ -89,6 +95,7 @@
         return buttonList;
     };
 
+    // TODO: リファクタリング
     const createFilterMenu = (filterType) => {
         const label = document.createElement('span');
         label.textContent = '絞り込み';
@@ -103,6 +110,7 @@
         return main.querySelector('.d-rcol.selector') ?? undefined;
     };
 
+    // TODO: リファクタリング
     const createFilterMenuAppender = (filterType) => {
         return (main) => {
             const menu = findMenu(main);
@@ -118,12 +126,13 @@
         return document.getElementById('main-bmk') ?? undefined;
     };
 
+    // TODO: リファクタリング
     const showDiscountedItemsOnListView = (main) => {
         const table = main.querySelector('table');
         if (table === null) {
             throw new Error('Missing table.');
         }
-        const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td'));
+        const dataRows = Array.from(table.querySelectorAll('tr')).filter(row => row.querySelector('td') !== null);
         dataRows.forEach(row => {
             const discount = row.querySelector('.price .tx-sp');
             const display = discount !== null ? 'table-row' : 'none';
@@ -131,6 +140,7 @@
         });
     };
 
+    // TODO: リファクタリング
     const showDiscountedItemsOnTableView = (main) => {
         const list = main.querySelector('#list');
         if (list === null) {
@@ -151,6 +161,7 @@
     const values = Object.values(ViewType);
     const isViewType = (value) => values.includes(value);
 
+    // TODO: リファクタリング
     const getDiscountedItemsShower = (view) => {
         switch (view) {
             case ViewType.TABLE:
@@ -160,6 +171,7 @@
         }
     };
 
+    // TODO: リファクタリング
     const params = new URLSearchParams(location.search);
     const view = params.get('view');
     if (!isViewType(view)) {
