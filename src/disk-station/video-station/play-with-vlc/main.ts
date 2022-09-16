@@ -1,6 +1,6 @@
+import { isVideoStationPage } from '../../lib/isVideoStationPage'
 import { createPlayWithVlcButton } from './createPlayWithVlcButton'
 import { DropdownMenuStyle } from './DropdownMenuStyle'
-import { isVideoStationPage } from './isVideoStationPage'
 
 if (isVideoStationPage(new URL(location.href))) {
   DropdownMenuStyle.create()

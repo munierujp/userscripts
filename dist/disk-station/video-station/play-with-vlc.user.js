@@ -14,6 +14,10 @@
 (function () {
     'use strict';
 
+    const isVideoStationPage = (url) => {
+        return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance';
+    };
+
     const cloneNode = (node) => {
         return node.cloneNode(true);
     };
@@ -155,10 +159,6 @@
             });
         });
         return playWithVlcButton;
-    };
-
-    const isVideoStationPage = (url) => {
-        return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance';
     };
 
     if (isVideoStationPage(new URL(location.href))) {
