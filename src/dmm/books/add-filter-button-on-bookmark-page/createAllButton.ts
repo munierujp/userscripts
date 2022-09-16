@@ -1,7 +1,5 @@
-// TODO: リファクタリング
-
-import { createCurrentButton } from './createCurrentButton'
-import { createNotCurrentButton } from './createNotCurrentButton'
+import { createActiveButton } from './createActiveButton'
+import { createInactiveButton } from './createInactiveButton'
 import { createUrl } from './createUrl'
 import { FilterType } from './FilterType'
 
@@ -10,9 +8,9 @@ const TEXT = 'すべて'
 export const createAllButton = (filterType: FilterType): HTMLLIElement => {
   switch (filterType) {
     case FilterType.All:
-      return createCurrentButton(TEXT)
+      return createActiveButton(TEXT)
     case FilterType.Discounted:
-      return createNotCurrentButton({
+      return createInactiveButton({
         text: TEXT,
         url: createUrl(FilterType.All)
       })

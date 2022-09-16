@@ -15,8 +15,7 @@
 (function () {
     'use strict';
 
-    // TODO: リファクタリング
-    const createCurrentButton = (text) => {
+    const createActiveButton = (text) => {
         const label = document.createElement('span');
         label.style.paddingLeft = '8px';
         label.style.paddingRight = '8px';
@@ -28,8 +27,7 @@
         return button;
     };
 
-    // TODO: リファクタリング
-    const createNotCurrentButton = ({ text, url }) => {
+    const createInactiveButton = ({ text, url }) => {
         const label = document.createElement('a');
         label.href = url.toString();
         label.style.paddingLeft = '8px';
@@ -54,35 +52,32 @@
     const values$1 = Object.values(FilterType);
     const isFilterType = (value) => values$1.includes(value);
 
-    // TODO: リファクタリング
     const TEXT$1 = 'すべて';
     const createAllButton = (filterType) => {
         switch (filterType) {
             case FilterType.All:
-                return createCurrentButton(TEXT$1);
+                return createActiveButton(TEXT$1);
             case FilterType.Discounted:
-                return createNotCurrentButton({
+                return createInactiveButton({
                     text: TEXT$1,
                     url: createUrl(FilterType.All)
                 });
         }
     };
 
-    // TODO: リファクタリング
     const TEXT = 'セール中';
     const createDiscountedButton = (filterType) => {
         switch (filterType) {
             case FilterType.All:
-                return createNotCurrentButton({
+                return createInactiveButton({
                     text: TEXT,
                     url: createUrl(FilterType.Discounted)
                 });
             case FilterType.Discounted:
-                return createCurrentButton(TEXT);
+                return createActiveButton(TEXT);
         }
     };
 
-    // TODO: リファクタリング
     const createButtonList = (filterType) => {
         const allButton = createAllButton(filterType);
         const discountedButton = createDiscountedButton(filterType);
@@ -92,7 +87,6 @@
         return buttonList;
     };
 
-    // TODO: リファクタリング
     const createFilterMenu = (filterType) => {
         const label = document.createElement('span');
         label.textContent = '絞り込み';
@@ -107,7 +101,6 @@
         return document.getElementById('main-bmk') ?? undefined;
     };
 
-    // TODO: リファクタリング
     const showDiscountedItems = (main) => {
         const list = main.querySelector('#list');
         if (list === null) {
@@ -127,7 +120,6 @@
     const values = Object.values(ViewType);
     const isViewType = (value) => values.includes(value);
 
-    // TODO: リファクタリング
     const params = new URLSearchParams(location.search);
     const view = params.get('view');
     if (!isViewType(view)) {

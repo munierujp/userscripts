@@ -1,5 +1,3 @@
-// TODO: リファクタリング
-
 export const showDiscountedItems = (main: Element): void => {
   const list = main.querySelector('#list')
 

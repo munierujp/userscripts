@@ -1,7 +1,5 @@
-// TODO: リファクタリング
-
 import { createButtonList } from './createButtonList'
-import { FilterType } from './FilterType'
+import type { FilterType } from './FilterType'
 
 export const createFilterMenu = (filterType: FilterType): HTMLDivElement => {
   const label = document.createElement('span')

@@ -1,5 +1,3 @@
-// TODO: リファクタリング
-
 import { createFilterMenu } from './createFilterMenu'
 import {
   FilterType,
