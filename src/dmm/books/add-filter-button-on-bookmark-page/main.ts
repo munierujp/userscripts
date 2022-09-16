@@ -6,7 +6,7 @@ import {
   isFilterType
 } from './FilterType'
 import { findMain } from './findMain'
-import { getDiscountedItemsShower } from './getDiscountedItemsShower'
+import { showDiscountedItems } from './showDiscountedItems'
 import { isViewType } from './ViewType'
 
 const params = new URLSearchParams(location.search)
@@ -26,7 +26,6 @@ const filter = params.get('filter')
 const filterType = isFilterType(filter) ? filter : FilterType.All
 
 if (filterType === FilterType.Discounted) {
-  const showDiscountedItems = getDiscountedItemsShower(view)
   showDiscountedItems(main)
 }
 

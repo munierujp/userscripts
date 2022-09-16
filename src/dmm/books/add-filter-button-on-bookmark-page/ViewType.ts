@@ -1,5 +1,4 @@
 export const ViewType = {
-  List: 'list',
   Table: 'table'
 } as const
 // eslint-disable-next-line @typescript-eslint/no-redeclare

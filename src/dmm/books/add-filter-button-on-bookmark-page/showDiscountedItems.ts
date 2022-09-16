@@ -1,6 +1,6 @@
 // TODO: リファクタリング
 
-export const showDiscountedItemsOnTableView = (main: Element): void => {
+export const showDiscountedItems = (main: Element): void => {
   const list = main.querySelector('#list')
 
   if (list === null) {
