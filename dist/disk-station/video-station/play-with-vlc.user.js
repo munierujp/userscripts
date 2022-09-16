@@ -161,7 +161,7 @@
         return playWithVlcButton;
     };
 
-    if (isVideoStationPage(new URL(location.href))) {
+    const handleVideoStation = () => {
         DropdownMenuStyle.create();
         const observer = new MutationObserver((mutations, observer) => {
             const playButton = mutations
@@ -180,6 +180,10 @@
             childList: true,
             subtree: true
         });
+    };
+
+    if (isVideoStationPage(new URL(location.href))) {
+        handleVideoStation();
     }
 
 })();
