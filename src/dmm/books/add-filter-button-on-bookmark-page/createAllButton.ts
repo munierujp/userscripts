@@ -10,7 +10,7 @@ export const createAllButton = (filterType: FilterType): HTMLLIElement => {
       return createActiveButton(ButtonLabel.All)
     case FilterType.Discounted:
       return createInactiveButton({
-        text: ButtonLabel.All,
+        label: ButtonLabel.All,
         url: createUrl(FilterType.All)
       })
   }

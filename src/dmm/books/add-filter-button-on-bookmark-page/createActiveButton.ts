@@ -1,12 +1,12 @@
-export const createActiveButton = (text: string): HTMLLIElement => {
-  const label = document.createElement('span')
-  label.style.paddingLeft = '8px'
-  label.style.paddingRight = '8px'
-  label.textContent = text
+export const createActiveButton = (label: string): HTMLLIElement => {
+  const link = document.createElement('span')
+  link.style.paddingLeft = '8px'
+  link.style.paddingRight = '8px'
+  link.textContent = label
 
   const button = document.createElement('li')
   button.classList.add('current')
   button.style.width = 'auto'
-  button.append(label)
+  button.append(link)
   return button
 }

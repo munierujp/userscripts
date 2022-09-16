@@ -21,27 +21,27 @@
     };
     Object.values(ButtonLabel);
 
-    const createActiveButton = (text) => {
-        const label = document.createElement('span');
-        label.style.paddingLeft = '8px';
-        label.style.paddingRight = '8px';
-        label.textContent = text;
+    const createActiveButton = (label) => {
+        const link = document.createElement('span');
+        link.style.paddingLeft = '8px';
+        link.style.paddingRight = '8px';
+        link.textContent = label;
         const button = document.createElement('li');
         button.classList.add('current');
         button.style.width = 'auto';
-        button.append(label);
+        button.append(link);
         return button;
     };
 
-    const createInactiveButton = ({ text, url }) => {
-        const label = document.createElement('a');
-        label.href = url.toString();
-        label.style.paddingLeft = '8px';
-        label.style.paddingRight = '8px';
-        label.textContent = text;
+    const createInactiveButton = ({ label, url }) => {
+        const link = document.createElement('a');
+        link.href = url.toString();
+        link.style.paddingLeft = '8px';
+        link.style.paddingRight = '8px';
+        link.textContent = label;
         const button = document.createElement('li');
         button.style.width = 'auto';
-        button.append(label);
+        button.append(link);
         return button;
     };
 
@@ -55,8 +55,8 @@
         All: 'all',
         Discounted: 'discounted'
     };
-    const values$1 = Object.values(FilterType);
-    const isFilterType = (value) => values$1.includes(value);
+    const values = Object.values(FilterType);
+    const isFilterType = (value) => values.includes(value);
 
     const createAllButton = (filterType) => {
         switch (filterType) {
@@ -64,7 +64,7 @@
                 return createActiveButton(ButtonLabel.All);
             case FilterType.Discounted:
                 return createInactiveButton({
-                    text: ButtonLabel.All,
+                    label: ButtonLabel.All,
                     url: createUrl(FilterType.All)
                 });
         }
@@ -74,7 +74,7 @@
         switch (filterType) {
             case FilterType.All:
                 return createInactiveButton({
-                    text: ButtonLabel.Discounted,
+                    label: ButtonLabel.Discounted,
                     url: createUrl(FilterType.Discounted)
                 });
             case FilterType.Discounted:
@@ -101,48 +101,45 @@
         return filterMenu;
     };
 
-    const findMain = () => {
-        return document.getElementById('main-bmk') ?? undefined;
-    };
-
-    const showDiscountedItems = (main) => {
-        const list = main.querySelector('#list');
-        if (list === null) {
-            throw new Error('Missing list.');
+    class Bookmark {
+        constructor(element) {
+            this.element = element;
         }
-        const items = Array.from(list.querySelectorAll('li'));
-        items.forEach(item => {
-            const discount = item.querySelector('.txtoff');
-            const display = discount !== null ? 'list-item' : 'none';
-            item.style.display = display;
-        });
-    };
+        static find() {
+            const element = document.getElementById('main-bmk');
+            return element !== null ? new Bookmark(element) : undefined;
+        }
+        hideNotDiscountedItems() {
+            const list = this.element.querySelector('#list');
+            if (list === null) {
+                throw new Error('Missing list.');
+            }
+            Array.from(list.querySelectorAll('li')).forEach(item => {
+                const discount = item.querySelector('.txtoff');
+                const display = discount !== null ? 'list-item' : 'none';
+                item.style.display = display;
+            });
+        }
+        appendFilterMenu(filterType) {
+            const menu = this.element.querySelector('.d-rcol.selector');
+            if (menu === null) {
+                throw new Error('Missing menu.');
+            }
+            const filterMenu = createFilterMenu(filterType);
+            menu.append(filterMenu);
+        }
+    }
 
-    const ViewType = {
-        Table: 'table'
-    };
-    const values = Object.values(ViewType);
-    const isViewType = (value) => values.includes(value);
-
+    const bookmark = Bookmark.find();
+    if (bookmark === undefined) {
+        throw new Error('Missing bookmark.');
+    }
     const params = new URLSearchParams(location.search);
-    const view = params.get('view');
-    if (!isViewType(view)) {
-        throw new Error('Invalid view.');
-    }
-    const main = findMain();
-    if (main === undefined) {
-        throw new Error('Missing main.');
-    }
-    const menu = main.querySelector('.d-rcol.selector');
-    if (menu === null) {
-        throw new Error('Missing menu.');
-    }
     const filter = params.get('filter');
     const filterType = isFilterType(filter) ? filter : FilterType.All;
     if (filterType === FilterType.Discounted) {
-        showDiscountedItems(main);
+        bookmark.hideNotDiscountedItems();
     }
-    const filterMenu = createFilterMenu(filterType);
-    menu.append(filterMenu);
+    bookmark.appendFilterMenu(filterType);
 
 })();

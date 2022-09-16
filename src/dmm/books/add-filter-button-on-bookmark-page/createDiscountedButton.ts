@@ -8,7 +8,7 @@ export const createDiscountedButton = (filterType: FilterType): HTMLLIElement =>
   switch (filterType) {
     case FilterType.All:
       return createInactiveButton({
-        text: ButtonLabel.Discounted,
+        label: ButtonLabel.Discounted,
         url: createUrl(FilterType.Discounted)
       })
     case FilterType.Discounted:

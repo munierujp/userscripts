@@ -1,18 +1,18 @@
 export const createInactiveButton = ({
-  text,
+  label,
   url
 }: {
-  text: string
+  label: string
   url: URL
 }): HTMLLIElement => {
-  const label = document.createElement('a')
-  label.href = url.toString()
-  label.style.paddingLeft = '8px'
-  label.style.paddingRight = '8px'
-  label.textContent = text
+  const link = document.createElement('a')
+  link.href = url.toString()
+  link.style.paddingLeft = '8px'
+  link.style.paddingRight = '8px'
+  link.textContent = label
 
   const button = document.createElement('li')
   button.style.width = 'auto'
-  button.append(label)
+  button.append(link)
   return button
 }
