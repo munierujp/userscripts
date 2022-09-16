@@ -15,6 +15,12 @@
 (function () {
     'use strict';
 
+    const ButtonLabel = {
+        All: 'すべて',
+        Discounted: 'セール中'
+    };
+    Object.values(ButtonLabel);
+
     const createActiveButton = (text) => {
         const label = document.createElement('span');
         label.style.paddingLeft = '8px';
@@ -52,29 +58,27 @@
     const values$1 = Object.values(FilterType);
     const isFilterType = (value) => values$1.includes(value);
 
-    const TEXT$1 = 'すべて';
     const createAllButton = (filterType) => {
         switch (filterType) {
             case FilterType.All:
-                return createActiveButton(TEXT$1);
+                return createActiveButton(ButtonLabel.All);
             case FilterType.Discounted:
                 return createInactiveButton({
-                    text: TEXT$1,
+                    text: ButtonLabel.All,
                     url: createUrl(FilterType.All)
                 });
         }
     };
 
-    const TEXT = 'セール中';
     const createDiscountedButton = (filterType) => {
         switch (filterType) {
             case FilterType.All:
                 return createInactiveButton({
-                    text: TEXT,
+                    text: ButtonLabel.Discounted,
                     url: createUrl(FilterType.Discounted)
                 });
             case FilterType.Discounted:
-                return createActiveButton(TEXT);
+                return createActiveButton(ButtonLabel.Discounted);
         }
     };
 
