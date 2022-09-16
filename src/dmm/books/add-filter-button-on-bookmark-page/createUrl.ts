@@ -1,11 +1,7 @@
-// TODO: リファクタリング
-
-import { FilterType } from './FilterType'
+import type { FilterType } from './FilterType'
 
 export const createUrl = (filterType: FilterType): URL => {
-  const params = new URLSearchParams(location.search)
-  params.set('filter', filterType)
   const url = new URL(location.href)
-  url.search = params.toString()
+  url.searchParams.set('filter', filterType)
   return url
 }

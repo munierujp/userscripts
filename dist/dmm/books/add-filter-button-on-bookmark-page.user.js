@@ -41,12 +41,9 @@
         return button;
     };
 
-    // TODO: リファクタリング
     const createUrl = (filterType) => {
-        const params = new URLSearchParams(location.search);
-        params.set('filter', filterType);
         const url = new URL(location.href);
-        url.search = params.toString();
+        url.searchParams.set('filter', filterType);
         return url;
     };
 
