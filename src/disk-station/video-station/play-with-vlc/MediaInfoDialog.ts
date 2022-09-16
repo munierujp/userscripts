@@ -1,13 +1,14 @@
-import { DropdownMenuStyle } from './DropdownMenuStyle'
+import { isElement } from '../../../lib/isElement'
 import { findActionButton } from './findActionButton'
 import { findMediaInfoLink } from './findMediaInfoLink'
 
 export class MediaInfoDialog {
   constructor (private readonly element: Element) {}
 
-  static findFromMutations (mutations: MutationRecord[]): MediaInfoDialog | undefined {
+  static fromMutations (mutations: MutationRecord[]): MediaInfoDialog | undefined {
     const element = mutations
-      .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node): node is Element => node instanceof Element))
+      // eslint-disable-next-line unicorn/no-array-callback-reference
+      .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isElement))
       .find(({ classList }) => classList.contains('video-info-dialog'))
 
     if (element === undefined) {
@@ -18,19 +19,12 @@ export class MediaInfoDialog {
   }
 
   static open (): void {
-    const dropdownMenuStyle = DropdownMenuStyle.find()
-
-    if (dropdownMenuStyle === undefined) {
-      throw new Error('Missing dropdown menu style.')
-    }
-
     const actionButton = findActionButton()
 
     if (actionButton === undefined) {
       throw new Error('Missing action button.')
     }
 
-    dropdownMenuStyle.hideDropdownMenu()
     actionButton.click()
     const mediaInfoLink = findMediaInfoLink()
 
@@ -39,17 +33,6 @@ export class MediaInfoDialog {
     }
 
     mediaInfoLink.click()
-    dropdownMenuStyle.showDropdownMenu()
-  }
-
-  findFilePath (): string | undefined {
-    return Array.from(this.element.querySelectorAll('tr'))
-      .map(row => Array.from(row.querySelectorAll('td')))
-      .filter(({ length }) => length >= 2)
-      .map(cells => cells.map(({ textContent }) => textContent ?? undefined))
-      .filter(([label]) => label === 'ファイル パス')
-      .map(([, value]) => value)
-      .find(value => value !== undefined)
   }
 
   close (): void {
@@ -60,5 +43,15 @@ export class MediaInfoDialog {
     }
 
     closeButton.click()
+  }
+
+  findFilePath (): string | undefined {
+    return Array.from(this.element.querySelectorAll('tr'))
+      .map(row => Array.from(row.querySelectorAll('td')))
+      .filter(({ length }) => length >= 2)
+      .map(cells => cells.map(({ textContent }) => textContent ?? undefined))
+      .filter(([label]) => label === 'ファイル パス')
+      .map(([, value]) => value)
+      .find(value => value !== undefined)
   }
 }

@@ -18,6 +18,10 @@
         return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance';
     };
 
+    const isHTMLElement = (value) => {
+        return value instanceof HTMLElement;
+    };
+
     const cloneNode = (node) => {
         return node.cloneNode(true);
     };
@@ -30,34 +34,9 @@
         return document.getElementById('sds-desktop') ?? undefined;
     };
 
-    const ID = 'jp-munieru-style-dropdown-menu';
-    class DropdownMenuStyle {
-        constructor(element) {
-            this.element = element;
-        }
-        static create() {
-            const element = document.createElement('style');
-            element.id = ID;
-            element.type = 'text/css';
-            document.head.append(element);
-            return new DropdownMenuStyle(element);
-        }
-        static find() {
-            const element = document.getElementById(ID);
-            return element instanceof HTMLStyleElement ? new DropdownMenuStyle(element) : undefined;
-        }
-        hideDropdownMenu() {
-            this.element.textContent = `
-.syno-ux-menu.syno-vs2-dropdown-menu {
-  display: none !important;
-  visibility: hidden !important;
-}
-`;
-        }
-        showDropdownMenu() {
-            this.element.textContent = '';
-        }
-    }
+    const isElement = (value) => {
+        return value instanceof Element;
+    };
 
     const findActionButton = () => {
         return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
@@ -72,9 +51,10 @@
         constructor(element) {
             this.element = element;
         }
-        static findFromMutations(mutations) {
+        static fromMutations(mutations) {
             const element = mutations
-                .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof Element))
+                // eslint-disable-next-line unicorn/no-array-callback-reference
+                .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isElement))
                 .find(({ classList }) => classList.contains('video-info-dialog'));
             if (element === undefined) {
                 return undefined;
@@ -82,22 +62,23 @@
             return new MediaInfoDialog(element);
         }
         static open() {
-            const dropdownMenuStyle = DropdownMenuStyle.find();
-            if (dropdownMenuStyle === undefined) {
-                throw new Error('Missing dropdown menu style.');
-            }
             const actionButton = findActionButton();
             if (actionButton === undefined) {
                 throw new Error('Missing action button.');
             }
-            dropdownMenuStyle.hideDropdownMenu();
             actionButton.click();
             const mediaInfoLink = findMediaInfoLink();
             if (mediaInfoLink === undefined) {
                 throw new Error('Missing media info link.');
             }
             mediaInfoLink.click();
-            dropdownMenuStyle.showDropdownMenu();
+        }
+        close() {
+            const closeButton = this.element.querySelector('button[aria-label="閉じる"]');
+            if (closeButton === null) {
+                throw new Error('Missing close button.');
+            }
+            closeButton.click();
         }
         findFilePath() {
             return Array.from(this.element.querySelectorAll('tr'))
@@ -108,27 +89,20 @@
                 .map(([, value]) => value)
                 .find(value => value !== undefined);
         }
-        close() {
-            const closeButton = this.element.querySelector('button[aria-label="閉じる"]');
-            if (closeButton === null) {
-                throw new Error('Missing close button.');
-            }
-            closeButton.click();
-        }
     }
 
     const fetchFilePath = async () => {
-        const desktop = findDesktop();
-        if (desktop === undefined) {
-            throw new Error('Missing desktop.');
-        }
         return await new Promise((resolve, reject) => {
+            const desktop = findDesktop();
+            if (desktop === undefined) {
+                throw new Error('Missing desktop.');
+            }
             const observer = new MutationObserver((mutations, observer) => {
-                const mediaInfoDialog = MediaInfoDialog.findFromMutations(mutations);
+                const mediaInfoDialog = MediaInfoDialog.fromMutations(mutations);
                 if (mediaInfoDialog === undefined) {
                     return;
                 }
-                // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
+                // NOTE: DOMを監視するコストが高いので、目的の要素が追加されたらすぐに止める
                 observer.disconnect();
                 const filePath = mediaInfoDialog.findFilePath();
                 mediaInfoDialog.close();
@@ -146,35 +120,42 @@
         });
     };
 
-    const onClickButton = async () => {
+    const handleError = (error) => {
+        throw error;
+    };
+
+    const handleClick = async () => {
         const filePath = await fetchFilePath();
         const url = createUrl(filePath);
         window.open(url);
     };
     const createPlayWithVlcButton = (playButton) => {
-        const playWithVlcButton = cloneNode(playButton);
-        playWithVlcButton.addEventListener('click', () => {
-            onClickButton().catch(error => {
-                throw error;
-            });
+        const button = cloneNode(playButton);
+        button.addEventListener('click', () => {
+            handleClick().catch(handleError);
         });
-        return playWithVlcButton;
+        return button;
+    };
+
+    const isPlayButton = (element) => {
+        const { classList } = element;
+        return classList.contains('x-btn') && classList.contains('play');
     };
 
     const handleVideoStation = () => {
-        DropdownMenuStyle.create();
         const observer = new MutationObserver((mutations, observer) => {
             const playButton = mutations
-                .flatMap(({ addedNodes }) => Array.from(addedNodes).filter((node) => node instanceof HTMLElement))
-                .find(({ classList }) => classList.contains('x-btn') && classList.contains('play'));
+                // eslint-disable-next-line unicorn/no-array-callback-reference
+                .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
+                .find(element => isPlayButton(element));
             if (playButton === undefined) {
                 return;
             }
-            // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
+            // NOTE: DOMを監視するコストが高いので、目的の要素が追加されたらすぐに止める
             observer.disconnect();
             const playWithVlcButton = createPlayWithVlcButton(playButton);
             playButton.style.display = 'none';
-            playButton.before(playWithVlcButton);
+            playButton.after(playWithVlcButton);
         });
         observer.observe(document.body, {
             childList: true,

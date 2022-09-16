@@ -2,21 +2,21 @@ import { findDesktop } from './findDesktop'
 import { MediaInfoDialog } from './MediaInfoDialog'
 
 export const fetchFilePath = async (): Promise<string> => {
-  const desktop = findDesktop()
-
-  if (desktop === undefined) {
-    throw new Error('Missing desktop.')
-  }
-
   return await new Promise((resolve, reject) => {
+    const desktop = findDesktop()
+
+    if (desktop === undefined) {
+      throw new Error('Missing desktop.')
+    }
+
     const observer = new MutationObserver((mutations, observer) => {
-      const mediaInfoDialog = MediaInfoDialog.findFromMutations(mutations)
+      const mediaInfoDialog = MediaInfoDialog.fromMutations(mutations)
 
       if (mediaInfoDialog === undefined) {
         return
       }
 
-      // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
+      // NOTE: DOMを監視するコストが高いので、目的の要素が追加されたらすぐに止める
       observer.disconnect()
       const filePath = mediaInfoDialog.findFilePath()
       mediaInfoDialog.close()
