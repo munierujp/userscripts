@@ -6,9 +6,9 @@ import { ViewType } from './ViewType'
 
 export const getDiscountedItemsShower = (view: ViewType): (main: Element) => void => {
   switch (view) {
-    case ViewType.TABLE:
+    case ViewType.Table:
       return showDiscountedItemsOnTableView
-    case ViewType.LIST:
+    case ViewType.List:
       return showDiscountedItemsOnListView
   }
 }

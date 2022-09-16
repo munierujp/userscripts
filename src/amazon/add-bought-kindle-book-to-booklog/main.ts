@@ -3,10 +3,10 @@ import { processAmazon } from './processAmazon'
 import { processBooklog } from './processBooklog'
 
 switch (location.origin) {
-  case Origin.AMAZON:
+  case Origin.Amazon:
     processAmazon()
     break
-  case Origin.BOOKLOG:
+  case Origin.Booklog:
     processBooklog()
     break
 }

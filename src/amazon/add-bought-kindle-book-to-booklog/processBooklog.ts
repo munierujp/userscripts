@@ -3,9 +3,9 @@ import { findAddButton } from './findAddButton'
 import { Origin } from './Origin'
 
 export const processBooklog = (): void => {
-  window.opener.postMessage(EventType.BOOKLOG_READY, Origin.AMAZON)
+  window.opener.postMessage(EventType.BooklogReady, Origin.Amazon)
   window.addEventListener('message', ({ data, origin }) => {
-    if (origin === Origin.AMAZON && data === EventType.AMAZON_BOUGHT) {
+    if (origin === Origin.Amazon && data === EventType.AmazonBought) {
       const addButton = findAddButton()
       addButton?.click()
     }

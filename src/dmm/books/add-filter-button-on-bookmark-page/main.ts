@@ -17,14 +17,14 @@ if (!isViewType(view)) {
 }
 
 const filter = params.get('filter')
-const filterType = isFilterType(filter) ? filter : FilterType.ALL
+const filterType = isFilterType(filter) ? filter : FilterType.All
 const main = findMain()
 
 if (main === undefined) {
   throw new Error('Missing main.')
 }
 
-if (filterType === FilterType.DISCOUNTED) {
+if (filterType === FilterType.Discounted) {
   const showDiscountedItems = getDiscountedItemsShower(view)
   showDiscountedItems(main)
 }

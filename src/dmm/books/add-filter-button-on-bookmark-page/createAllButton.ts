@@ -9,12 +9,12 @@ const TEXT = 'すべて'
 
 export const createAllButton = (filterType: FilterType): HTMLLIElement => {
   switch (filterType) {
-    case FilterType.ALL:
+    case FilterType.All:
       return createCurrentButton(TEXT)
-    case FilterType.DISCOUNTED:
+    case FilterType.Discounted:
       return createNotCurrentButton({
         text: TEXT,
-        url: createUrl(FilterType.ALL)
+        url: createUrl(FilterType.All)
       })
   }
 }

@@ -9,12 +9,12 @@ const TEXT = 'セール中'
 
 export const createDiscountedButton = (filterType: FilterType): HTMLLIElement => {
   switch (filterType) {
-    case FilterType.ALL:
+    case FilterType.All:
       return createNotCurrentButton({
         text: TEXT,
-        url: createUrl(FilterType.DISCOUNTED)
+        url: createUrl(FilterType.Discounted)
       })
-    case FilterType.DISCOUNTED:
+    case FilterType.Discounted:
       return createCurrentButton(TEXT)
   }
 }

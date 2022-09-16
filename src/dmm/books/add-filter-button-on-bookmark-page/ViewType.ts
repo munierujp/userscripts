@@ -1,6 +1,6 @@
 export const ViewType = {
-  LIST: 'list',
-  TABLE: 'table'
+  List: 'list',
+  Table: 'table'
 } as const
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export type ViewType = typeof ViewType[keyof typeof ViewType]

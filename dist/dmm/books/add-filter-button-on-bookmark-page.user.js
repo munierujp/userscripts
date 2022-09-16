@@ -51,8 +51,8 @@
     };
 
     const FilterType = {
-        ALL: 'all',
-        DISCOUNTED: 'discounted'
+        All: 'all',
+        Discounted: 'discounted'
     };
     const values$1 = Object.values(FilterType);
     const isFilterType = (value) => values$1.includes(value);
@@ -61,12 +61,12 @@
     const TEXT$1 = 'すべて';
     const createAllButton = (filterType) => {
         switch (filterType) {
-            case FilterType.ALL:
+            case FilterType.All:
                 return createCurrentButton(TEXT$1);
-            case FilterType.DISCOUNTED:
+            case FilterType.Discounted:
                 return createNotCurrentButton({
                     text: TEXT$1,
-                    url: createUrl(FilterType.ALL)
+                    url: createUrl(FilterType.All)
                 });
         }
     };
@@ -75,12 +75,12 @@
     const TEXT = 'セール中';
     const createDiscountedButton = (filterType) => {
         switch (filterType) {
-            case FilterType.ALL:
+            case FilterType.All:
                 return createNotCurrentButton({
                     text: TEXT,
-                    url: createUrl(FilterType.DISCOUNTED)
+                    url: createUrl(FilterType.Discounted)
                 });
-            case FilterType.DISCOUNTED:
+            case FilterType.Discounted:
                 return createCurrentButton(TEXT);
         }
     };
@@ -155,8 +155,8 @@
     };
 
     const ViewType = {
-        LIST: 'list',
-        TABLE: 'table'
+        List: 'list',
+        Table: 'table'
     };
     const values = Object.values(ViewType);
     const isViewType = (value) => values.includes(value);
@@ -164,9 +164,9 @@
     // TODO: リファクタリング
     const getDiscountedItemsShower = (view) => {
         switch (view) {
-            case ViewType.TABLE:
+            case ViewType.Table:
                 return showDiscountedItemsOnTableView;
-            case ViewType.LIST:
+            case ViewType.List:
                 return showDiscountedItemsOnListView;
         }
     };
@@ -178,12 +178,12 @@
         throw new Error(`Invalid view. view=${String(view)}`);
     }
     const filter = params.get('filter');
-    const filterType = isFilterType(filter) ? filter : FilterType.ALL;
+    const filterType = isFilterType(filter) ? filter : FilterType.All;
     const main = findMain();
     if (main === undefined) {
         throw new Error('Missing main.');
     }
-    if (filterType === FilterType.DISCOUNTED) {
+    if (filterType === FilterType.Discounted) {
         const showDiscountedItems = getDiscountedItemsShower(view);
         showDiscountedItems(main);
     }

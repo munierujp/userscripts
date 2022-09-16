@@ -16,13 +16,13 @@
     'use strict';
 
     const Origin = {
-        AMAZON: 'https://www.amazon.co.jp',
-        BOOKLOG: 'https://booklog.jp'
+        Amazon: 'https://www.amazon.co.jp',
+        Booklog: 'https://booklog.jp'
     };
 
     const EventType = {
-        AMAZON_BOUGHT: 'amazon_bought',
-        BOOKLOG_READY: 'booklog_ready'
+        AmazonBought: 'amazon_bought',
+        BooklogReady: 'booklog_ready'
     };
 
     const extractAsin = (url) => {
@@ -34,13 +34,13 @@
         if (asin === undefined) {
             throw new Error('ASIN is missing.');
         }
-        const booklogTab = window.open(`${Origin.BOOKLOG}/item/1/${asin}`, '_blank');
+        const booklogTab = window.open(`${Origin.Booklog}/item/1/${asin}`, '_blank');
         if (booklogTab === null) {
             throw new Error('Failed to open new tab.');
         }
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.BOOKLOG && data === EventType.BOOKLOG_READY) {
-                booklogTab.postMessage(EventType.AMAZON_BOUGHT, Origin.BOOKLOG);
+            if (origin === Origin.Booklog && data === EventType.BooklogReady) {
+                booklogTab.postMessage(EventType.AmazonBought, Origin.Booklog);
             }
         });
     };
@@ -50,9 +50,9 @@
     };
 
     const processBooklog = () => {
-        window.opener.postMessage(EventType.BOOKLOG_READY, Origin.AMAZON);
+        window.opener.postMessage(EventType.BooklogReady, Origin.Amazon);
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.AMAZON && data === EventType.AMAZON_BOUGHT) {
+            if (origin === Origin.Amazon && data === EventType.AmazonBought) {
                 const addButton = findAddButton();
                 addButton?.click();
             }
@@ -60,10 +60,10 @@
     };
 
     switch (location.origin) {
-        case Origin.AMAZON:
+        case Origin.Amazon:
             processAmazon();
             break;
-        case Origin.BOOKLOG:
+        case Origin.Booklog:
             processBooklog();
             break;
     }

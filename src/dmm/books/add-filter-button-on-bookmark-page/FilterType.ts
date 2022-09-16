@@ -1,6 +1,6 @@
 export const FilterType = {
-  ALL: 'all',
-  DISCOUNTED: 'discounted'
+  All: 'all',
+  Discounted: 'discounted'
 } as const
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export type FilterType = typeof FilterType[keyof typeof FilterType]
