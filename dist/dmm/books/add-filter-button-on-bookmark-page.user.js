@@ -110,10 +110,6 @@
         return document.getElementById('main-bmk') ?? undefined;
     };
 
-    const findMenu = (main) => {
-        return main.querySelector('.d-rcol.selector') ?? undefined;
-    };
-
     // TODO: リファクタリング
     const showDiscountedItems = (main) => {
         const list = main.querySelector('#list');
@@ -144,8 +140,8 @@
     if (main === undefined) {
         throw new Error('Missing main.');
     }
-    const menu = findMenu(main);
-    if (menu === undefined) {
+    const menu = main.querySelector('.d-rcol.selector');
+    if (menu === null) {
         throw new Error('Missing menu.');
     }
     const filter = params.get('filter');

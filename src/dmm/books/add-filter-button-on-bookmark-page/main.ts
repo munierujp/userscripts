@@ -6,7 +6,6 @@ import {
   isFilterType
 } from './FilterType'
 import { findMain } from './findMain'
-import { findMenu } from './findMenu'
 import { showDiscountedItems } from './showDiscountedItems'
 import { isViewType } from './ViewType'
 
@@ -23,9 +22,9 @@ if (main === undefined) {
   throw new Error('Missing main.')
 }
 
-const menu = findMenu(main)
+const menu = main.querySelector('.d-rcol.selector')
 
-if (menu === undefined) {
+if (menu === null) {
   throw new Error('Missing menu.')
 }
 
