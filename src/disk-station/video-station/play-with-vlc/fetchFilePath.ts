@@ -8,7 +8,7 @@ export const fetchFilePath = async (): Promise<string> => {
     throw new Error('Missing desktop.')
   }
 
-  return await new Promise(resolve => {
+  return await new Promise((resolve, reject) => {
     const observer = new MutationObserver((mutations, observer) => {
       const mediaInfoDialog = MediaInfoDialog.findFromMutations(mutations)
 
@@ -19,13 +19,13 @@ export const fetchFilePath = async (): Promise<string> => {
       // NOTE: コストが高いので目的の要素が追加されたらすぐに止める
       observer.disconnect()
       const filePath = mediaInfoDialog.findFilePath()
-
-      if (filePath === undefined) {
-        throw new Error('Missing file path.')
-      }
-
       mediaInfoDialog.close()
-      resolve(filePath)
+
+      if (filePath !== undefined) {
+        resolve(filePath)
+      } else {
+        reject(new Error('Missing file path.'))
+      }
     })
     observer.observe(desktop, {
       childList: true
