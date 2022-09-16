@@ -10,12 +10,7 @@ export class MediaInfoDialog {
       // eslint-disable-next-line unicorn/no-array-callback-reference
       .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isElement))
       .find(({ classList }) => classList.contains('video-info-dialog'))
-
-    if (element === undefined) {
-      return undefined
-    }
-
-    return new MediaInfoDialog(element)
+    return element !== undefined ? new MediaInfoDialog(element) : undefined
   }
 
   static open (): void {

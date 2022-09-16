@@ -1,13 +1,8 @@
-import { isHTMLElement } from '../../../lib/isHTMLElement'
-import { createPlayWithVlcButton } from './createPlayWithVlcButton'
-import { isPlayButton } from './isPlayButton'
+import { PlayButton } from './PlayButton'
 
 export const handleVideoStation = (): void => {
   const observer = new MutationObserver((mutations, observer) => {
-    const playButton = mutations
-      // eslint-disable-next-line unicorn/no-array-callback-reference
-      .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
-      .find(element => isPlayButton(element))
+    const playButton = PlayButton.fromMutations(mutations)
 
     if (playButton === undefined) {
       return
@@ -15,9 +10,7 @@ export const handleVideoStation = (): void => {
 
     // NOTE: DOMを監視するコストが高いので、目的の要素が追加されたらすぐに止める
     observer.disconnect()
-    const playWithVlcButton = createPlayWithVlcButton(playButton)
-    playButton.style.display = 'none'
-    playButton.after(playWithVlcButton)
+    playButton.replace()
   })
   observer.observe(document.body, {
     childList: true,

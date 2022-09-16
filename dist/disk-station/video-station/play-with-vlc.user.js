@@ -18,16 +18,12 @@
         return url.searchParams.get('launchApp') === 'SYNO.SDS.VideoStation.AppInstance';
     };
 
-    const isHTMLElement = (value) => {
-        return value instanceof HTMLElement;
-    };
-
     const cloneNode = (node) => {
         return node.cloneNode(true);
     };
 
-    const createUrl = (filePath) => {
-        return encodeURI(`vlc:///Volumes${filePath}`);
+    const isHTMLElement = (value) => {
+        return value instanceof HTMLElement;
     };
 
     const findDesktop = () => {
@@ -56,10 +52,7 @@
                 // eslint-disable-next-line unicorn/no-array-callback-reference
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isElement))
                 .find(({ classList }) => classList.contains('video-info-dialog'));
-            if (element === undefined) {
-                return undefined;
-            }
-            return new MediaInfoDialog(element);
+            return element !== undefined ? new MediaInfoDialog(element) : undefined;
         }
         static open() {
             const actionButton = findActionButton();
@@ -104,10 +97,10 @@
                 }
                 // NOTE: DOMを監視するコストが高いので、目的の要素が追加されたらすぐに止める
                 observer.disconnect();
-                const filePath = mediaInfoDialog.findFilePath();
+                const path = mediaInfoDialog.findFilePath();
                 mediaInfoDialog.close();
-                if (filePath !== undefined) {
-                    resolve(filePath);
+                if (path !== undefined) {
+                    resolve(path);
                 }
                 else {
                     reject(new Error('Missing file path.'));
@@ -124,38 +117,46 @@
         throw error;
     };
 
-    const handleClick = async () => {
-        const filePath = await fetchFilePath();
-        const url = createUrl(filePath);
-        window.open(url);
-    };
-    const createPlayWithVlcButton = (playButton) => {
-        const button = cloneNode(playButton);
-        button.addEventListener('click', () => {
-            handleClick().catch(handleError);
-        });
-        return button;
-    };
-
     const isPlayButton = (element) => {
         const { classList } = element;
         return classList.contains('x-btn') && classList.contains('play');
     };
 
-    const handleVideoStation = () => {
-        const observer = new MutationObserver((mutations, observer) => {
-            const playButton = mutations
+    class PlayButton {
+        constructor(element) {
+            this.element = element;
+        }
+        static fromMutations(mutations) {
+            const element = mutations
                 // eslint-disable-next-line unicorn/no-array-callback-reference
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
                 .find(element => isPlayButton(element));
+            return element !== undefined ? new PlayButton(element) : undefined;
+        }
+        replace() {
+            const button = cloneNode(this.element);
+            button.addEventListener('click', () => {
+                this.handleClick().catch(handleError);
+            });
+            this.element.style.display = 'none';
+            this.element.after(button);
+        }
+        async handleClick() {
+            const path = await fetchFilePath();
+            const url = encodeURI(`vlc:///Volumes${path}`);
+            window.open(url);
+        }
+    }
+
+    const handleVideoStation = () => {
+        const observer = new MutationObserver((mutations, observer) => {
+            const playButton = PlayButton.fromMutations(mutations);
             if (playButton === undefined) {
                 return;
             }
             // NOTE: DOMを監視するコストが高いので、目的の要素が追加されたらすぐに止める
             observer.disconnect();
-            const playWithVlcButton = createPlayWithVlcButton(playButton);
-            playButton.style.display = 'none';
-            playButton.after(playWithVlcButton);
+            playButton.replace();
         });
         observer.observe(document.body, {
             childList: true,
