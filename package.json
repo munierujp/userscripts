@@ -13,9 +13,6 @@
   "engines": {
     "node": "16.11.1"
   },
-  "dependencies": {
-    "type-guards": "0.15.0"
-  },
   "devDependencies": {
     "@jest/types": "29.0.3",
     "@rollup/plugin-node-resolve": "14.1.0",
