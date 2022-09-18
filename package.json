@@ -8,7 +8,9 @@
     "clean": "rimraf dist",
     "lint": "eslint '**/*.{js,ts}'",
     "prebuild": "npm run clean",
-    "test": "jest --passWithNoTests"
+    "prewatch": "npm run clean",
+    "test": "jest --passWithNoTests",
+    "watch": "rollup --config rollup.config.ts --configPlugin typescript --watch"
   },
   "engines": {
     "node": "16.11.1"
