@@ -6,10 +6,9 @@
   "scripts": {
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "clean": "rimraf dist",
-    "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
+    "dev": "npm run build -- --watch",
     "lint": "eslint '**/*.{js,ts}'",
     "prebuild": "npm run clean",
-    "predev": "npm run clean",
     "test": "jest --passWithNoTests"
   },
   "engines": {
