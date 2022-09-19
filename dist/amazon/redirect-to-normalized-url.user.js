@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        正規化されたURLにリダイレクト
+// @name         正規化されたURLにリダイレクト
 // @namespace    https://github.com/munierujp/
 // @version      0.3.0
-// @description   Amazonで正規化されたURLにリダイレクトします。
+// @description  Amazonで正規化されたURLにリダイレクトします。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/amazon/redirect-to-normalized-url.user.js
