@@ -9,8 +9,8 @@ import {
 } from 'userscript-metadata'
 
 const entries = globSync('src/**/main.ts').map(entryPath => {
-  const metadataPath = entryPath.replace(/\/main\.ts$/, '/manifest.json')
-  const readMetadata = (): Metadata => JSON.parse(readFileSync(metadataPath, 'utf8'))
+  const manifestPath = entryPath.replace(/\/main\.ts$/, '/manifest.json')
+  const readMetadata = (): Metadata => JSON.parse(readFileSync(manifestPath, 'utf8'))
   const scriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.user.js')
   const scriptUrl = `file://${process.cwd()}/${scriptPath}`
   const devScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.dev.user.js')
