@@ -14,7 +14,7 @@ const entries = glob('src/**/main.ts').map(entryPath => {
   const mainScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.user.js')
   const devScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.dev.user.js')
   const manifestPath = entryPath.replace(/\/main\.ts$/, '/manifest.json')
-  const devifyManifest = (metadata: Metadata): Metadata => {
+  const devifyMetadata = (metadata: Metadata): Metadata => {
     const { require } = metadata
     const requires: string[] = []
 
@@ -34,7 +34,7 @@ const entries = glob('src/**/main.ts').map(entryPath => {
     return stringify(readMetadata(manifestPath))
   }
   const createDevHeader = (): string => {
-    return stringify(devifyManifest(readMetadata(manifestPath)))
+    return stringify(devifyMetadata(readMetadata(manifestPath)))
   }
   return {
     createDevHeader,
