@@ -39,7 +39,6 @@ const entries = glob('src/**/main.ts').map(entryPath => {
     mainScriptPath
   }
 })
-
 const mainConfig: RollupOptions[] = entries.map(({ createMainHeader, entryPath, mainScriptPath }) => ({
   input: entryPath,
   output: {
@@ -54,7 +53,6 @@ const mainConfig: RollupOptions[] = entries.map(({ createMainHeader, entryPath, 
     })
   ]
 }))
-
 const devConfig: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath }) => ({
   input: 'rollup/dev.ts',
   output: {
