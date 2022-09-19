@@ -29,12 +29,8 @@ const entries = glob('src/**/main.ts').map(entryPath => {
       require: requires
     }
   }
-  const createMainHeader = (): string => {
-    return stringify(readMetadata(manifestPath))
-  }
-  const createDevHeader = (): string => {
-    return stringify(devifyMetadata(readMetadata(manifestPath)))
-  }
+  const createMainHeader = (): string => stringify(readMetadata(manifestPath))
+  const createDevHeader = (): string => stringify(devifyMetadata(readMetadata(manifestPath)))
   return {
     createDevHeader,
     createMainHeader,
