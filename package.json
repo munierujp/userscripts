@@ -36,7 +36,6 @@
     "minimatch": "5.1.0",
     "rimraf": "3.0.2",
     "rollup": "2.79.0",
-    "rollup-plugin-userscript-metablock": "0.3.1",
     "rollup-plugin-watch": "1.0.1",
     "rollup-plugin-watch-globs": "1.0.0",
     "ts-jest": "29.0.1",
