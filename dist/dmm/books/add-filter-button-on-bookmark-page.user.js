@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        ブックマークページにフィルターボタンを追加
+// @name         ブックマークページにフィルターボタンを追加
 // @namespace    https://github.com/munierujp/
 // @version      1.3.0
-// @description   DMMブックスのブックマークページにフィルターボタンを追加します。
+// @description  DMMブックスのブックマークページにフィルターボタンを追加します。
 // @author       https://github.com/munierujp/
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/dmm/books/add-filter-button-on-bookmark-page.user.js
