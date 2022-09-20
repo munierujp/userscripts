@@ -4,16 +4,16 @@ import { sync as glob } from 'glob'
 import type { RollupOptions } from 'rollup'
 import watch from 'rollup-plugin-watch'
 import {
-  stringify,
+  stringify as stringifyMetadata,
   type Metadata
 } from 'userscript-metadata'
 
 const readMetadata = (path: string): Metadata => JSON.parse(readFileSync(path, 'utf8'))
 const rootDir = process.cwd()
 const entries = glob('src/**/main.ts').map(entryPath => {
+  const manifestPath = entryPath.replace(/\/main\.ts$/, '/manifest.json')
   const mainScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.user.js')
   const devScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.dev.user.js')
-  const manifestPath = entryPath.replace(/\/main\.ts$/, '/manifest.json')
   const devifyMetadata = (metadata: Metadata): Metadata => {
     const requires: string[] = []
 
@@ -29,8 +29,8 @@ const entries = glob('src/**/main.ts').map(entryPath => {
       require: requires
     }
   }
-  const createMainHeader = (): string => stringify(readMetadata(manifestPath))
-  const createDevHeader = (): string => stringify(devifyMetadata(readMetadata(manifestPath)))
+  const createMainHeader = (): string => stringifyMetadata(readMetadata(manifestPath))
+  const createDevHeader = (): string => stringifyMetadata(devifyMetadata(readMetadata(manifestPath)))
   return {
     createDevHeader,
     createMainHeader,
@@ -39,7 +39,7 @@ const entries = glob('src/**/main.ts').map(entryPath => {
     mainScriptPath
   }
 })
-const mainConfig: RollupOptions[] = entries.map(({ createMainHeader, entryPath, mainScriptPath }) => ({
+const mainConfigs: RollupOptions[] = entries.map(({ createMainHeader, entryPath, mainScriptPath }) => ({
   input: entryPath,
   output: {
     file: mainScriptPath,
@@ -53,7 +53,7 @@ const mainConfig: RollupOptions[] = entries.map(({ createMainHeader, entryPath, 
     })
   ]
 }))
-const devConfig: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath }) => ({
+const devConfigs: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath }) => ({
   input: 'rollup/dev.ts',
   output: {
     file: devScriptPath,
@@ -68,6 +68,6 @@ const devConfig: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath
 }))
 
 export default [
-  ...mainConfig,
-  ...devConfig
+  ...mainConfigs,
+  ...devConfigs
 ]
