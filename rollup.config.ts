@@ -4,7 +4,7 @@ import { sync as glob } from 'glob'
 import type { RollupOptions } from 'rollup'
 import watch from 'rollup-plugin-watch'
 import {
-  stringify,
+  stringify as stringifyMetadata,
   type Metadata
 } from 'userscript-metadata'
 
@@ -29,8 +29,8 @@ const entries = glob('src/**/main.ts').map(entryPath => {
       require: requires
     }
   }
-  const createMainHeader = (): string => stringify(readMetadata(manifestPath))
-  const createDevHeader = (): string => stringify(devifyMetadata(readMetadata(manifestPath)))
+  const createMainHeader = (): string => stringifyMetadata(readMetadata(manifestPath))
+  const createDevHeader = (): string => stringifyMetadata(devifyMetadata(readMetadata(manifestPath)))
   return {
     createDevHeader,
     createMainHeader,
