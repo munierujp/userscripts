@@ -53,7 +53,7 @@ const mainConfigs: RollupOptions[] = entries.map(({ createMainHeader, entryPath,
     })
   ]
 }))
-const devConfig: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath }) => ({
+const devConfigs: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath }) => ({
   input: 'rollup/dev.ts',
   output: {
     file: devScriptPath,
@@ -69,5 +69,5 @@ const devConfig: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath
 
 export default [
   ...mainConfigs,
-  ...devConfig
+  ...devConfigs
 ]
