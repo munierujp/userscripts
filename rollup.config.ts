@@ -39,7 +39,7 @@ const entries = glob('src/**/main.ts').map(entryPath => {
     mainScriptPath
   }
 })
-const mainConfig: RollupOptions[] = entries.map(({ createMainHeader, entryPath, mainScriptPath }) => ({
+const mainConfigs: RollupOptions[] = entries.map(({ createMainHeader, entryPath, mainScriptPath }) => ({
   input: entryPath,
   output: {
     file: mainScriptPath,
@@ -68,6 +68,6 @@ const devConfig: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath
 }))
 
 export default [
-  ...mainConfig,
+  ...mainConfigs,
   ...devConfig
 ]
