@@ -26,6 +26,7 @@ const entries = glob('src/**/main.ts').map(entryPath => {
     requires.push(`file://${rootDir}/${mainScriptPath}`)
     return {
       ...metadata,
+      name: `[dev] ${String(metadata.name)}`,
       require: requires
     }
   }
