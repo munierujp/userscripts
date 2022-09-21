@@ -6,10 +6,6 @@
       "es2021",
       "dom"
     ],
-    "noUncheckedIndexedAccess": true,
-    "types": [
-      "node",
-      "jest"
-    ],
+    "noUncheckedIndexedAccess": true
   }
 }
