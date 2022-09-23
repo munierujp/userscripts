@@ -3,10 +3,8 @@ import typescript from '@rollup/plugin-typescript'
 import { sync as glob } from 'glob'
 import type { RollupOptions } from 'rollup'
 import watch from 'rollup-plugin-watch'
-import {
-  stringify as stringifyMetadata,
-  type Metadata
-} from 'userscript-metadata'
+import { stringify as stringifyMetadata } from 'userscript-metadata'
+import type { Metadata } from 'userscript-metadata'
 
 const readMetadata = (path: string): Metadata => JSON.parse(readFileSync(path, 'utf8'))
 const rootDir = process.cwd()
