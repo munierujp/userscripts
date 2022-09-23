@@ -3,16 +3,16 @@ import typescript from '@rollup/plugin-typescript'
 import { sync as glob } from 'glob'
 import type { RollupOptions } from 'rollup'
 import watch from 'rollup-plugin-watch'
-import {
-  stringify as stringifyMetadata,
-  type Metadata
-} from 'userscript-metadata'
+import { stringify as stringifyMetadata } from 'userscript-metadata'
+import type { Metadata } from 'userscript-metadata'
 
 const readMetadata = (path: string): Metadata => JSON.parse(readFileSync(path, 'utf8'))
 const rootDir = process.cwd()
-const entries = glob('src/**/main.ts').map(entryPath => {
+const entryPaths = glob('src/**/main.ts')
+const entries = entryPaths.map(entryPath => {
   const manifestPath = entryPath.replace(/\/main\.ts$/, '/manifest.json')
   const mainScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.user.js')
+  const mainScriptUrl = `file://${rootDir}/${mainScriptPath}`
   const devScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.dev.user.js')
   const devifyMetadata = (metadata: Metadata): Metadata => {
     const requires: string[] = []
@@ -23,7 +23,7 @@ const entries = glob('src/**/main.ts').map(entryPath => {
       requires.push(...metadata.require)
     }
 
-    requires.push(`file://${rootDir}/${mainScriptPath}`)
+    requires.push(mainScriptUrl)
     return {
       ...metadata,
       name: `[dev] ${String(metadata.name)}`,
