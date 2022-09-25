@@ -1,4 +1,8 @@
-import { describe, expect, it } from '@jest/globals'
+import {
+  describe,
+  expect,
+  it
+} from '@jest/globals'
 import { isPlayButton } from './isPlayButton'
 
 describe('isPlayButton', () => {
