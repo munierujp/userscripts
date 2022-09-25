@@ -19,13 +19,17 @@ const unicornRules = {
   'unicorn/prevent-abbreviations': 'off'
 }
 
-const importOrderRules = {
+const importRules = {
   'sort-imports': 'off',
   'import/order': ['error', {
     alphabetize: {
       order: 'asc',
       caseInsensitive: true
     }
+  }],
+  'import-newlines/enforce': ['error', {
+    items: 1,
+    semi: false
   }]
 }
 
@@ -37,6 +41,7 @@ module.exports = {
     'plugin:jest/recommended'
   ],
   plugins: [
+    'import-newlines',
     'tsdoc'
   ],
   parserOptions: {
@@ -47,7 +52,7 @@ module.exports = {
   },
   rules: {
     ...unicornRules,
-    ...importOrderRules,
+    ...importRules,
     'tsdoc/syntax': 'warn'
   }
 }
