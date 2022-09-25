@@ -55,7 +55,7 @@ const mainConfigs: RollupOptions[] = entries.map(({ createMainHeader, entryPath,
   ]
 }))
 const devConfigs: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath }) => ({
-  input: 'rollup/dev.ts',
+  input: 'src/dev.ts',
   output: {
     file: devScriptPath,
     banner: () => createDevHeader()
