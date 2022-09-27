@@ -9,6 +9,7 @@
     "dev": "npm run build -- --watch",
     "lint": "eslint '**/*.{js,ts}'",
     "prebuild": "npm run clean",
+    "prelint": "npm run build",
     "test": "jest --passWithNoTests"
   },
   "engines": {
