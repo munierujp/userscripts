@@ -1,7 +1,7 @@
 import {
   cloneNode,
   isHTMLElement
-} from '../../../lib'
+} from '../../../util'
 import { fetchFilePath } from './fetchFilePath'
 import { handleError } from './handleError'
 import { isPlayButton } from './isPlayButton'

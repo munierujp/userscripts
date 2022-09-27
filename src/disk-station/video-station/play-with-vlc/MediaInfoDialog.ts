@@ -1,4 +1,4 @@
-import { isElement } from '../../../lib'
+import { isElement } from '../../../util'
 import { findActionButton } from './findActionButton'
 import { findMediaInfoLink } from './findMediaInfoLink'
 
