@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VLCで再生
 // @namespace    https://github.com/munierujp/
-// @version      1.1.1
+// @version      1.1.2
 // @description  DiskStationのVideo Stationで動画をVLCで再生します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -24,16 +24,16 @@
         return node.cloneNode(true);
     };
 
+    const isElement = (value) => {
+        return value instanceof Element;
+    };
+
     const isHTMLElement = (value) => {
         return value instanceof HTMLElement;
     };
 
     const findDesktop = () => {
         return document.getElementById('sds-desktop') ?? undefined;
-    };
-
-    const isElement = (value) => {
-        return value instanceof Element;
     };
 
     const findActionButton = () => {
