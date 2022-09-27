@@ -34,25 +34,50 @@ const importRules = {
 }
 
 module.exports = {
-  extends: [
-    'standard-with-typescript',
-    'plugin:unicorn/recommended',
-    'plugin:eslint-comments/recommended',
-    'plugin:jest/recommended'
-  ],
-  plugins: [
-    'import-newlines',
-    'tsdoc'
-  ],
-  parserOptions: {
-    project: './tsconfig.json'
-  },
-  env: {
-    browser: true
-  },
-  rules: {
-    ...unicornRules,
-    ...importRules,
-    'tsdoc/syntax': 'warn'
-  }
+  overrides: [
+    {
+      files: [
+        '**/*.js',
+        '**/*.ts'
+      ],
+      excludedFiles: [
+        'dist/**/*.js'
+      ],
+      extends: [
+        'standard-with-typescript',
+        'plugin:unicorn/recommended',
+        'plugin:eslint-comments/recommended',
+        'plugin:jest/recommended'
+      ],
+      plugins: [
+        'import-newlines',
+        'tsdoc'
+      ],
+      parserOptions: {
+        project: './tsconfig.json'
+      },
+      env: {
+        browser: true
+      },
+      rules: {
+        ...unicornRules,
+        ...importRules,
+        'tsdoc/syntax': 'warn'
+      }
+    },
+    {
+      files: [
+        'dist/**/*.js'
+      ],
+      extends: [
+        'plugin:userscripts/recommended'
+      ],
+      parserOptions: {
+        ecmaVersion: 'latest'
+      },
+      env: {
+        browser: true
+      }
+    }
+  ]
 }
