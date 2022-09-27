@@ -1,7 +1,7 @@
 {
   "name": "サイト内リンクを現在のタブで開く",
   "namespace": "https://github.com/munierujp/",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Amazonでサイト内リンクを現在のタブで開きます。",
   "author": "https://github.com/munierujp/",
   "homepage": "https://github.com/munierujp/userscripts",

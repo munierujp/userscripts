@@ -1,7 +1,7 @@
 {
   "name": "正規化されたURLにリダイレクト",
   "namespace": "https://github.com/munierujp/",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Amazonで正規化されたURLにリダイレクトします。",
   "author": "https://github.com/munierujp/",
   "homepage": "https://github.com/munierujp/userscripts",
