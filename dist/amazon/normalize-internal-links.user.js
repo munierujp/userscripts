@@ -4,6 +4,7 @@
 // @version      0.3.0
 // @description  Amazonの内部リンクを正規化します。
 // @author       https://github.com/munierujp/
+// @homepage     https://github.com/munierujp/userscripts
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/amazon/normalize-internal-links.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/amazon/normalize-internal-links.user.js
@@ -11,6 +12,7 @@
 // @match        *://www.amazon.co.jp/*
 // @grant        none
 // ==/UserScript==
+
 (function () {
     'use strict';
 

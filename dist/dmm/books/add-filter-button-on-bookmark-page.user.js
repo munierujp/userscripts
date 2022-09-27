@@ -4,6 +4,7 @@
 // @version      1.3.0
 // @description  DMMブックスのブックマークページにフィルターボタンを追加します。
 // @author       https://github.com/munierujp/
+// @homepage     https://github.com/munierujp/userscripts
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/dmm/books/add-filter-button-on-bookmark-page.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/dmm/books/add-filter-button-on-bookmark-page.user.js
@@ -12,6 +13,7 @@
 // @match        *://book.dmm.com/bookmark/*
 // @grant        none
 // ==/UserScript==
+
 (function () {
     'use strict';
 
