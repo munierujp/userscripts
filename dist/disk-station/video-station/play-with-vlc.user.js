@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         VLCで再生
 // @namespace    https://github.com/munierujp/
-// @version      1.1.0
+// @version      1.1.1
 // @description  DiskStationのVideo Stationで動画をVLCで再生します。
 // @author       https://github.com/munierujp/
+// @homepage     https://github.com/munierujp/userscripts
 // @homepageURL  https://github.com/munierujp/userscripts
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/disk-station/video-station/play-with-vlc.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/disk-station/video-station/play-with-vlc.user.js
@@ -11,6 +12,7 @@
 // @match        *://diskstation.local/*
 // @grant        none
 // ==/UserScript==
+
 (function () {
     'use strict';
 
