@@ -45,7 +45,7 @@ const mainConfigs: RollupOptions[] = entries.map(({ createMainHeader, entryPath,
   output: {
     file: mainScriptPath,
     format: 'iife',
-    banner: () => createMainHeader()
+    banner: () => `${createMainHeader()}\n`
   },
   plugins: [
     typescript(),
@@ -58,7 +58,7 @@ const devConfigs: RollupOptions[] = entries.map(({ createDevHeader, devScriptPat
   input: 'src/dev.ts',
   output: {
     file: devScriptPath,
-    banner: () => createDevHeader()
+    banner: () => `${createDevHeader()}\n`
   },
   plugins: [
     typescript(),
