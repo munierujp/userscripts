@@ -1,5 +1,7 @@
-import { cloneNode } from '../../../lib/cloneNode'
-import { isHTMLElement } from '../../../lib/isHTMLElement'
+import {
+  cloneNode,
+  isHTMLElement
+} from '../../../lib'
 import { fetchFilePath } from './fetchFilePath'
 import { handleError } from './handleError'
 import { isPlayButton } from './isPlayButton'
