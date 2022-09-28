@@ -137,6 +137,9 @@
                 if (href === null) {
                     return;
                 }
+                if (!/^\?/.test(href)) {
+                    return;
+                }
                 const params = new URLSearchParams(href);
                 params.set('filter', filterType);
                 link.setAttribute('href', `?${params.toString()}`);
