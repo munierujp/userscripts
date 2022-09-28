@@ -155,5 +155,6 @@
         bookmark.hideNotDiscountedItems();
     }
     bookmark.appendFilterMenu(filterType);
+    bookmark.appendFilterParamToMenuLinks(filterType);
 
 })();

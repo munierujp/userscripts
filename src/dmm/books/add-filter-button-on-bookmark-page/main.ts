@@ -19,3 +19,4 @@ if (filterType === FilterType.Discounted) {
 }
 
 bookmark.appendFilterMenu(filterType)
+bookmark.appendFilterParamToMenuLinks(filterType)
