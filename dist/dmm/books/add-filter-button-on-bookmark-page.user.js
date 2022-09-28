@@ -130,6 +130,18 @@
             const filterMenu = createFilterMenu(filterType);
             menu.append(filterMenu);
         }
+        appendFilterParamToMenuLinks(filterType) {
+            const links = this.element.querySelectorAll('.d-rcol.selector a');
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === null) {
+                    return;
+                }
+                const params = new URLSearchParams(href);
+                params.set('filter', filterType);
+                link.setAttribute('href', `?${params.toString()}`);
+            });
+        }
     }
 
     const bookmark = Bookmark.find();
