@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ブックマークページにフィルターボタンを追加
 // @namespace    https://github.com/munierujp/
-// @version      1.3.1
+// @version      1.3.2
 // @description  DMMブックスのブックマークページにフィルターボタンを追加します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -130,6 +130,21 @@
             const filterMenu = createFilterMenu(filterType);
             menu.append(filterMenu);
         }
+        appendFilterParamToMenuLinks(filterType) {
+            const links = this.element.querySelectorAll('.d-rcol.selector a');
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === null) {
+                    return;
+                }
+                if (!/^\?/.test(href)) {
+                    return;
+                }
+                const params = new URLSearchParams(href);
+                params.set('filter', filterType);
+                link.setAttribute('href', `?${params.toString()}`);
+            });
+        }
     }
 
     const bookmark = Bookmark.find();
@@ -143,5 +158,6 @@
         bookmark.hideNotDiscountedItems();
     }
     bookmark.appendFilterMenu(filterType);
+    bookmark.appendFilterParamToMenuLinks(filterType);
 
 })();

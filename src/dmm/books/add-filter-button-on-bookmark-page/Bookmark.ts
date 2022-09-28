@@ -33,4 +33,23 @@ export class Bookmark {
     const filterMenu = createFilterMenu(filterType)
     menu.append(filterMenu)
   }
+
+  appendFilterParamToMenuLinks (filterType: FilterType): void {
+    const links = this.element.querySelectorAll<HTMLAnchorElement>('.d-rcol.selector a')
+    links.forEach(link => {
+      const href = link.getAttribute('href')
+
+      if (href === null) {
+        return
+      }
+
+      if (!/^\?/.test(href)) {
+        return
+      }
+
+      const params = new URLSearchParams(href)
+      params.set('filter', filterType)
+      link.setAttribute('href', `?${params.toString()}`)
+    })
+  }
 }
