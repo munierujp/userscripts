@@ -16,7 +16,7 @@
     "node": "16.11.1"
   },
   "devDependencies": {
-    "@eslint-recommended/eslint-config-typescript": "^0.1.0",
+    "@eslint-recommended/eslint-config-typescript": "0.1.0",
     "@rollup/plugin-typescript": "8.5.0",
     "@tsconfig/node16": "1.0.3",
     "@types/glob": "8.0.0",
