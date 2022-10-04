@@ -16,7 +16,9 @@ const unicornRules = {
   // TODO [engine:node@>=18]: Node.js v18以上になったら有効化
   'unicorn/prefer-top-level-await': 'off',
   // 一般的に定着しているような略語を省略せずに書くのは冗長なので無効化
-  'unicorn/prevent-abbreviations': 'off'
+  'unicorn/prevent-abbreviations': 'off',
+  // switch文のcase節を常にブロックにするのは冗長なので必要なときのみブロックにする
+  'unicorn/switch-case-braces': ['error', 'avoid']
 }
 
 const importRules = {
@@ -44,9 +46,7 @@ module.exports = {
         'dist/**/*.js'
       ],
       extends: [
-        'standard-with-typescript',
-        'plugin:unicorn/recommended',
-        'plugin:eslint-comments/recommended',
+        '@eslint-recommended/eslint-config-typescript',
         'plugin:jest/recommended'
       ],
       plugins: [
