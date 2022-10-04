@@ -19,6 +19,7 @@
     "@eslint-recommended/eslint-config-typescript": "0.1.0",
     "@rollup/plugin-typescript": "8.5.0",
     "@tsconfig/node16": "1.0.3",
+    "@types/eslint": "8.4.6",
     "@types/glob": "8.0.0",
     "@types/node": "16.11.64",
     "eslint": "8.24.0",
