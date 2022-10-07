@@ -12,17 +12,11 @@ module.exports = {
         '@munierujp/eslint-config-typescript',
         'plugin:jest/recommended'
       ],
-      plugins: [
-        'tsdoc'
-      ],
       parserOptions: {
         project: './tsconfig.json'
       },
       env: {
         browser: true
-      },
-      rules: {
-        'tsdoc/syntax': 'warn'
       }
     },
     {
