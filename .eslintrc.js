@@ -13,24 +13,17 @@ module.exports = {
         'plugin:jest/recommended'
       ],
       plugins: [
-        'import-newlines'
+        'import-newlines',
+        'tsdoc'
       ],
+      rules: {
+        'tsdoc/syntax': 'warn'
+      },
       parserOptions: {
         project: './tsconfig.json'
       },
       env: {
         browser: true
-      }
-    },
-    {
-      files: [
-        '*.ts'
-      ],
-      plugins: [
-        'tsdoc'
-      ],
-      rules: {
-        'tsdoc/syntax': 'warn'
       }
     },
     {
