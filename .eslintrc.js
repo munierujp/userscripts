@@ -16,14 +16,14 @@ module.exports = {
         'import-newlines',
         'tsdoc'
       ],
-      rules: {
-        'tsdoc/syntax': 'warn'
-      },
       parserOptions: {
         project: './tsconfig.json'
       },
       env: {
         browser: true
+      },
+      rules: {
+        'tsdoc/syntax': 'warn'
       }
     },
     {
