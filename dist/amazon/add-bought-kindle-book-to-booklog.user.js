@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Kindle本の購入完了時にブクログに登録
 // @namespace    https://github.com/munierujp/
-// @version      0.2.1
+// @version      0.2.2
 // @description  AmazonでKindle本の購入完了時にブクログに読書状況を積読として登録します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -52,7 +52,11 @@
     };
 
     const handleBooklog = () => {
-        window.opener.postMessage(EventType.BooklogReady, Origin.Amazon);
+        const opener = window.opener;
+        if (opener === null || document.referrer !== 'https://www.amazon.co.jp/') {
+            return;
+        }
+        opener.postMessage(EventType.BooklogReady, Origin.Amazon);
         window.addEventListener('message', ({ data, origin }) => {
             if (origin === Origin.Amazon && data === EventType.AmazonBought) {
                 const addButton = findAddButton();
