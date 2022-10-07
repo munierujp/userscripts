@@ -13,7 +13,6 @@ module.exports = {
         'plugin:jest/recommended'
       ],
       plugins: [
-        'import-newlines',
         'tsdoc'
       ],
       parserOptions: {
