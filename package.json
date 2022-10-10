@@ -4,13 +4,13 @@
   "description": "My User Scripts",
   "private": true,
   "scripts": {
+    "prebuild": "npm run clean",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
+    "postbuild": "npm run lint:userscripts",
     "clean": "rimraf dist",
     "dev": "npm run build -- --watch",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:userscripts": "eslint --no-eslintrc --config .eslintrc.userscripts.js 'dist/**/*.js'",
-    "postbuild": "npm run lint:userscripts",
-    "prebuild": "npm run clean",
     "test": "jest --passWithNoTests"
   },
   "engines": {
