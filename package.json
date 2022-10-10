@@ -8,7 +8,8 @@
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "postbuild": "npm run lint:userscripts",
     "clean": "rimraf dist",
-    "dev": "npm run build -- --watch",
+    "predev": "npm run clean",
+    "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:userscripts": "eslint --no-eslintrc --config .eslintrc.userscripts.js 'dist/**/*.js'",
     "test": "jest --passWithNoTests"
