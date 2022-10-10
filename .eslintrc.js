@@ -14,9 +14,6 @@ module.exports = {
       ],
       parserOptions: {
         project: './tsconfig.json'
-      },
-      env: {
-        browser: true
       }
     },
     {
@@ -28,9 +25,6 @@ module.exports = {
       ],
       parserOptions: {
         ecmaVersion: 'latest'
-      },
-      env: {
-        browser: true
       }
     }
   ]
