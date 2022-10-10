@@ -8,6 +8,7 @@
     "clean": "rimraf dist",
     "dev": "npm run build -- --watch",
     "lint": "eslint '**/*.{js,ts}'",
+    "lint:userscripts": "eslint --no-eslintrc --config .eslintrc.userscripts.js 'dist/**/*.js'",
     "prebuild": "npm run clean",
     "prelint": "npm run build",
     "test": "jest --passWithNoTests"
