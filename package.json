@@ -21,7 +21,7 @@
     "@tsconfig/node16": "1.0.3",
     "@types/glob": "8.0.0",
     "@types/node": "16.11.64",
-    "eslint": "8.24.0",
+    "eslint": "8.25.0",
     "eslint-plugin-jest": "27.1.1",
     "eslint-plugin-userscripts": "0.2.10",
     "glob": "8.0.3",
