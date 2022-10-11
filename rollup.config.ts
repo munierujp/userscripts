@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import typescript from '@rollup/plugin-typescript'
 import { sync as glob } from 'glob'
 import type { RollupOptions } from 'rollup'
+import cleanup from 'rollup-plugin-cleanup'
 import watch from 'rollup-plugin-watch'
 import { stringify as stringifyMetadata } from 'userscript-metadata'
 import type { Metadata } from 'userscript-metadata'
@@ -49,6 +50,11 @@ const mainConfigs: RollupOptions[] = entries.map(({ createMainHeader, entryPath,
   },
   plugins: [
     typescript(),
+    cleanup({
+      extensions: [
+        'ts'
+      ]
+    }),
     watch({
       dir: 'src'
     })
@@ -62,6 +68,11 @@ const devConfigs: RollupOptions[] = entries.map(({ createDevHeader, devScriptPat
   },
   plugins: [
     typescript(),
+    cleanup({
+      extensions: [
+        'ts'
+      ]
+    }),
     watch({
       dir: 'src'
     })
