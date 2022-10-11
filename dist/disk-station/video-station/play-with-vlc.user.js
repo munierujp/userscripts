@@ -51,7 +51,6 @@
         }
         static fromMutations(mutations) {
             const element = mutations
-                // eslint-disable-next-line unicorn/no-array-callback-reference
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isElement))
                 .find(({ classList }) => classList.contains('video-info-dialog'));
             return element !== undefined ? new MediaInfoDialog(element) : undefined;
@@ -97,7 +96,6 @@
                 if (mediaInfoDialog === undefined) {
                     return;
                 }
-                // NOTE: DOMを監視するコストが高いので、目的の要素が追加されたらすぐに止める
                 observer.disconnect();
                 const path = mediaInfoDialog.findFilePath();
                 mediaInfoDialog.close();
@@ -130,7 +128,6 @@
         }
         static fromMutations(mutations) {
             const element = mutations
-                // eslint-disable-next-line unicorn/no-array-callback-reference
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
                 .find(element => isPlayButton(element));
             return element !== undefined ? new PlayButton(element) : undefined;
@@ -156,7 +153,6 @@
             if (playButton === undefined) {
                 return;
             }
-            // NOTE: DOMを監視するコストが高いので、目的の要素が追加されたらすぐに止める
             observer.disconnect();
             playButton.replace();
         });
