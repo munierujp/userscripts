@@ -1,7 +1,7 @@
 import type { Filter } from './Filter'
 
-export const createUrl = (filterType: Filter): URL => {
+export const createUrl = (filter: Filter): URL => {
   const url = new URL(location.href)
-  url.searchParams.set('filter', filterType)
+  url.searchParams.set('filter', filter)
   return url
 }

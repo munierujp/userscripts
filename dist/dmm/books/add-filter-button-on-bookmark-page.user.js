@@ -47,9 +47,9 @@
         return button;
     };
 
-    const createUrl = (filterType) => {
+    const createUrl = (filter) => {
         const url = new URL(location.href);
-        url.searchParams.set('filter', filterType);
+        url.searchParams.set('filter', filter);
         return url;
     };
 
