@@ -72,8 +72,8 @@
         }
     };
 
-    const createDiscountedButton = (filterType) => {
-        switch (filterType) {
+    const createDiscountedButton = (filter) => {
+        switch (filter) {
             case Filter.All:
                 return createInactiveButton({
                     label: ButtonLabel.Discounted,
