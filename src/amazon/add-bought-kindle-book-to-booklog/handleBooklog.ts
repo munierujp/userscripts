@@ -2,6 +2,9 @@ import { EventType } from './EventType'
 import { findAddButton } from './findAddButton'
 import { Origin } from './Origin'
 
+/**
+ * ブクログ側の処理を実行します。
+ */
 export const handleBooklog = (): void => {
   const opener: Window | null = window.opener
 

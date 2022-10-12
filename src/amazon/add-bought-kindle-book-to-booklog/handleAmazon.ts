@@ -2,6 +2,9 @@ import { EventType } from './EventType'
 import { extractAsin } from './extractAsin'
 import { Origin } from './Origin'
 
+/**
+ * Amazon側の処理を実行します。
+ */
 export const handleAmazon = (): void => {
   const asin = extractAsin(new URL(location.href))
 
