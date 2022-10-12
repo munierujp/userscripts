@@ -78,13 +78,16 @@
             return this.element.querySelector('button[aria-label="閉じる"]') ?? undefined;
         }
         findFilePath() {
-            return Array.from(this.element.querySelectorAll('tr'))
+            return this.findRowElements()
                 .map(row => Array.from(row.querySelectorAll('td')))
                 .filter(({ length }) => length >= 2)
                 .map(cells => cells.map(({ textContent }) => textContent ?? undefined))
                 .filter(([label]) => label === 'ファイル パス')
                 .map(([, value]) => value)
                 .find(value => value !== undefined);
+        }
+        findRowElements() {
+            return Array.from(this.element.querySelectorAll('tr'));
         }
     }
 

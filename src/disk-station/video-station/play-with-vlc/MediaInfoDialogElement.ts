@@ -45,12 +45,16 @@ export class MediaInfoDialogElement {
   }
 
   findFilePath (): string | undefined {
-    return Array.from(this.element.querySelectorAll('tr'))
+    return this.findRowElements()
       .map(row => Array.from(row.querySelectorAll('td')))
       .filter(({ length }) => length >= 2)
       .map(cells => cells.map(({ textContent }) => textContent ?? undefined))
       .filter(([label]) => label === 'ファイル パス')
       .map(([, value]) => value)
       .find(value => value !== undefined)
+  }
+
+  private findRowElements (): HTMLTableRowElement[] {
+    return Array.from(this.element.querySelectorAll('tr'))
   }
 }
