@@ -84,9 +84,9 @@
         }
     };
 
-    const createButtonList = (filterType) => {
-        const allButton = createAllButton(filterType);
-        const discountedButton = createDiscountedButton(filterType);
+    const createButtonList = (filter) => {
+        const allButton = createAllButton(filter);
+        const discountedButton = createDiscountedButton(filter);
         const buttonList = document.createElement('ul');
         buttonList.append(allButton);
         buttonList.append(discountedButton);
