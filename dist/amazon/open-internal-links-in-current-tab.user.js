@@ -16,7 +16,11 @@
 (function () {
     'use strict';
 
-    Array.from(document.querySelectorAll('a[href^="/"][target="_blank"]'))
-        .forEach(element => element.removeAttribute('target'));
+    const findInternalLinkElements = () => {
+        return Array.from(document.querySelectorAll('a[href^="/"][target="_blank"]'));
+    };
+
+    const internalLinkElements = findInternalLinkElements();
+    internalLinkElements.forEach(element => element.removeAttribute('target'));
 
 })();
