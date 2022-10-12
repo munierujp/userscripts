@@ -15,14 +15,14 @@
     "test": "jest --passWithNoTests"
   },
   "engines": {
-    "node": "18.8.0"
+    "node": "16.11.1"
   },
   "devDependencies": {
     "@munierujp/eslint-config-typescript": "1.0.4",
     "@rollup/plugin-typescript": "9.0.1",
-    "@tsconfig/node18": "1.0.1",
+    "@tsconfig/node16": "1.0.3",
     "@types/glob": "8.0.0",
-    "@types/node": "18.8.4",
+    "@types/node": "16.11.65",
     "eslint": "8.25.0",
     "eslint-plugin-jest": "27.1.1",
     "eslint-plugin-userscripts": "0.2.10",
