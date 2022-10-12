@@ -21,7 +21,7 @@
         return url.searchParams.get('asin') ?? undefined;
     };
 
-    const MessageType = {
+    const Message = {
         AmazonBought: 'amazon_bought',
         BooklogReady: 'booklog_ready'
     };
@@ -41,8 +41,8 @@
             throw new Error('Failed to open new tab.');
         }
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Booklog && data === MessageType.BooklogReady) {
-                booklogTab.postMessage(MessageType.AmazonBought, Origin.Booklog);
+            if (origin === Origin.Booklog && data === Message.BooklogReady) {
+                booklogTab.postMessage(Message.AmazonBought, Origin.Booklog);
             }
         });
     };
@@ -56,9 +56,9 @@
         if (opener === null || document.referrer !== 'https://www.amazon.co.jp/') {
             return;
         }
-        opener.postMessage(MessageType.BooklogReady, Origin.Amazon);
+        opener.postMessage(Message.BooklogReady, Origin.Amazon);
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Amazon && data === MessageType.AmazonBought) {
+            if (origin === Origin.Amazon && data === Message.AmazonBought) {
                 const addButtonElement = findAddButtonElement();
                 addButtonElement?.click();
             }
