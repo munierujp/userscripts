@@ -15,7 +15,7 @@
     "test": "jest --passWithNoTests"
   },
   "engines": {
-    "node": "16.11.1"
+    "node": "18.8.0"
   },
   "devDependencies": {
     "@munierujp/eslint-config-typescript": "1.0.4",
