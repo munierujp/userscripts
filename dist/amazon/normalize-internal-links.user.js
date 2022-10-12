@@ -20,7 +20,12 @@
         return path.match(/^\/(gp\/product|(([^/]+)\/)?dp)\/([^/?]+)([/?].+)?/)?.[4];
     };
 
-    Array.from(document.querySelectorAll('a[href^="/"]')).forEach(element => {
+    const findInternalLinkElements = () => {
+        return Array.from(document.querySelectorAll('a[href^="/"][target="_blank"]'));
+    };
+
+    const internalLinkElements = findInternalLinkElements();
+    internalLinkElements.forEach(element => {
         const href = element.getAttribute('href');
         if (href === null) {
             return;

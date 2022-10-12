@@ -1,6 +1,8 @@
 import { extractAsin } from './extractAsin'
+import { findInternalLinkElements } from './findInternalLinkElements'
 
-Array.from(document.querySelectorAll('a[href^="/"]')).forEach(element => {
+const internalLinkElements = findInternalLinkElements()
+internalLinkElements.forEach(element => {
   const href = element.getAttribute('href')
 
   if (href === null) {
