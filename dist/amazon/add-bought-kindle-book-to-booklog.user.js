@@ -47,7 +47,7 @@
         });
     };
 
-    const findAddButton = () => {
+    const findAddButtonElement = () => {
         return document.querySelector('a.additem_button[data-status="4"]') ?? undefined;
     };
 
@@ -59,8 +59,8 @@
         opener.postMessage(EventType.BooklogReady, Origin.Amazon);
         window.addEventListener('message', ({ data, origin }) => {
             if (origin === Origin.Amazon && data === EventType.AmazonBought) {
-                const addButton = findAddButton();
-                addButton?.click();
+                const addButtonElement = findAddButtonElement();
+                addButtonElement?.click();
             }
         });
     };
