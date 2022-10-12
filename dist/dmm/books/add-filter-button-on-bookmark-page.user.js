@@ -147,13 +147,17 @@
         }
     }
 
+    const findFilter = () => {
+        const params = new URLSearchParams(location.search);
+        const maybeFilter = params.get('filter');
+        return isFilter(maybeFilter) ? maybeFilter : undefined;
+    };
+
     const bookmark = Bookmark.find();
     if (bookmark === undefined) {
         throw new Error('Missing bookmark.');
     }
-    const params = new URLSearchParams(location.search);
-    const maybeFilter = params.get('filter');
-    const filter = isFilter(maybeFilter) ? maybeFilter : Filter.All;
+    const filter = findFilter() ?? Filter.All;
     if (filter === Filter.Discounted) {
         bookmark.hideNotDiscountedItems();
     }
