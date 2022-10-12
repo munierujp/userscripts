@@ -4,8 +4,8 @@ import { createInactiveButton } from './createInactiveButton'
 import { createUrl } from './createUrl'
 import { Filter } from './Filter'
 
-export const createAllButton = (filterType: Filter): HTMLLIElement => {
-  switch (filterType) {
+export const createAllButton = (filter: Filter): HTMLLIElement => {
+  switch (filter) {
     case Filter.All:
       return createActiveButton(ButtonLabel.All)
     case Filter.Discounted:

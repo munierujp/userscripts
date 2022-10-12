@@ -60,8 +60,8 @@
     const values = Object.values(Filter);
     const isFilter = (value) => values.includes(value);
 
-    const createAllButton = (filterType) => {
-        switch (filterType) {
+    const createAllButton = (filter) => {
+        switch (filter) {
             case Filter.All:
                 return createActiveButton(ButtonLabel.All);
             case Filter.Discounted:
