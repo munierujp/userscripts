@@ -1,5 +1,8 @@
 import { PlayButtonElement } from './PlayButtonElement'
 
+/**
+ * Video Stationの処理を実行します。
+ */
 export const handleVideoStation = (): void => {
   const observer = new MutationObserver((mutations, observer) => {
     const playButtonElement = PlayButtonElement.fromMutations(mutations)
