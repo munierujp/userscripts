@@ -18,10 +18,6 @@
 (function () {
     'use strict';
 
-    const createUrl = (asin) => {
-        return `https://www.amazon.co.jp/dp/${asin}`;
-    };
-
     const extractAsin = (url) => {
         return url.match(/^https?:\/\/www\.amazon\.co\.jp\/(gp\/product|(([^/]+)\/)?dp)\/([^/?]+)([/?].+)?/)?.[4];
     };
@@ -31,7 +27,7 @@
     if (asin === undefined) {
         throw new Error('Missing ASIN.');
     }
-    const normalizedUrl = createUrl(asin);
+    const normalizedUrl = `https://www.amazon.co.jp/dp/${asin}`;
     if (normalizedUrl !== url) {
         location.href = normalizedUrl;
     }
