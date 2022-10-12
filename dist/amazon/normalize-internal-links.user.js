@@ -16,10 +16,6 @@
 (function () {
     'use strict';
 
-    const createPath = (asin) => {
-        return `/dp/${asin}`;
-    };
-
     const extractAsin = (path) => {
         return path.match(/^\/(gp\/product|(([^/]+)\/)?dp)\/([^/?]+)([/?].+)?/)?.[4];
     };
@@ -33,7 +29,7 @@
         if (asin === undefined) {
             return;
         }
-        const normalizedPath = createPath(asin);
+        const normalizedPath = `/dp/${asin}`;
         if (normalizedPath !== href) {
             element.setAttribute('href', normalizedPath);
         }

@@ -1,4 +1,3 @@
-import { createPath } from './createPath'
 import { extractAsin } from './extractAsin'
 
 Array.from(document.querySelectorAll('a[href^="/"]')).forEach(element => {
@@ -14,7 +13,7 @@ Array.from(document.querySelectorAll('a[href^="/"]')).forEach(element => {
     return
   }
 
-  const normalizedPath = createPath(asin)
+  const normalizedPath = `/dp/${asin}`
 
   if (normalizedPath !== href) {
     element.setAttribute('href', normalizedPath)
