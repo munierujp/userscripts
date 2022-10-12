@@ -1,8 +1,8 @@
 import { Bookmark } from './Bookmark'
 import {
-  FilterType,
-  isFilterType
-} from './FilterType'
+  Filter,
+  isFilter
+} from './Filter'
 
 const bookmark = Bookmark.find()
 
@@ -11,12 +11,12 @@ if (bookmark === undefined) {
 }
 
 const params = new URLSearchParams(location.search)
-const filter = params.get('filter')
-const filterType = isFilterType(filter) ? filter : FilterType.All
+const maybeFilter = params.get('filter')
+const filter = isFilter(maybeFilter) ? maybeFilter : Filter.All
 
-if (filterType === FilterType.Discounted) {
+if (filter === Filter.Discounted) {
   bookmark.hideNotDiscountedItems()
 }
 
-bookmark.appendFilterMenu(filterType)
-bookmark.appendFilterParamToMenuLinks(filterType)
+bookmark.appendFilterMenu(filter)
+bookmark.appendFilterParamToMenuLinks(filter)

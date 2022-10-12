@@ -53,33 +53,33 @@
         return url;
     };
 
-    const FilterType = {
+    const Filter = {
         All: 'all',
         Discounted: 'discounted'
     };
-    const values = Object.values(FilterType);
-    const isFilterType = (value) => values.includes(value);
+    const values = Object.values(Filter);
+    const isFilter = (value) => values.includes(value);
 
     const createAllButton = (filterType) => {
         switch (filterType) {
-            case FilterType.All:
+            case Filter.All:
                 return createActiveButton(ButtonLabel.All);
-            case FilterType.Discounted:
+            case Filter.Discounted:
                 return createInactiveButton({
                     label: ButtonLabel.All,
-                    url: createUrl(FilterType.All)
+                    url: createUrl(Filter.All)
                 });
         }
     };
 
     const createDiscountedButton = (filterType) => {
         switch (filterType) {
-            case FilterType.All:
+            case Filter.All:
                 return createInactiveButton({
                     label: ButtonLabel.Discounted,
-                    url: createUrl(FilterType.Discounted)
+                    url: createUrl(Filter.Discounted)
                 });
-            case FilterType.Discounted:
+            case Filter.Discounted:
                 return createActiveButton(ButtonLabel.Discounted);
         }
     };
@@ -152,12 +152,12 @@
         throw new Error('Missing bookmark.');
     }
     const params = new URLSearchParams(location.search);
-    const filter = params.get('filter');
-    const filterType = isFilterType(filter) ? filter : FilterType.All;
-    if (filterType === FilterType.Discounted) {
+    const maybeFilter = params.get('filter');
+    const filter = isFilter(maybeFilter) ? maybeFilter : Filter.All;
+    if (filter === Filter.Discounted) {
         bookmark.hideNotDiscountedItems();
     }
-    bookmark.appendFilterMenu(filterType);
-    bookmark.appendFilterParamToMenuLinks(filterType);
+    bookmark.appendFilterMenu(filter);
+    bookmark.appendFilterParamToMenuLinks(filter);
 
 })();

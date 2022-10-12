@@ -2,16 +2,16 @@ import { ButtonLabel } from './ButtonLabel'
 import { createActiveButton } from './createActiveButton'
 import { createInactiveButton } from './createInactiveButton'
 import { createUrl } from './createUrl'
-import { FilterType } from './FilterType'
+import { Filter } from './Filter'
 
-export const createAllButton = (filterType: FilterType): HTMLLIElement => {
+export const createAllButton = (filterType: Filter): HTMLLIElement => {
   switch (filterType) {
-    case FilterType.All:
+    case Filter.All:
       return createActiveButton(ButtonLabel.All)
-    case FilterType.Discounted:
+    case Filter.Discounted:
       return createInactiveButton({
         label: ButtonLabel.All,
-        url: createUrl(FilterType.All)
+        url: createUrl(Filter.All)
       })
   }
 }

@@ -1,5 +1,5 @@
 import { createFilterMenu } from './createFilterMenu'
-import type { FilterType } from './FilterType'
+import type { Filter } from './Filter'
 
 export class Bookmark {
   constructor (private readonly element: Element) {}
@@ -23,7 +23,7 @@ export class Bookmark {
     })
   }
 
-  appendFilterMenu (filterType: FilterType): void {
+  appendFilterMenu (filterType: Filter): void {
     const menu = this.element.querySelector('.d-rcol.selector')
 
     if (menu === null) {
@@ -34,7 +34,7 @@ export class Bookmark {
     menu.append(filterMenu)
   }
 
-  appendFilterParamToMenuLinks (filterType: FilterType): void {
+  appendFilterParamToMenuLinks (filterType: Filter): void {
     const links = this.element.querySelectorAll<HTMLAnchorElement>('.d-rcol.selector a')
     links.forEach(link => {
       const href = link.getAttribute('href')
