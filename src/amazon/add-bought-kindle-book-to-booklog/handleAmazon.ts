@@ -3,7 +3,7 @@ import { MessageType } from './MessageType'
 import { Origin } from './Origin'
 
 /**
- * Amazon側の処理を実行します。
+ * Amazonの処理を実行します。
  */
 export const handleAmazon = (): void => {
   const asin = extractAsin(new URL(location.href))
