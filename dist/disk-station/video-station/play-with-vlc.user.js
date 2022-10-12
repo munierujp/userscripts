@@ -45,7 +45,7 @@
             .find(({ textContent }) => textContent === 'メディア情報を表示');
     };
 
-    class MediaInfoDialog {
+    class MediaInfoDialogElement {
         constructor(element) {
             this.element = element;
         }
@@ -53,7 +53,7 @@
             const element = mutations
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isElement))
                 .find(({ classList }) => classList.contains('video-info-dialog'));
-            return element !== undefined ? new MediaInfoDialog(element) : undefined;
+            return element !== undefined ? new MediaInfoDialogElement(element) : undefined;
         }
         static open() {
             const actionButtonElement = findActionButtonElement();
@@ -92,13 +92,13 @@
                 throw new Error('Missing desktop element.');
             }
             const observer = new MutationObserver((mutations, observer) => {
-                const mediaInfoDialog = MediaInfoDialog.fromMutations(mutations);
-                if (mediaInfoDialog === undefined) {
+                const mediaInfoDialogElement = MediaInfoDialogElement.fromMutations(mutations);
+                if (mediaInfoDialogElement === undefined) {
                     return;
                 }
                 observer.disconnect();
-                const path = mediaInfoDialog.findFilePath();
-                mediaInfoDialog.close();
+                const path = mediaInfoDialogElement.findFilePath();
+                mediaInfoDialogElement.close();
                 if (path !== undefined) {
                     resolve(path);
                 }
@@ -109,7 +109,7 @@
             observer.observe(desktopElement, {
                 childList: true
             });
-            MediaInfoDialog.open();
+            MediaInfoDialogElement.open();
         });
     };
 

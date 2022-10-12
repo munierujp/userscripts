@@ -2,15 +2,15 @@ import { isElement } from '../../../util'
 import { findActionButtonElement } from './findActionButtonElement'
 import { findMediaInfoLink } from './findMediaInfoLink'
 
-export class MediaInfoDialog {
+export class MediaInfoDialogElement {
   constructor (private readonly element: Element) {}
 
-  static fromMutations (mutations: MutationRecord[]): MediaInfoDialog | undefined {
+  static fromMutations (mutations: MutationRecord[]): MediaInfoDialogElement | undefined {
     const element = mutations
       // eslint-disable-next-line unicorn/no-array-callback-reference
       .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isElement))
       .find(({ classList }) => classList.contains('video-info-dialog'))
-    return element !== undefined ? new MediaInfoDialog(element) : undefined
+    return element !== undefined ? new MediaInfoDialogElement(element) : undefined
   }
 
   static open (): void {
