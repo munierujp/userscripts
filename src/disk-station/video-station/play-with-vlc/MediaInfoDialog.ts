@@ -1,5 +1,5 @@
 import { isElement } from '../../../util'
-import { findActionButton } from './findActionButton'
+import { findActionButtonElement } from './findActionButtonElement'
 import { findMediaInfoLink } from './findMediaInfoLink'
 
 export class MediaInfoDialog {
@@ -14,13 +14,13 @@ export class MediaInfoDialog {
   }
 
   static open (): void {
-    const actionButton = findActionButton()
+    const actionButtonElement = findActionButtonElement()
 
-    if (actionButton === undefined) {
+    if (actionButtonElement === undefined) {
       throw new Error('Missing action button.')
     }
 
-    actionButton.click()
+    actionButtonElement.click()
     const mediaInfoLink = findMediaInfoLink()
 
     if (mediaInfoLink === undefined) {

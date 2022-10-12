@@ -36,7 +36,7 @@
         return document.getElementById('sds-desktop') ?? undefined;
     };
 
-    const findActionButton = () => {
+    const findActionButtonElement = () => {
         return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
     };
 
@@ -56,11 +56,11 @@
             return element !== undefined ? new MediaInfoDialog(element) : undefined;
         }
         static open() {
-            const actionButton = findActionButton();
-            if (actionButton === undefined) {
+            const actionButtonElement = findActionButtonElement();
+            if (actionButtonElement === undefined) {
                 throw new Error('Missing action button.');
             }
-            actionButton.click();
+            actionButtonElement.click();
             const mediaInfoLink = findMediaInfoLink();
             if (mediaInfoLink === undefined) {
                 throw new Error('Missing media info link.');
