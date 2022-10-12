@@ -21,6 +21,7 @@
     "@munierujp/eslint-config-typescript": "1.0.4",
     "@rollup/plugin-typescript": "9.0.1",
     "@tsconfig/node16": "1.0.3",
+    "@tsconfig/node18": "1.0.1",
     "@types/glob": "8.0.0",
     "@types/node": "18.8.4",
     "eslint": "8.25.0",
