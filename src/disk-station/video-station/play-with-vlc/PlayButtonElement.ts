@@ -4,7 +4,7 @@ import {
 } from '../../../util'
 import { fetchFilePath } from './fetchFilePath'
 import { handleError } from './handleError'
-import { isPlayButton } from './isPlayButton'
+import { isPlayButtonElement } from './isPlayButtonElement'
 
 export class PlayButtonElement {
   constructor (private readonly element: HTMLElement) {}
@@ -13,7 +13,7 @@ export class PlayButtonElement {
     const element = mutations
       // eslint-disable-next-line unicorn/no-array-callback-reference
       .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
-      .find(element => isPlayButton(element))
+      .find(element => isPlayButtonElement(element))
     return element !== undefined ? new PlayButtonElement(element) : undefined
   }
 

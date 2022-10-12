@@ -3,14 +3,14 @@ import {
   expect,
   it
 } from '@jest/globals'
-import { isPlayButton } from './isPlayButton'
+import { isPlayButtonElement } from './isPlayButtonElement'
 
-describe('isPlayButton', () => {
+describe('isPlayButtonElement', () => {
   it('returns true if element is play button', () => {
     const element = document.createElement('span')
     element.classList.add('x-btn', 'play')
 
-    const actual = isPlayButton(element)
+    const actual = isPlayButtonElement(element)
 
     expect(actual).toBe(true)
   })
@@ -18,7 +18,7 @@ describe('isPlayButton', () => {
   it('returns false if element is not play button', () => {
     const element = document.createElement('span')
 
-    const actual = isPlayButton(element)
+    const actual = isPlayButtonElement(element)
 
     expect(actual).toBe(false)
   })
