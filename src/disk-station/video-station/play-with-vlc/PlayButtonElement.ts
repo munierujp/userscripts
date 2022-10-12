@@ -6,15 +6,15 @@ import { fetchFilePath } from './fetchFilePath'
 import { handleError } from './handleError'
 import { isPlayButton } from './isPlayButton'
 
-export class PlayButton {
+export class PlayButtonElement {
   constructor (private readonly element: HTMLElement) {}
 
-  static fromMutations (mutations: MutationRecord[]): PlayButton | undefined {
+  static fromMutations (mutations: MutationRecord[]): PlayButtonElement | undefined {
     const element = mutations
       // eslint-disable-next-line unicorn/no-array-callback-reference
       .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
       .find(element => isPlayButton(element))
-    return element !== undefined ? new PlayButton(element) : undefined
+    return element !== undefined ? new PlayButtonElement(element) : undefined
   }
 
   replace (): void {

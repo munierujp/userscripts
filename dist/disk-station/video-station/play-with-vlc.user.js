@@ -122,7 +122,7 @@
         return classList.contains('x-btn') && classList.contains('play');
     };
 
-    class PlayButton {
+    class PlayButtonElement {
         constructor(element) {
             this.element = element;
         }
@@ -130,7 +130,7 @@
             const element = mutations
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
                 .find(element => isPlayButton(element));
-            return element !== undefined ? new PlayButton(element) : undefined;
+            return element !== undefined ? new PlayButtonElement(element) : undefined;
         }
         replace() {
             const button = cloneNode(this.element);
@@ -149,12 +149,12 @@
 
     const handleVideoStation = () => {
         const observer = new MutationObserver((mutations, observer) => {
-            const playButton = PlayButton.fromMutations(mutations);
-            if (playButton === undefined) {
+            const playButtonElement = PlayButtonElement.fromMutations(mutations);
+            if (playButtonElement === undefined) {
                 return;
             }
             observer.disconnect();
-            playButton.replace();
+            playButtonElement.replace();
         });
         observer.observe(document.body, {
             childList: true,
