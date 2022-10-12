@@ -40,7 +40,7 @@
         return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
     };
 
-    const findMediaInfoLink = () => {
+    const findMediaInfoLinkElement = () => {
         return Array.from(document.querySelectorAll('a.x-menu-list-item'))
             .find(({ textContent }) => textContent === 'メディア情報を表示');
     };
@@ -61,11 +61,11 @@
                 throw new Error('Missing action button.');
             }
             actionButtonElement.click();
-            const mediaInfoLink = findMediaInfoLink();
-            if (mediaInfoLink === undefined) {
-                throw new Error('Missing media info link.');
+            const mediaInfoLinkElement = findMediaInfoLinkElement();
+            if (mediaInfoLinkElement === undefined) {
+                throw new Error('Missing media info link element.');
             }
-            mediaInfoLink.click();
+            mediaInfoLinkElement.click();
         }
         close() {
             const closeButton = this.findCloseButtonElement();

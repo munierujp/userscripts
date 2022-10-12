@@ -1,6 +1,6 @@
 import { isElement } from '../../../util'
 import { findActionButtonElement } from './findActionButtonElement'
-import { findMediaInfoLink } from './findMediaInfoLink'
+import { findMediaInfoLinkElement } from './findMediaInfoLinkElement'
 
 export class MediaInfoDialogElement {
   constructor (private readonly element: Element) {}
@@ -21,13 +21,13 @@ export class MediaInfoDialogElement {
     }
 
     actionButtonElement.click()
-    const mediaInfoLink = findMediaInfoLink()
+    const mediaInfoLinkElement = findMediaInfoLinkElement()
 
-    if (mediaInfoLink === undefined) {
-      throw new Error('Missing media info link.')
+    if (mediaInfoLinkElement === undefined) {
+      throw new Error('Missing media info link element.')
     }
 
-    mediaInfoLink.click()
+    mediaInfoLinkElement.click()
   }
 
   close (): void {
