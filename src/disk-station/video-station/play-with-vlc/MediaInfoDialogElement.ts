@@ -31,13 +31,17 @@ export class MediaInfoDialogElement {
   }
 
   close (): void {
-    const closeButton = this.element.querySelector<HTMLButtonElement>('button[aria-label="閉じる"]')
+    const closeButton = this.findCloseButtonElement()
 
-    if (closeButton === null) {
-      throw new Error('Missing close button.')
+    if (closeButton === undefined) {
+      throw new Error('Missing close button element.')
     }
 
     closeButton.click()
+  }
+
+  private findCloseButtonElement (): HTMLButtonElement | undefined {
+    return this.element.querySelector<HTMLButtonElement>('button[aria-label="閉じる"]') ?? undefined
   }
 
   findFilePath (): string | undefined {

@@ -68,11 +68,14 @@
             mediaInfoLink.click();
         }
         close() {
-            const closeButton = this.element.querySelector('button[aria-label="閉じる"]');
-            if (closeButton === null) {
-                throw new Error('Missing close button.');
+            const closeButton = this.findCloseButtonElement();
+            if (closeButton === undefined) {
+                throw new Error('Missing close button element.');
             }
             closeButton.click();
+        }
+        findCloseButtonElement() {
+            return this.element.querySelector('button[aria-label="閉じる"]') ?? undefined;
         }
         findFilePath() {
             return Array.from(this.element.querySelectorAll('tr'))
