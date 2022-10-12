@@ -123,11 +123,6 @@
         throw error;
     };
 
-    const isPlayButtonElement = (element) => {
-        const { classList } = element;
-        return classList.contains('x-btn') && classList.contains('play');
-    };
-
     class PlayButtonElement {
         constructor(element) {
             this.element = element;
@@ -135,8 +130,12 @@
         static fromMutations(mutations) {
             const element = mutations
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
-                .find(element => isPlayButtonElement(element));
+                .find(element => PlayButtonElement.isPlayButtonElement(element));
             return element !== undefined ? new PlayButtonElement(element) : undefined;
+        }
+        static isPlayButtonElement(element) {
+            const { classList } = element;
+            return classList.contains('x-btn') && classList.contains('play');
         }
         replace() {
             const button = cloneNode(this.element);

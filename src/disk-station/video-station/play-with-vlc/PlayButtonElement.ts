@@ -4,7 +4,6 @@ import {
 } from '../../../util'
 import { fetchFilePath } from './fetchFilePath'
 import { handleError } from './handleError'
-import { isPlayButtonElement } from './isPlayButtonElement'
 
 export class PlayButtonElement {
   constructor (private readonly element: HTMLElement) {}
@@ -13,8 +12,13 @@ export class PlayButtonElement {
     const element = mutations
       // eslint-disable-next-line unicorn/no-array-callback-reference
       .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
-      .find(element => isPlayButtonElement(element))
+      .find(element => PlayButtonElement.isPlayButtonElement(element))
     return element !== undefined ? new PlayButtonElement(element) : undefined
+  }
+
+  private static isPlayButtonElement (element: Element): boolean {
+    const { classList } = element
+    return classList.contains('x-btn') && classList.contains('play')
   }
 
   replace (): void {
