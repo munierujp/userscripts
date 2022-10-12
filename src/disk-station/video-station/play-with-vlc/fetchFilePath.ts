@@ -1,12 +1,12 @@
-import { findDesktop } from './findDesktop'
+import { findDesktopElement } from './findDesktopElement'
 import { MediaInfoDialog } from './MediaInfoDialog'
 
 export const fetchFilePath = async (): Promise<string> => {
   return await new Promise((resolve, reject) => {
-    const desktop = findDesktop()
+    const desktopElement = findDesktopElement()
 
-    if (desktop === undefined) {
-      throw new Error('Missing desktop.')
+    if (desktopElement === undefined) {
+      throw new Error('Missing desktop element.')
     }
 
     const observer = new MutationObserver((mutations, observer) => {
@@ -27,7 +27,7 @@ export const fetchFilePath = async (): Promise<string> => {
         reject(new Error('Missing file path.'))
       }
     })
-    observer.observe(desktop, {
+    observer.observe(desktopElement, {
       childList: true
     })
     MediaInfoDialog.open()

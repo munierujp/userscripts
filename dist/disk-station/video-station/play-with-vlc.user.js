@@ -32,7 +32,7 @@
         return value instanceof HTMLElement;
     };
 
-    const findDesktop = () => {
+    const findDesktopElement = () => {
         return document.getElementById('sds-desktop') ?? undefined;
     };
 
@@ -87,9 +87,9 @@
 
     const fetchFilePath = async () => {
         return await new Promise((resolve, reject) => {
-            const desktop = findDesktop();
-            if (desktop === undefined) {
-                throw new Error('Missing desktop.');
+            const desktopElement = findDesktopElement();
+            if (desktopElement === undefined) {
+                throw new Error('Missing desktop element.');
             }
             const observer = new MutationObserver((mutations, observer) => {
                 const mediaInfoDialog = MediaInfoDialog.fromMutations(mutations);
@@ -106,7 +106,7 @@
                     reject(new Error('Missing file path.'));
                 }
             });
-            observer.observe(desktop, {
+            observer.observe(desktopElement, {
                 childList: true
             });
             MediaInfoDialog.open();
