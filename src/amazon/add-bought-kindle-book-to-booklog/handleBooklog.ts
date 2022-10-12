@@ -1,5 +1,5 @@
-import { EventType } from './EventType'
 import { findAddButtonElement } from './findAddButtonElement'
+import { MessageType } from './MessageType'
 import { Origin } from './Origin'
 
 /**
@@ -12,9 +12,9 @@ export const handleBooklog = (): void => {
     return
   }
 
-  opener.postMessage(EventType.BooklogReady, Origin.Amazon)
+  opener.postMessage(MessageType.BooklogReady, Origin.Amazon)
   window.addEventListener('message', ({ data, origin }) => {
-    if (origin === Origin.Amazon && data === EventType.AmazonBought) {
+    if (origin === Origin.Amazon && data === MessageType.AmazonBought) {
       const addButtonElement = findAddButtonElement()
       addButtonElement?.click()
     }

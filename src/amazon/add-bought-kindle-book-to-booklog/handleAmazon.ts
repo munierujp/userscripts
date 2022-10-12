@@ -1,5 +1,5 @@
-import { EventType } from './EventType'
 import { extractAsin } from './extractAsin'
+import { MessageType } from './MessageType'
 import { Origin } from './Origin'
 
 /**
@@ -19,8 +19,8 @@ export const handleAmazon = (): void => {
   }
 
   window.addEventListener('message', ({ data, origin }) => {
-    if (origin === Origin.Booklog && data === EventType.BooklogReady) {
-      booklogTab.postMessage(EventType.AmazonBought, Origin.Booklog)
+    if (origin === Origin.Booklog && data === MessageType.BooklogReady) {
+      booklogTab.postMessage(MessageType.AmazonBought, Origin.Booklog)
     }
   })
 }

@@ -17,13 +17,13 @@
 (function () {
     'use strict';
 
-    const EventType = {
-        AmazonBought: 'amazon_bought',
-        BooklogReady: 'booklog_ready'
-    };
-
     const extractAsin = (url) => {
         return url.searchParams.get('asin') ?? undefined;
+    };
+
+    const MessageType = {
+        AmazonBought: 'amazon_bought',
+        BooklogReady: 'booklog_ready'
     };
 
     const Origin = {
@@ -41,8 +41,8 @@
             throw new Error('Failed to open new tab.');
         }
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Booklog && data === EventType.BooklogReady) {
-                booklogTab.postMessage(EventType.AmazonBought, Origin.Booklog);
+            if (origin === Origin.Booklog && data === MessageType.BooklogReady) {
+                booklogTab.postMessage(MessageType.AmazonBought, Origin.Booklog);
             }
         });
     };
@@ -56,9 +56,9 @@
         if (opener === null || document.referrer !== 'https://www.amazon.co.jp/') {
             return;
         }
-        opener.postMessage(EventType.BooklogReady, Origin.Amazon);
+        opener.postMessage(MessageType.BooklogReady, Origin.Amazon);
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Amazon && data === EventType.AmazonBought) {
+            if (origin === Origin.Amazon && data === MessageType.AmazonBought) {
                 const addButtonElement = findAddButtonElement();
                 addButtonElement?.click();
             }
