@@ -147,8 +147,8 @@
         }
     }
 
-    const extractFilter = (params) => {
-        const maybeFilter = params.get('filter');
+    const extractFilter = (url) => {
+        const maybeFilter = url.searchParams.get('filter');
         return isFilter(maybeFilter) ? maybeFilter : undefined;
     };
 
@@ -156,8 +156,8 @@
     if (bookmark === undefined) {
         throw new Error('Missing bookmark.');
     }
-    const params = new URLSearchParams(location.search);
-    const filter = extractFilter(params) ?? Filter.All;
+    const url = new URL(location.href);
+    const filter = extractFilter(url) ?? Filter.All;
     if (filter === Filter.Discounted) {
         bookmark.hideNotDiscountedItems();
     }

@@ -3,7 +3,7 @@ import {
   isFilter
 } from './Filter'
 
-export const extractFilter = (params: URLSearchParams): Filter | undefined => {
-  const maybeFilter = params.get('filter')
+export const extractFilter = (url: URL): Filter | undefined => {
+  const maybeFilter = url.searchParams.get('filter')
   return isFilter(maybeFilter) ? maybeFilter : undefined
 }
