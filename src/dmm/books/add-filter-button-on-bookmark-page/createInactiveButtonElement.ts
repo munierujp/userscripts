@@ -1,4 +1,4 @@
-export const createInactiveButton = ({
+export const createInactiveButtonElement = ({
   label,
   url
 }: {

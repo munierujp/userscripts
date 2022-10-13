@@ -35,7 +35,7 @@
         return button;
     };
 
-    const createInactiveButton = ({ label, url }) => {
+    const createInactiveButtonElement = ({ label, url }) => {
         const link = document.createElement('a');
         link.href = url.toString();
         link.style.paddingLeft = '8px';
@@ -65,7 +65,7 @@
             case Filter.All:
                 return createActiveButtonElement(ButtonLabel.All);
             case Filter.Discounted:
-                return createInactiveButton({
+                return createInactiveButtonElement({
                     label: ButtonLabel.All,
                     url: createUrl(Filter.All)
                 });
@@ -75,7 +75,7 @@
     const createDiscountedButtonElement = (filter) => {
         switch (filter) {
             case Filter.All:
-                return createInactiveButton({
+                return createInactiveButtonElement({
                     label: ButtonLabel.Discounted,
                     url: createUrl(Filter.Discounted)
                 });
