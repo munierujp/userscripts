@@ -122,15 +122,15 @@
                 item.style.display = display;
             });
         }
-        appendFilterMenu(filterType) {
+        appendFilterMenu(filter) {
             const menu = this.element.querySelector('.d-rcol.selector');
             if (menu === null) {
                 throw new Error('Missing menu.');
             }
-            const filterMenu = createFilterMenu(filterType);
+            const filterMenu = createFilterMenu(filter);
             menu.append(filterMenu);
         }
-        appendFilterParamToMenuLinks(filterType) {
+        appendFilterParamToMenuLinks(filter) {
             const links = this.element.querySelectorAll('.d-rcol.selector a');
             links.forEach(link => {
                 const href = link.getAttribute('href');
@@ -141,7 +141,7 @@
                     return;
                 }
                 const params = new URLSearchParams(href);
-                params.set('filter', filterType);
+                params.set('filter', filter);
                 link.setAttribute('href', `?${params.toString()}`);
             });
         }

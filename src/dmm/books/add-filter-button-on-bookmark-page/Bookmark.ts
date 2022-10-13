@@ -23,18 +23,18 @@ export class Bookmark {
     })
   }
 
-  appendFilterMenu (filterType: Filter): void {
+  appendFilterMenu (filter: Filter): void {
     const menu = this.element.querySelector('.d-rcol.selector')
 
     if (menu === null) {
       throw new Error('Missing menu.')
     }
 
-    const filterMenu = createFilterMenu(filterType)
+    const filterMenu = createFilterMenu(filter)
     menu.append(filterMenu)
   }
 
-  appendFilterParamToMenuLinks (filterType: Filter): void {
+  appendFilterParamToMenuLinks (filter: Filter): void {
     const links = this.element.querySelectorAll<HTMLAnchorElement>('.d-rcol.selector a')
     links.forEach(link => {
       const href = link.getAttribute('href')
@@ -48,7 +48,7 @@ export class Bookmark {
       }
 
       const params = new URLSearchParams(href)
-      params.set('filter', filterType)
+      params.set('filter', filter)
       link.setAttribute('href', `?${params.toString()}`)
     })
   }
