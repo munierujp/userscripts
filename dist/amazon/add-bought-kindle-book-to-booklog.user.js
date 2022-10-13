@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Kindle本の購入完了時にブクログに登録
 // @namespace    https://github.com/munierujp/
-// @version      0.2.2
+// @version      0.2.3
 // @description  AmazonでKindle本の購入完了時にブクログに読書状況を積読として登録します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -17,13 +17,13 @@
 (function () {
     'use strict';
 
-    const EventType = {
-        AmazonBought: 'amazon_bought',
-        BooklogReady: 'booklog_ready'
-    };
-
     const extractAsin = (url) => {
         return url.searchParams.get('asin') ?? undefined;
+    };
+
+    const Message = {
+        AmazonBought: 'amazon_bought',
+        BooklogReady: 'booklog_ready'
     };
 
     const Origin = {
@@ -41,13 +41,13 @@
             throw new Error('Failed to open new tab.');
         }
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Booklog && data === EventType.BooklogReady) {
-                booklogTab.postMessage(EventType.AmazonBought, Origin.Booklog);
+            if (origin === Origin.Booklog && data === Message.BooklogReady) {
+                booklogTab.postMessage(Message.AmazonBought, Origin.Booklog);
             }
         });
     };
 
-    const findAddButton = () => {
+    const findAddButtonElement = () => {
         return document.querySelector('a.additem_button[data-status="4"]') ?? undefined;
     };
 
@@ -56,11 +56,11 @@
         if (opener === null || document.referrer !== 'https://www.amazon.co.jp/') {
             return;
         }
-        opener.postMessage(EventType.BooklogReady, Origin.Amazon);
+        opener.postMessage(Message.BooklogReady, Origin.Amazon);
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Amazon && data === EventType.AmazonBought) {
-                const addButton = findAddButton();
-                addButton?.click();
+            if (origin === Origin.Amazon && data === Message.AmazonBought) {
+                const addButtonElement = findAddButtonElement();
+                addButtonElement?.click();
             }
         });
     };

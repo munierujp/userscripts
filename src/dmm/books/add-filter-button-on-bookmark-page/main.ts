@@ -1,22 +1,19 @@
-import { Bookmark } from './Bookmark'
-import {
-  FilterType,
-  isFilterType
-} from './FilterType'
+import { BookmarkElement } from './BookmarkElement'
+import { extractFilter } from './extractFilter'
+import { Filter } from './Filter'
 
-const bookmark = Bookmark.find()
+const bookmarkElement = BookmarkElement.find()
 
-if (bookmark === undefined) {
-  throw new Error('Missing bookmark.')
+if (bookmarkElement === undefined) {
+  throw new Error('Missing bookmark element.')
 }
 
-const params = new URLSearchParams(location.search)
-const filter = params.get('filter')
-const filterType = isFilterType(filter) ? filter : FilterType.All
+const url = new URL(location.href)
+const filter = extractFilter(url) ?? Filter.All
 
-if (filterType === FilterType.Discounted) {
-  bookmark.hideNotDiscountedItems()
+if (filter === Filter.Discounted) {
+  bookmarkElement.hideUndiscountedItems()
 }
 
-bookmark.appendFilterMenu(filterType)
-bookmark.appendFilterParamToMenuLinks(filterType)
+bookmarkElement.appendFilterMenu(filter)
+bookmarkElement.appendFilterParamToMenuLinks(filter)

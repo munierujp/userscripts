@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         サイト内リンクを現在のタブで開く
 // @namespace    https://github.com/munierujp/
-// @version      0.2.1
+// @version      0.2.2
 // @description  Amazonでサイト内リンクを現在のタブで開きます。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -16,7 +16,11 @@
 (function () {
     'use strict';
 
-    Array.from(document.querySelectorAll('a[href^="/"][target="_blank"]'))
-        .forEach(element => element.removeAttribute('target'));
+    const findInternalLinkElements = () => {
+        return Array.from(document.querySelectorAll('a[href^="/"][target="_blank"]'));
+    };
+
+    const internalLinkElements = findInternalLinkElements();
+    internalLinkElements.forEach(element => element.removeAttribute('target'));
 
 })();

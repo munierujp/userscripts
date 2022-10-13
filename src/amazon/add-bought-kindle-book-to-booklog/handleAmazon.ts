@@ -1,7 +1,10 @@
-import { EventType } from './EventType'
 import { extractAsin } from './extractAsin'
+import { Message } from './Message'
 import { Origin } from './Origin'
 
+/**
+ * Amazonの処理を実行します。
+ */
 export const handleAmazon = (): void => {
   const asin = extractAsin(new URL(location.href))
 
@@ -16,8 +19,8 @@ export const handleAmazon = (): void => {
   }
 
   window.addEventListener('message', ({ data, origin }) => {
-    if (origin === Origin.Booklog && data === EventType.BooklogReady) {
-      booklogTab.postMessage(EventType.AmazonBought, Origin.Booklog)
+    if (origin === Origin.Booklog && data === Message.BooklogReady) {
+      booklogTab.postMessage(Message.AmazonBought, Origin.Booklog)
     }
   })
 }
