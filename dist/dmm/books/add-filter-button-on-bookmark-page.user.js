@@ -112,28 +112,29 @@
             return element !== null ? new BookmarkElement(element) : undefined;
         }
         hideUndiscountedItems() {
-            const list = this.element.querySelector('#list');
-            if (list === null) {
+            const listElement = this.element.querySelector('#list');
+            if (listElement === null) {
                 throw new Error('Missing list element.');
             }
-            Array.from(list.querySelectorAll('li')).forEach(item => {
-                const discount = item.querySelector('.txtoff');
-                const display = discount !== null ? 'list-item' : 'none';
-                item.style.display = display;
+            const itemElements = Array.from(listElement.querySelectorAll('li'));
+            itemElements.forEach(itemElement => {
+                const discountElement = itemElement.querySelector('.txtoff');
+                const display = discountElement !== null ? 'list-item' : 'none';
+                itemElement.style.display = display;
             });
         }
         appendFilterMenu(filter) {
-            const menu = this.element.querySelector('.d-rcol.selector');
-            if (menu === null) {
+            const menuElement = this.element.querySelector('.d-rcol.selector');
+            if (menuElement === null) {
                 throw new Error('Missing menu element.');
             }
             const filterMenuElement = createFilterMenuElement(filter);
-            menu.append(filterMenuElement);
+            menuElement.append(filterMenuElement);
         }
         appendFilterParamToMenuLinks(filter) {
-            const links = this.element.querySelectorAll('.d-rcol.selector a');
-            links.forEach(link => {
-                const href = link.getAttribute('href');
+            const linkElements = this.element.querySelectorAll('.d-rcol.selector a');
+            linkElements.forEach(linkElement => {
+                const href = linkElement.getAttribute('href');
                 if (href === null) {
                     return;
                 }
@@ -142,7 +143,7 @@
                 }
                 const params = new URLSearchParams(href);
                 params.set('filter', filter);
-                link.setAttribute('href', `?${params.toString()}`);
+                linkElement.setAttribute('href', `?${params.toString()}`);
             });
         }
     }
