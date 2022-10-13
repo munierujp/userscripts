@@ -111,7 +111,7 @@
             const element = document.getElementById('main-bmk');
             return element !== null ? new BookmarkElement(element) : undefined;
         }
-        hideNotDiscountedItems() {
+        hideUndiscountedItems() {
             const list = this.element.querySelector('#list');
             if (list === null) {
                 throw new Error('Missing list.');
@@ -159,7 +159,7 @@
     const url = new URL(location.href);
     const filter = extractFilter(url) ?? Filter.All;
     if (filter === Filter.Discounted) {
-        bookmarkElement.hideNotDiscountedItems();
+        bookmarkElement.hideUndiscountedItems();
     }
     bookmarkElement.appendFilterMenu(filter);
     bookmarkElement.appendFilterParamToMenuLinks(filter);

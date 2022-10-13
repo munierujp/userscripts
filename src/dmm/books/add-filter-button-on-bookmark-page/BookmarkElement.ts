@@ -9,7 +9,7 @@ export class BookmarkElement {
     return element !== null ? new BookmarkElement(element) : undefined
   }
 
-  hideNotDiscountedItems (): void {
+  hideUndiscountedItems (): void {
     const list = this.element.querySelector('#list')
 
     if (list === null) {
