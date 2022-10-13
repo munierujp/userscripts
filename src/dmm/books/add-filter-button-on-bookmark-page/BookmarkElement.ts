@@ -1,4 +1,4 @@
-import { createFilterMenu } from './createFilterMenu'
+import { createFilterMenuElement } from './createFilterMenuElement'
 import type { Filter } from './Filter'
 
 export class BookmarkElement {
@@ -30,8 +30,8 @@ export class BookmarkElement {
       throw new Error('Missing menu.')
     }
 
-    const filterMenu = createFilterMenu(filter)
-    menu.append(filterMenu)
+    const filterMenuElement = createFilterMenuElement(filter)
+    menu.append(filterMenuElement)
   }
 
   appendFilterParamToMenuLinks (filter: Filter): void {
