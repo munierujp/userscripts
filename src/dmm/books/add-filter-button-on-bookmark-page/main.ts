@@ -5,7 +5,7 @@ import { Filter } from './Filter'
 const bookmarkElement = BookmarkElement.find()
 
 if (bookmarkElement === undefined) {
-  throw new Error('Missing bookmark.')
+  throw new Error('Missing bookmark element.')
 }
 
 const url = new URL(location.href)

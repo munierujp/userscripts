@@ -114,7 +114,7 @@
         hideUndiscountedItems() {
             const list = this.element.querySelector('#list');
             if (list === null) {
-                throw new Error('Missing list.');
+                throw new Error('Missing list element.');
             }
             Array.from(list.querySelectorAll('li')).forEach(item => {
                 const discount = item.querySelector('.txtoff');
@@ -125,7 +125,7 @@
         appendFilterMenu(filter) {
             const menu = this.element.querySelector('.d-rcol.selector');
             if (menu === null) {
-                throw new Error('Missing menu.');
+                throw new Error('Missing menu element.');
             }
             const filterMenuElement = createFilterMenuElement(filter);
             menu.append(filterMenuElement);
@@ -154,7 +154,7 @@
 
     const bookmarkElement = BookmarkElement.find();
     if (bookmarkElement === undefined) {
-        throw new Error('Missing bookmark.');
+        throw new Error('Missing bookmark element.');
     }
     const url = new URL(location.href);
     const filter = extractFilter(url) ?? Filter.All;

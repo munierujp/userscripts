@@ -17,7 +17,7 @@ export class MediaInfoDialogElement {
     const actionButtonElement = findActionButtonElement()
 
     if (actionButtonElement === undefined) {
-      throw new Error('Missing action button.')
+      throw new Error('Missing action button element.')
     }
 
     actionButtonElement.click()
