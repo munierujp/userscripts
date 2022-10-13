@@ -60,7 +60,7 @@
     const values = Object.values(Filter);
     const isFilter = (value) => values.includes(value);
 
-    const createAllButton = (filter) => {
+    const createAllButtonElement = (filter) => {
         switch (filter) {
             case Filter.All:
                 return createActiveButton(ButtonLabel.All);
@@ -85,10 +85,10 @@
     };
 
     const createButtonListElement = (filter) => {
-        const allButton = createAllButton(filter);
+        const allButtonElement = createAllButtonElement(filter);
         const discountedButton = createDiscountedButton(filter);
         const buttonList = document.createElement('ul');
-        buttonList.append(allButton);
+        buttonList.append(allButtonElement);
         buttonList.append(discountedButton);
         return buttonList;
     };
