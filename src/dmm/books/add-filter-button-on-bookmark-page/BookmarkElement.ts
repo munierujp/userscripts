@@ -1,12 +1,12 @@
 import { createFilterMenu } from './createFilterMenu'
 import type { Filter } from './Filter'
 
-export class Bookmark {
+export class BookmarkElement {
   constructor (private readonly element: Element) {}
 
-  static find (): Bookmark | undefined {
+  static find (): BookmarkElement | undefined {
     const element = document.getElementById('main-bmk')
-    return element !== null ? new Bookmark(element) : undefined
+    return element !== null ? new BookmarkElement(element) : undefined
   }
 
   hideNotDiscountedItems (): void {

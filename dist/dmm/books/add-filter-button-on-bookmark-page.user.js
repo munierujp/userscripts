@@ -103,13 +103,13 @@
         return filterMenu;
     };
 
-    class Bookmark {
+    class BookmarkElement {
         constructor(element) {
             this.element = element;
         }
         static find() {
             const element = document.getElementById('main-bmk');
-            return element !== null ? new Bookmark(element) : undefined;
+            return element !== null ? new BookmarkElement(element) : undefined;
         }
         hideNotDiscountedItems() {
             const list = this.element.querySelector('#list');
@@ -152,16 +152,16 @@
         return isFilter(maybeFilter) ? maybeFilter : undefined;
     };
 
-    const bookmark = Bookmark.find();
-    if (bookmark === undefined) {
+    const bookmarkElement = BookmarkElement.find();
+    if (bookmarkElement === undefined) {
         throw new Error('Missing bookmark.');
     }
     const url = new URL(location.href);
     const filter = extractFilter(url) ?? Filter.All;
     if (filter === Filter.Discounted) {
-        bookmark.hideNotDiscountedItems();
+        bookmarkElement.hideNotDiscountedItems();
     }
-    bookmark.appendFilterMenu(filter);
-    bookmark.appendFilterParamToMenuLinks(filter);
+    bookmarkElement.appendFilterMenu(filter);
+    bookmarkElement.appendFilterParamToMenuLinks(filter);
 
 })();

@@ -21,7 +21,7 @@
     };
 
     const findInternalLinkElements = () => {
-        return Array.from(document.querySelectorAll('a[href^="/"][target="_blank"]'));
+        return Array.from(document.querySelectorAll('a[href^="/"]'));
     };
 
     const internalLinkElements = findInternalLinkElements();
