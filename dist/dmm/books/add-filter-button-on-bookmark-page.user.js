@@ -72,7 +72,7 @@
         }
     };
 
-    const createDiscountedButton = (filter) => {
+    const createDiscountedButtonElement = (filter) => {
         switch (filter) {
             case Filter.All:
                 return createInactiveButton({
@@ -86,10 +86,10 @@
 
     const createButtonListElement = (filter) => {
         const allButtonElement = createAllButtonElement(filter);
-        const discountedButton = createDiscountedButton(filter);
+        const discountedButtonElement = createDiscountedButtonElement(filter);
         const buttonList = document.createElement('ul');
         buttonList.append(allButtonElement);
-        buttonList.append(discountedButton);
+        buttonList.append(discountedButtonElement);
         return buttonList;
     };
 

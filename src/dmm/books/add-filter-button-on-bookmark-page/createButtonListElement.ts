@@ -1,12 +1,12 @@
 import { createAllButtonElement } from './createAllButtonElement'
-import { createDiscountedButton } from './createDiscountedButton'
+import { createDiscountedButtonElement } from './createDiscountedButtonElement'
 import type { Filter } from './Filter'
 
 export const createButtonListElement = (filter: Filter): HTMLUListElement => {
   const allButtonElement = createAllButtonElement(filter)
-  const discountedButton = createDiscountedButton(filter)
+  const discountedButtonElement = createDiscountedButtonElement(filter)
   const buttonList = document.createElement('ul')
   buttonList.append(allButtonElement)
-  buttonList.append(discountedButton)
+  buttonList.append(discountedButtonElement)
   return buttonList
 }
