@@ -23,7 +23,7 @@
     };
     Object.values(ButtonLabel);
 
-    const createActiveButton = (label) => {
+    const createActiveButtonElement = (label) => {
         const link = document.createElement('span');
         link.style.paddingLeft = '8px';
         link.style.paddingRight = '8px';
@@ -35,7 +35,7 @@
         return button;
     };
 
-    const createInactiveButton = ({ label, url }) => {
+    const createInactiveButtonElement = ({ label, url }) => {
         const link = document.createElement('a');
         link.href = url.toString();
         link.style.paddingLeft = '8px';
@@ -47,94 +47,94 @@
         return button;
     };
 
-    const createUrl = (filterType) => {
+    const createUrl = (filter) => {
         const url = new URL(location.href);
-        url.searchParams.set('filter', filterType);
+        url.searchParams.set('filter', filter);
         return url;
     };
 
-    const FilterType = {
+    const Filter = {
         All: 'all',
         Discounted: 'discounted'
     };
-    const values = Object.values(FilterType);
-    const isFilterType = (value) => values.includes(value);
+    const values = Object.values(Filter);
+    const isFilter = (value) => values.includes(value);
 
-    const createAllButton = (filterType) => {
-        switch (filterType) {
-            case FilterType.All:
-                return createActiveButton(ButtonLabel.All);
-            case FilterType.Discounted:
-                return createInactiveButton({
+    const createAllButtonElement = (filter) => {
+        switch (filter) {
+            case Filter.All:
+                return createActiveButtonElement(ButtonLabel.All);
+            case Filter.Discounted:
+                return createInactiveButtonElement({
                     label: ButtonLabel.All,
-                    url: createUrl(FilterType.All)
+                    url: createUrl(Filter.All)
                 });
         }
     };
 
-    const createDiscountedButton = (filterType) => {
-        switch (filterType) {
-            case FilterType.All:
-                return createInactiveButton({
+    const createDiscountedButtonElement = (filter) => {
+        switch (filter) {
+            case Filter.All:
+                return createInactiveButtonElement({
                     label: ButtonLabel.Discounted,
-                    url: createUrl(FilterType.Discounted)
+                    url: createUrl(Filter.Discounted)
                 });
-            case FilterType.Discounted:
-                return createActiveButton(ButtonLabel.Discounted);
+            case Filter.Discounted:
+                return createActiveButtonElement(ButtonLabel.Discounted);
         }
     };
 
-    const createButtonList = (filterType) => {
-        const allButton = createAllButton(filterType);
-        const discountedButton = createDiscountedButton(filterType);
+    const createButtonListElement = (filter) => {
+        const allButtonElement = createAllButtonElement(filter);
+        const discountedButtonElement = createDiscountedButtonElement(filter);
         const buttonList = document.createElement('ul');
-        buttonList.append(allButton);
-        buttonList.append(discountedButton);
+        buttonList.append(allButtonElement);
+        buttonList.append(discountedButtonElement);
         return buttonList;
     };
 
-    const createFilterMenu = (filterType) => {
+    const createFilterMenuElement = (filter) => {
         const label = document.createElement('span');
         label.textContent = '絞り込み';
-        const buttonList = createButtonList(filterType);
+        const buttonListElement = createButtonListElement(filter);
         const filterMenu = document.createElement('div');
         filterMenu.append(label);
-        filterMenu.append(buttonList);
+        filterMenu.append(buttonListElement);
         return filterMenu;
     };
 
-    class Bookmark {
-        element;
+    class BookmarkElement {
         constructor(element) {
             this.element = element;
         }
         static find() {
             const element = document.getElementById('main-bmk');
-            return element !== null ? new Bookmark(element) : undefined;
+            return element !== null ? new BookmarkElement(element) : undefined;
         }
-        hideNotDiscountedItems() {
-            const list = this.element.querySelector('#list');
-            if (list === null) {
-                throw new Error('Missing list.');
+        hideUndiscountedItems() {
+            const listElement = this.element.querySelector('#list');
+            if (listElement === null) {
+                throw new Error('Missing list element.');
             }
-            Array.from(list.querySelectorAll('li')).forEach(item => {
-                const discount = item.querySelector('.txtoff');
-                const display = discount !== null ? 'list-item' : 'none';
-                item.style.display = display;
+            const itemElements = Array.from(listElement.querySelectorAll('li'));
+            itemElements.forEach(itemElement => {
+                const discountElement = itemElement.querySelector('.txtoff');
+                const display = discountElement !== null ? 'list-item' : 'none';
+                itemElement.style.display = display;
             });
         }
-        appendFilterMenu(filterType) {
-            const menu = this.element.querySelector('.d-rcol.selector');
-            if (menu === null) {
-                throw new Error('Missing menu.');
+        appendFilterMenu(filter) {
+            const menuElement = this.element.querySelector('.d-rcol.selector');
+            if (menuElement === null) {
+                throw new Error('Missing menu element.');
             }
-            const filterMenu = createFilterMenu(filterType);
-            menu.append(filterMenu);
+            const filterMenuElement = createFilterMenuElement(filter);
+            menuElement.append(filterMenuElement);
         }
-        appendFilterParamToMenuLinks(filterType) {
-            const links = this.element.querySelectorAll('.d-rcol.selector a');
-            links.forEach(link => {
-                const href = link.getAttribute('href');
+        appendFilterParamToMenuLinks(filter) {
+            const linkElements = this.element.querySelectorAll('.d-rcol.selector a');
+            linkElements.forEach(linkElement => {
+                const href = linkElement.getAttribute('href');
                 if (href === null) {
                     return;
                 }
@@ -142,23 +142,27 @@
                     return;
                 }
                 const params = new URLSearchParams(href);
-                params.set('filter', filterType);
-                link.setAttribute('href', `?${params.toString()}`);
+                params.set('filter', filter);
+                linkElement.setAttribute('href', `?${params.toString()}`);
             });
         }
     }
 
-    const bookmark = Bookmark.find();
-    if (bookmark === undefined) {
-        throw new Error('Missing bookmark.');
+    const extractFilter = (url) => {
+        const maybeFilter = url.searchParams.get('filter');
+        return isFilter(maybeFilter) ? maybeFilter : undefined;
+    };
+
+    const bookmarkElement = BookmarkElement.find();
+    if (bookmarkElement === undefined) {
+        throw new Error('Missing bookmark element.');
     }
-    const params = new URLSearchParams(location.search);
-    const filter = params.get('filter');
-    const filterType = isFilterType(filter) ? filter : FilterType.All;
-    if (filterType === FilterType.Discounted) {
-        bookmark.hideNotDiscountedItems();
+    const url = new URL(location.href);
+    const filter = extractFilter(url) ?? Filter.All;
+    if (filter === Filter.Discounted) {
+        bookmarkElement.hideUndiscountedItems();
     }
-    bookmark.appendFilterMenu(filterType);
-    bookmark.appendFilterParamToMenuLinks(filterType);
+    bookmarkElement.appendFilterMenu(filter);
+    bookmarkElement.appendFilterParamToMenuLinks(filter);
 
 })();

@@ -32,21 +32,20 @@
         return value instanceof HTMLElement;
     };
 
-    const findDesktop = () => {
+    const findDesktopElement = () => {
         return document.getElementById('sds-desktop') ?? undefined;
     };
 
-    const findActionButton = () => {
+    const findActionButtonElement = () => {
         return document.querySelector('button[aria-label="アクション/操作"]') ?? undefined;
     };
 
-    const findMediaInfoLink = () => {
+    const findMediaInfoLinkElement = () => {
         return Array.from(document.querySelectorAll('a.x-menu-list-item'))
             .find(({ textContent }) => textContent === 'メディア情報を表示');
     };
 
-    class MediaInfoDialog {
-        element;
+    class MediaInfoDialogElement {
         constructor(element) {
             this.element = element;
         }
@@ -54,29 +53,32 @@
             const element = mutations
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isElement))
                 .find(({ classList }) => classList.contains('video-info-dialog'));
-            return element !== undefined ? new MediaInfoDialog(element) : undefined;
+            return element !== undefined ? new MediaInfoDialogElement(element) : undefined;
         }
         static open() {
-            const actionButton = findActionButton();
-            if (actionButton === undefined) {
-                throw new Error('Missing action button.');
+            const actionButtonElement = findActionButtonElement();
+            if (actionButtonElement === undefined) {
+                throw new Error('Missing action button element.');
             }
-            actionButton.click();
-            const mediaInfoLink = findMediaInfoLink();
-            if (mediaInfoLink === undefined) {
-                throw new Error('Missing media info link.');
+            actionButtonElement.click();
+            const mediaInfoLinkElement = findMediaInfoLinkElement();
+            if (mediaInfoLinkElement === undefined) {
+                throw new Error('Missing media info link element.');
             }
-            mediaInfoLink.click();
+            mediaInfoLinkElement.click();
         }
         close() {
-            const closeButton = this.element.querySelector('button[aria-label="閉じる"]');
-            if (closeButton === null) {
-                throw new Error('Missing close button.');
+            const closeButton = this.findCloseButtonElement();
+            if (closeButton === undefined) {
+                throw new Error('Missing close button element.');
             }
             closeButton.click();
         }
+        findCloseButtonElement() {
+            return this.element.querySelector('button[aria-label="閉じる"]') ?? undefined;
+        }
         findFilePath() {
-            return Array.from(this.element.querySelectorAll('tr'))
+            return this.findRowElements()
                 .map(row => Array.from(row.querySelectorAll('td')))
                 .filter(({ length }) => length >= 2)
                 .map(cells => cells.map(({ textContent }) => textContent ?? undefined))
@@ -84,22 +86,25 @@
                 .map(([, value]) => value)
                 .find(value => value !== undefined);
         }
+        findRowElements() {
+            return Array.from(this.element.querySelectorAll('tr'));
+        }
     }
 
     const fetchFilePath = async () => {
         return await new Promise((resolve, reject) => {
-            const desktop = findDesktop();
-            if (desktop === undefined) {
-                throw new Error('Missing desktop.');
+            const desktopElement = findDesktopElement();
+            if (desktopElement === undefined) {
+                throw new Error('Missing desktop element.');
             }
             const observer = new MutationObserver((mutations, observer) => {
-                const mediaInfoDialog = MediaInfoDialog.fromMutations(mutations);
-                if (mediaInfoDialog === undefined) {
+                const mediaInfoDialogElement = MediaInfoDialogElement.fromMutations(mutations);
+                if (mediaInfoDialogElement === undefined) {
                     return;
                 }
                 observer.disconnect();
-                const path = mediaInfoDialog.findFilePath();
-                mediaInfoDialog.close();
+                const path = mediaInfoDialogElement.findFilePath();
+                mediaInfoDialogElement.close();
                 if (path !== undefined) {
                     resolve(path);
                 }
@@ -107,10 +112,10 @@
                     reject(new Error('Missing file path.'));
                 }
             });
-            observer.observe(desktop, {
+            observer.observe(desktopElement, {
                 childList: true
             });
-            MediaInfoDialog.open();
+            MediaInfoDialogElement.open();
         });
     };
 
@@ -118,21 +123,19 @@
         throw error;
     };
 
-    const isPlayButton = (element) => {
-        const { classList } = element;
-        return classList.contains('x-btn') && classList.contains('play');
-    };
-
-    class PlayButton {
-        element;
+    class PlayButtonElement {
         constructor(element) {
             this.element = element;
         }
         static fromMutations(mutations) {
             const element = mutations
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
-                .find(element => isPlayButton(element));
-            return element !== undefined ? new PlayButton(element) : undefined;
+                .find(element => PlayButtonElement.isPlayButtonElement(element));
+            return element !== undefined ? new PlayButtonElement(element) : undefined;
+        }
+        static isPlayButtonElement(element) {
+            const { classList } = element;
+            return classList.contains('x-btn') && classList.contains('play');
         }
         replace() {
             const button = cloneNode(this.element);
@@ -151,12 +154,12 @@
 
     const handleVideoStation = () => {
         const observer = new MutationObserver((mutations, observer) => {
-            const playButton = PlayButton.fromMutations(mutations);
-            if (playButton === undefined) {
+            const playButtonElement = PlayButtonElement.fromMutations(mutations);
+            if (playButtonElement === undefined) {
                 return;
             }
             observer.disconnect();
-            playButton.replace();
+            playButtonElement.replace();
         });
         observer.observe(document.body, {
             childList: true,

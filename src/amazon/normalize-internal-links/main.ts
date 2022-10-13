@@ -1,7 +1,8 @@
-import { createPath } from './createPath'
 import { extractAsin } from './extractAsin'
+import { findInternalLinkElements } from './findInternalLinkElements'
 
-Array.from(document.querySelectorAll('a[href^="/"]')).forEach(element => {
+const internalLinkElements = findInternalLinkElements()
+internalLinkElements.forEach(element => {
   const href = element.getAttribute('href')
 
   if (href === null) {
@@ -14,7 +15,7 @@ Array.from(document.querySelectorAll('a[href^="/"]')).forEach(element => {
     return
   }
 
-  const normalizedPath = createPath(asin)
+  const normalizedPath = `/dp/${asin}`
 
   if (normalizedPath !== href) {
     element.setAttribute('href', normalizedPath)

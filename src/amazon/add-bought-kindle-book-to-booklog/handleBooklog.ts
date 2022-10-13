@@ -1,7 +1,10 @@
-import { EventType } from './EventType'
-import { findAddButton } from './findAddButton'
+import { findAddButtonElement } from './findAddButtonElement'
+import { Message } from './Message'
 import { Origin } from './Origin'
 
+/**
+ * ブクログの処理を実行します。
+ */
 export const handleBooklog = (): void => {
   const opener: Window | null = window.opener
 
@@ -9,11 +12,11 @@ export const handleBooklog = (): void => {
     return
   }
 
-  opener.postMessage(EventType.BooklogReady, Origin.Amazon)
+  opener.postMessage(Message.BooklogReady, Origin.Amazon)
   window.addEventListener('message', ({ data, origin }) => {
-    if (origin === Origin.Amazon && data === EventType.AmazonBought) {
-      const addButton = findAddButton()
-      addButton?.click()
+    if (origin === Origin.Amazon && data === Message.AmazonBought) {
+      const addButtonElement = findAddButtonElement()
+      addButtonElement?.click()
     }
   })
 }
