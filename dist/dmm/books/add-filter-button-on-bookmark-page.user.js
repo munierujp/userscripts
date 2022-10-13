@@ -23,7 +23,7 @@
     };
     Object.values(ButtonLabel);
 
-    const createActiveButton = (label) => {
+    const createActiveButtonElement = (label) => {
         const link = document.createElement('span');
         link.style.paddingLeft = '8px';
         link.style.paddingRight = '8px';
@@ -63,7 +63,7 @@
     const createAllButtonElement = (filter) => {
         switch (filter) {
             case Filter.All:
-                return createActiveButton(ButtonLabel.All);
+                return createActiveButtonElement(ButtonLabel.All);
             case Filter.Discounted:
                 return createInactiveButton({
                     label: ButtonLabel.All,
@@ -80,7 +80,7 @@
                     url: createUrl(Filter.Discounted)
                 });
             case Filter.Discounted:
-                return createActiveButton(ButtonLabel.Discounted);
+                return createActiveButtonElement(ButtonLabel.Discounted);
         }
     };
 

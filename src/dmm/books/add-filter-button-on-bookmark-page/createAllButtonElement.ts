@@ -1,5 +1,5 @@
 import { ButtonLabel } from './ButtonLabel'
-import { createActiveButton } from './createActiveButton'
+import { createActiveButtonElement } from './createActiveButtonElement'
 import { createInactiveButton } from './createInactiveButton'
 import { createUrl } from './createUrl'
 import { Filter } from './Filter'
@@ -7,7 +7,7 @@ import { Filter } from './Filter'
 export const createAllButtonElement = (filter: Filter): HTMLLIElement => {
   switch (filter) {
     case Filter.All:
-      return createActiveButton(ButtonLabel.All)
+      return createActiveButtonElement(ButtonLabel.All)
     case Filter.Discounted:
       return createInactiveButton({
         label: ButtonLabel.All,

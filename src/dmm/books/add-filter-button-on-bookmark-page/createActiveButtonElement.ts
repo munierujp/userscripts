@@ -1,4 +1,4 @@
-export const createActiveButton = (label: string): HTMLLIElement => {
+export const createActiveButtonElement = (label: string): HTMLLIElement => {
   const link = document.createElement('span')
   link.style.paddingLeft = '8px'
   link.style.paddingRight = '8px'
