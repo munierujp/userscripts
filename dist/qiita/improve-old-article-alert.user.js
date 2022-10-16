@@ -37,7 +37,10 @@
     };
 
     const isArticle = (value) => {
-        return typeof value === 'object' && value !== null && value['@type'] === 'Article' && typeof value.dateModified === 'string';
+        return typeof value === 'object' &&
+            value !== null &&
+            value['@type'] === 'Article' &&
+            (typeof value.dateModified === 'string' || typeof value.dateModified === 'undefined');
     };
 
     const findArticle = () => {
