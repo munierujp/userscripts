@@ -4,18 +4,18 @@ import glob from 'glob'
 import type { RollupOptions } from 'rollup'
 import cleanup from 'rollup-plugin-cleanup'
 import watch from 'rollup-plugin-watch'
-import { stringify as stringifyMetadata } from 'userscript-metadata'
+import { stringify } from 'userscript-metadata'
 import type { Metadata } from 'userscript-metadata'
 
 const readMetadata = (path: string): Metadata => JSON.parse(readFileSync(path, 'utf8'))
 const rootDir = process.cwd()
 const entryPaths = glob.sync('src/**/main.ts')
-const entries = entryPaths.map(entryPath => {
+const configs: RollupOptions[] = entryPaths.flatMap(entryPath => {
   const manifestPath = entryPath.replace(/\/main\.ts$/, '/manifest.json')
   const mainScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.user.js')
   const mainScriptUrl = `file://${rootDir}/${mainScriptPath}`
   const devScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.dev.user.js')
-  const devifyMetadata = (metadata: Metadata): Metadata => {
+  const devify = (metadata: Metadata): Metadata => {
     const requires: string[] = []
 
     if (typeof metadata.require === 'string') {
@@ -31,55 +31,47 @@ const entries = entryPaths.map(entryPath => {
       require: requires
     }
   }
-  const createMainHeader = (): string => stringifyMetadata(readMetadata(manifestPath))
-  const createDevHeader = (): string => stringifyMetadata(devifyMetadata(readMetadata(manifestPath)))
-  return {
-    createDevHeader,
-    createMainHeader,
-    devScriptPath,
-    entryPath,
-    mainScriptPath
+  const mainConfig: RollupOptions = {
+    input: entryPath,
+    output: {
+      file: mainScriptPath,
+      format: 'iife',
+      banner: () => `${stringify(readMetadata(manifestPath))}\n`
+    },
+    plugins: [
+      typescript(),
+      cleanup({
+        extensions: [
+          'ts'
+        ]
+      }),
+      watch({
+        dir: 'src'
+      })
+    ]
   }
+  const devConfig: RollupOptions = {
+    input: 'src/dev.ts',
+    output: {
+      file: devScriptPath,
+      banner: () => `${stringify(devify(readMetadata(manifestPath)))}\n`
+    },
+    plugins: [
+      typescript(),
+      cleanup({
+        extensions: [
+          'ts'
+        ]
+      }),
+      watch({
+        dir: 'src'
+      })
+    ]
+  }
+  return [
+    mainConfig,
+    devConfig
+  ]
 })
-const mainConfigs: RollupOptions[] = entries.map(({ createMainHeader, entryPath, mainScriptPath }) => ({
-  input: entryPath,
-  output: {
-    file: mainScriptPath,
-    format: 'iife',
-    banner: () => `${createMainHeader()}\n`
-  },
-  plugins: [
-    typescript(),
-    cleanup({
-      extensions: [
-        'ts'
-      ]
-    }),
-    watch({
-      dir: 'src'
-    })
-  ]
-}))
-const devConfigs: RollupOptions[] = entries.map(({ createDevHeader, devScriptPath }) => ({
-  input: 'src/dev.ts',
-  output: {
-    file: devScriptPath,
-    banner: () => `${createDevHeader()}\n`
-  },
-  plugins: [
-    typescript(),
-    cleanup({
-      extensions: [
-        'ts'
-      ]
-    }),
-    watch({
-      dir: 'src'
-    })
-  ]
-}))
 
-export default [
-  ...mainConfigs,
-  ...devConfigs
-]
+export default configs
