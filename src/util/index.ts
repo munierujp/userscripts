@@ -1,4 +1,5 @@
 export * from './cloneNode'
 export * from './findJsonLdElements'
+export * from './findJsonLds'
 export * from './isElement'
 export * from './isHTMLElement'
