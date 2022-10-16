@@ -4,7 +4,7 @@ import glob from 'glob'
 import type { RollupOptions } from 'rollup'
 import cleanup from 'rollup-plugin-cleanup'
 import watch from 'rollup-plugin-watch'
-import { stringify as stringifyMetadata } from 'userscript-metadata'
+import { stringify } from 'userscript-metadata'
 import type { Metadata } from 'userscript-metadata'
 
 const readMetadata = (path: string): Metadata => JSON.parse(readFileSync(path, 'utf8'))
@@ -24,7 +24,7 @@ const mainConfigs: RollupOptions[] = paths.map(({ entryPath, mainScriptPath, man
   output: {
     file: mainScriptPath,
     format: 'iife',
-    banner: () => `${stringifyMetadata(readMetadata(manifestPath))}\n`
+    banner: () => `${stringify(readMetadata(manifestPath))}\n`
   },
   plugins: [
     typescript(),
@@ -61,7 +61,7 @@ const devConfigs: RollupOptions[] = paths.map(({ entryPath, mainScriptPath, mani
     input: 'src/dev.ts',
     output: {
       file: devScriptPath,
-      banner: () => `${stringifyMetadata(devifyMetadata(readMetadata(manifestPath)))}\n`
+      banner: () => `${stringify(devifyMetadata(readMetadata(manifestPath)))}\n`
     },
     plugins: [
       typescript(),
