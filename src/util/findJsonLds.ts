@@ -1,8 +1,5 @@
-import { findJsonLdElements } from './findJsonLdElements'
-
 export const findJsonLds = (): string[] => {
-  const jsonLdElements = findJsonLdElements()
-  return jsonLdElements
+  return Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
     .map(({ textContent }) => textContent)
     .filter((json): json is NonNullable<typeof json> => json !== null)
 }
