@@ -1,6 +1,6 @@
 export interface Article {
   '@type': 'Article'
-  'dateModified': string
+  'dateModified'?: string
 }
 
 export const isArticle = (value: any): value is Article => {
