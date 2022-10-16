@@ -1,10 +1,7 @@
 import { readFileSync } from 'node:fs'
 import typescript from '@rollup/plugin-typescript'
 import glob from 'glob'
-import type {
-  InputPluginOption,
-  RollupOptions
-} from 'rollup'
+import type { RollupOptions } from 'rollup'
 import cleanup from 'rollup-plugin-cleanup'
 import watch from 'rollup-plugin-watch'
 import { stringify } from 'userscript-metadata'
@@ -34,17 +31,6 @@ const configs: RollupOptions[] = entryPaths.flatMap(entryPath => {
       require: requires
     }
   }
-  const plugins: InputPluginOption = [
-    typescript(),
-    cleanup({
-      extensions: [
-        'ts'
-      ]
-    }),
-    watch({
-      dir: 'src'
-    })
-  ]
   const mainConfig: RollupOptions = {
     input: entryPath,
     output: {
@@ -52,7 +38,17 @@ const configs: RollupOptions[] = entryPaths.flatMap(entryPath => {
       format: 'iife',
       banner: () => `${stringify(readMetadata(manifestPath))}\n`
     },
-    plugins
+    plugins: [
+      typescript(),
+      cleanup({
+        extensions: [
+          'ts'
+        ]
+      }),
+      watch({
+        dir: 'src'
+      })
+    ]
   }
   const devConfig: RollupOptions = {
     input: 'src/dev.ts',
@@ -60,7 +56,17 @@ const configs: RollupOptions[] = entryPaths.flatMap(entryPath => {
       file: devScriptPath,
       banner: () => `${stringify(devify(readMetadata(manifestPath)))}\n`
     },
-    plugins
+    plugins: [
+      typescript(),
+      cleanup({
+        extensions: [
+          'ts'
+        ]
+      }),
+      watch({
+        dir: 'src'
+      })
+    ]
   }
   return [
     mainConfig,
