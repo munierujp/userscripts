@@ -21,8 +21,8 @@
         return dayjs(date1).diff(date2, 'year');
     };
 
-    const isAlertTextElement = (element) => {
-        const { textContent } = element;
+    const isAlertTextElement = (node) => {
+        const { textContent } = node;
         return textContent !== null && /^この記事は最終更新日から\d+年以上が経過しています。$/.test(textContent);
     };
 
