@@ -6,20 +6,27 @@ import {
 import { isAlertTextElement } from './isAlertTextElement'
 
 describe('isAlertTextElement', () => {
-  it('returns true if value is alert text element.', () => {
-    const element = document.createElement('p')
-    element.textContent = 'この記事は最終更新日から1年以上が経過しています。'
+  describe('returns whether value is alert text element.', () => {
+    it.each([
+      [
+        'この記事は最終更新日から1年以上が経過しています。',
+        true
+      ],
+      [
+        'この記事は最終更新日から10年以上が経過しています。',
+        true
+      ],
+      [
+        'この記事は1年以内に更新されています。',
+        false
+      ]
+    ])('message=%p', (message, expected) => {
+      const element = document.createElement('p')
+      element.textContent = message
 
-    const actual = isAlertTextElement(element)
+      const actual = isAlertTextElement(element)
 
-    expect(actual).toBe(true)
-  })
-
-  it('returns false if value is not alert text element.', () => {
-    const element = document.createElement('p')
-
-    const actual = isAlertTextElement(element)
-
-    expect(actual).toBe(false)
+      expect(actual).toBe(expected)
+    })
   })
 })
