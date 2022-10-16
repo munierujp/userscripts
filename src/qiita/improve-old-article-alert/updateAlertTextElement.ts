@@ -1,14 +1,7 @@
 import { differenceInYears } from '../../util/dayjs'
-import { findAlertTextElement } from './findAlertTextElement'
 import { findArticle } from './findArticle'
 
-export const updateAlert = (): void => {
-  const alertTextElement = findAlertTextElement()
-
-  if (alertTextElement === undefined) {
-    return
-  }
-
+export const updateAlertTextElement = (alertTextElement: HTMLElement): void => {
   const article = findArticle()
 
   if (article === undefined) {

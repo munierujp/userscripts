@@ -1,3 +1,8 @@
-import { updateAlert } from './updateAlert'
+import { findAlertTextElement } from './findAlertTextElement'
+import { updateAlertTextElement } from './updateAlertTextElement'
 
-updateAlert()
+const alertTextElement = findAlertTextElement()
+
+if (alertTextElement !== undefined) {
+  updateAlertTextElement(alertTextElement)
+}

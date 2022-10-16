@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         古い記事のアラートを改善
 // @namespace    https://github.com/munierujp/
-// @version      0.1.0
+// @version      0.1.1
 // @description  Qiitaの古い記事のアラートにおいて、年数をより正確に表示します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -17,10 +17,6 @@
 (function (dayjs) {
     'use strict';
 
-    const differenceInYears = (date1, date2) => {
-        return dayjs(date1).diff(date2, 'year');
-    };
-
     const isAlertTextElement = (node) => {
         const { textContent } = node;
         return textContent !== null && /^この記事は最終更新日から\d+年以上が経過しています。$/.test(textContent);
@@ -28,6 +24,10 @@
 
     const findAlertTextElement = () => {
         return Array.from(document.getElementsByTagName('p')).find(element => isAlertTextElement(element));
+    };
+
+    const differenceInYears = (date1, date2) => {
+        return dayjs(date1).diff(date2, 'year');
     };
 
     const findJsonLds = () => {
@@ -50,11 +50,7 @@
             .find(isArticle);
     };
 
-    const updateAlert = () => {
-        const alertTextElement = findAlertTextElement();
-        if (alertTextElement === undefined) {
-            return;
-        }
+    const updateAlertTextElement = (alertTextElement) => {
         const article = findArticle();
         if (article === undefined) {
             throw new Error('Missing article.');
@@ -68,6 +64,9 @@
         alertTextElement.textContent = `この記事は最終更新日から${year}年以上が経過しています。`;
     };
 
-    updateAlert();
+    const alertTextElement = findAlertTextElement();
+    if (alertTextElement !== undefined) {
+        updateAlertTextElement(alertTextElement);
+    }
 
 })(dayjs);
