@@ -17,10 +17,6 @@
 (function (dayjs) {
     'use strict';
 
-    const differenceInYears = (date1, date2) => {
-        return dayjs(date1).diff(date2, 'year');
-    };
-
     const isAlertTextElement = (node) => {
         const { textContent } = node;
         return textContent !== null && /^この記事は最終更新日から\d+年以上が経過しています。$/.test(textContent);
@@ -28,6 +24,10 @@
 
     const findAlertTextElement = () => {
         return Array.from(document.getElementsByTagName('p')).find(element => isAlertTextElement(element));
+    };
+
+    const differenceInYears = (date1, date2) => {
+        return dayjs(date1).diff(date2, 'year');
     };
 
     const findJsonLds = () => {
@@ -50,11 +50,7 @@
             .find(isArticle);
     };
 
-    (() => {
-        const alertTextElement = findAlertTextElement();
-        if (alertTextElement === undefined) {
-            return;
-        }
+    const updateAlertTextElement = (alertTextElement) => {
         const article = findArticle();
         if (article === undefined) {
             throw new Error('Missing article.');
@@ -66,6 +62,11 @@
         const now = new Date();
         const year = differenceInYears(now, dateModified);
         alertTextElement.textContent = `この記事は最終更新日から${year}年以上が経過しています。`;
-    })();
+    };
+
+    const alertTextElement = findAlertTextElement();
+    if (alertTextElement !== undefined) {
+        updateAlertTextElement(alertTextElement);
+    }
 
 })(dayjs);
