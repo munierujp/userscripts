@@ -58,8 +58,7 @@
         }
         const now = new Date();
         const year = differenceInYears(now, article.dateModified);
-        const message = `この記事は最終更新日から${year}年以上が経過しています。`;
-        alertTextElement.textContent = message;
+        alertTextElement.textContent = `この記事は最終更新日から${year}年以上が経過しています。`;
     };
 
     updateAlert();
