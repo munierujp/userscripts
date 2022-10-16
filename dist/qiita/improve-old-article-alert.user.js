@@ -50,7 +50,7 @@
             .find(isArticle);
     };
 
-    const updateAlert = () => {
+    (() => {
         const alertTextElement = findAlertTextElement();
         if (alertTextElement === undefined) {
             return;
@@ -66,8 +66,6 @@
         const now = new Date();
         const year = differenceInYears(now, dateModified);
         alertTextElement.textContent = `この記事は最終更新日から${year}年以上が経過しています。`;
-    };
-
-    updateAlert();
+    })();
 
 })(dayjs);
