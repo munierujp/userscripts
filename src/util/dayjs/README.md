@@ -7,7 +7,7 @@
 ```json
 {
   "require": [
-    "https://cdn.jsdelivr.net/npm/dayjs@1.11.5/dayjs.min.js"
+    "https://cdn.jsdelivr.net/npm/dayjs@1.11.6/dayjs.min.js"
   ]
 }
 ```
