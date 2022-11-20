@@ -10,7 +10,7 @@
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/qiita/improve-old-article-alert.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        *://qiita.com/*/items/*
-// @require      https://cdn.jsdelivr.net/npm/dayjs@1.11.5/dayjs.min.js
+// @require      https://cdn.jsdelivr.net/npm/dayjs@1.11.6/dayjs.min.js
 // @grant        none
 // ==/UserScript==
 
