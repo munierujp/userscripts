@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         古い記事のアラートを改善
 // @namespace    https://github.com/munierujp/
-// @version      0.1.1
+// @version      0.1.2
 // @description  Qiitaの古い記事のアラートにおいて、年数をより正確に表示します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -10,7 +10,7 @@
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/qiita/improve-old-article-alert.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        *://qiita.com/*/items/*
-// @require      https://cdn.jsdelivr.net/npm/dayjs@1.11.5/dayjs.min.js
+// @require      https://cdn.jsdelivr.net/npm/dayjs@1.11.6/dayjs.min.js
 // @grant        none
 // ==/UserScript==
 
