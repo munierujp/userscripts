@@ -13,11 +13,12 @@ export const handleBooklog = (): void => {
     return
   }
 
-  opener.postMessage(Message.WindowReady, Origin.Amazon)
   window.addEventListener('message', ({ data, origin }) => {
     if (origin === Origin.Amazon && data === Message.Bought) {
       const addButtonElement = findAddButtonElement()
       addButtonElement?.click()
     }
   })
+
+  opener.postMessage(Message.WindowReady, Origin.Amazon)
 }
