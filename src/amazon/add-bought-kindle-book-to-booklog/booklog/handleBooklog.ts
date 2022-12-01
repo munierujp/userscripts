@@ -1,6 +1,4 @@
-import { Message } from '../Message'
-import { Origin } from '../Origin'
-import { findAddButtonElement } from './findAddButtonElement'
+import { handleOpenedFromAmazon } from './handleOpenedFromAmazon'
 import { isOpenedFromAmazon } from './isOpenedFromAmazon'
 
 /**
@@ -9,17 +7,7 @@ import { isOpenedFromAmazon } from './isOpenedFromAmazon'
 export const handleBooklog = (): void => {
   const opener: Window | null = window.opener
 
-  if (opener === null || !isOpenedFromAmazon()) {
-    return
+  if (opener !== null && isOpenedFromAmazon()) {
+    handleOpenedFromAmazon()
   }
-
-  // Amazonから購入完了メッセージを受信したら、追加ボタンをクリック
-  window.addEventListener('message', ({ data, origin }) => {
-    if (origin === Origin.Amazon && data === Message.Bought) {
-      const addButtonElement = findAddButtonElement()
-      addButtonElement?.click()
-    }
-  })
-
-  opener.postMessage(Message.WindowReady, Origin.Amazon)
 }

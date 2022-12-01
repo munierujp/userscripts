@@ -52,15 +52,7 @@
         return document.querySelector('a.additem_button[data-status="4"]') ?? undefined;
     };
 
-    const isOpenedFromAmazon = () => {
-        return document.referrer === 'https://www.amazon.co.jp/';
-    };
-
-    const handleBooklog = () => {
-        const opener = window.opener;
-        if (opener === null || !isOpenedFromAmazon()) {
-            return;
-        }
+    const handleOpenedFromAmazon = () => {
         window.addEventListener('message', ({ data, origin }) => {
             if (origin === Origin.Amazon && data === Message.Bought) {
                 const addButtonElement = findAddButtonElement();
@@ -68,6 +60,17 @@
             }
         });
         opener.postMessage(Message.WindowReady, Origin.Amazon);
+    };
+
+    const isOpenedFromAmazon = () => {
+        return document.referrer === 'https://www.amazon.co.jp/';
+    };
+
+    const handleBooklog = () => {
+        const opener = window.opener;
+        if (opener !== null && isOpenedFromAmazon()) {
+            handleOpenedFromAmazon();
+        }
     };
 
     switch (location.origin) {
