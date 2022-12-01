@@ -23,7 +23,7 @@
 
     const Message = {
         AmazonBought: 'amazon_bought',
-        BooklogReady: 'booklog_ready'
+        WindowReady: 'window_ready'
     };
 
     const Origin = {
@@ -41,7 +41,7 @@
             throw new Error('Failed to open new tab.');
         }
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Booklog && data === Message.BooklogReady) {
+            if (origin === Origin.Booklog && data === Message.WindowReady) {
                 booklogTab.postMessage(Message.AmazonBought, Origin.Booklog);
             }
         });
@@ -56,7 +56,7 @@
         if (opener === null || document.referrer !== 'https://www.amazon.co.jp/') {
             return;
         }
-        opener.postMessage(Message.BooklogReady, Origin.Amazon);
+        opener.postMessage(Message.WindowReady, Origin.Amazon);
         window.addEventListener('message', ({ data, origin }) => {
             if (origin === Origin.Amazon && data === Message.AmazonBought) {
                 const addButtonElement = findAddButtonElement();

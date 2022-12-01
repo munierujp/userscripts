@@ -19,7 +19,7 @@ export const handleAmazon = (): void => {
   }
 
   window.addEventListener('message', ({ data, origin }) => {
-    if (origin === Origin.Booklog && data === Message.BooklogReady) {
+    if (origin === Origin.Booklog && data === Message.WindowReady) {
       booklogTab.postMessage(Message.AmazonBought, Origin.Booklog)
     }
   })
