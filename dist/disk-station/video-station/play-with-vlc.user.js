@@ -53,7 +53,7 @@
             const element = mutations
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isElement))
                 .find(({ classList }) => classList.contains('video-info-dialog'));
-            return element !== undefined ? new MediaInfoDialogElement(element) : undefined;
+            return element === undefined ? undefined : new MediaInfoDialogElement(element);
         }
         static open() {
             const actionButtonElement = findActionButtonElement();
@@ -105,11 +105,11 @@
                 observer.disconnect();
                 const path = mediaInfoDialogElement.findFilePath();
                 mediaInfoDialogElement.close();
-                if (path !== undefined) {
-                    resolve(path);
+                if (path === undefined) {
+                    reject(new Error('Missing file path.'));
                 }
                 else {
-                    reject(new Error('Missing file path.'));
+                    resolve(path);
                 }
             });
             observer.observe(desktopElement, {
@@ -131,7 +131,7 @@
             const element = mutations
                 .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
                 .find(element => PlayButtonElement.isPlayButtonElement(element));
-            return element !== undefined ? new PlayButtonElement(element) : undefined;
+            return element === undefined ? undefined : new PlayButtonElement(element);
         }
         static isPlayButtonElement(element) {
             const { classList } = element;

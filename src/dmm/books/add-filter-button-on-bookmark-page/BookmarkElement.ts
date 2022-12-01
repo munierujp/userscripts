@@ -6,7 +6,7 @@ export class BookmarkElement {
 
   static find (): BookmarkElement | undefined {
     const element = document.getElementById('main-bmk')
-    return element !== null ? new BookmarkElement(element) : undefined
+    return element === null ? undefined : new BookmarkElement(element)
   }
 
   hideUndiscountedItems (): void {
@@ -19,7 +19,7 @@ export class BookmarkElement {
     const itemElements = Array.from(listElement.querySelectorAll('li'))
     itemElements.forEach(itemElement => {
       const discountElement = itemElement.querySelector('.txtoff')
-      const display = discountElement !== null ? 'list-item' : 'none'
+      const display = discountElement === null ? 'none' : 'list-item'
       itemElement.style.display = display
     })
   }
