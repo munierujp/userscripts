@@ -1,7 +1,7 @@
+import { Message } from '../Message'
+import { Origin } from '../Origin'
 import { findAddButtonElement } from './findAddButtonElement'
 import { isOpenedFromAmazon } from './isOpenedFromAmazon'
-import { Message } from './Message'
-import { Origin } from './Origin'
 
 /**
  * ブクログの処理を実行します。
