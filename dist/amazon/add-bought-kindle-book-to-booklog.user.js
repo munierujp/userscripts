@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Kindle本の購入完了時にブクログに登録
 // @namespace    https://github.com/munierujp/
-// @version      0.2.3
+// @version      0.2.4
 // @description  AmazonでKindle本の購入完了時にブクログに読書状況を積読として登録します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -17,18 +17,19 @@
 (function () {
     'use strict';
 
-    const extractAsin = (url) => {
-        return url.searchParams.get('asin') ?? undefined;
-    };
-
     const Message = {
-        AmazonBought: 'amazon_bought',
-        BooklogReady: 'booklog_ready'
+        Bought: 'bought',
+        WindowReady: 'window_ready'
     };
 
     const Origin = {
         Amazon: 'https://www.amazon.co.jp',
         Booklog: 'https://booklog.jp'
+    };
+
+    const extractAsin = (url) => {
+        url = url instanceof URL ? url : new URL(url);
+        return url.searchParams.get('asin') ?? undefined;
     };
 
     const handleAmazon = () => {
@@ -41,8 +42,8 @@
             throw new Error('Failed to open new tab.');
         }
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Booklog && data === Message.BooklogReady) {
-                booklogTab.postMessage(Message.AmazonBought, Origin.Booklog);
+            if (origin === Origin.Booklog && data === Message.WindowReady) {
+                booklogTab.postMessage(Message.Bought, Origin.Booklog);
             }
         });
     };
@@ -51,18 +52,25 @@
         return document.querySelector('a.additem_button[data-status="4"]') ?? undefined;
     };
 
-    const handleBooklog = () => {
-        const opener = window.opener;
-        if (opener === null || document.referrer !== 'https://www.amazon.co.jp/') {
-            return;
-        }
-        opener.postMessage(Message.BooklogReady, Origin.Amazon);
+    const handleOpenedFromAmazon = () => {
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Amazon && data === Message.AmazonBought) {
+            if (origin === Origin.Amazon && data === Message.Bought) {
                 const addButtonElement = findAddButtonElement();
                 addButtonElement?.click();
             }
         });
+        opener.postMessage(Message.WindowReady, Origin.Amazon);
+    };
+
+    const isOpenedFromAmazon = () => {
+        return document.referrer === 'https://www.amazon.co.jp/';
+    };
+
+    const handleBooklog = () => {
+        const opener = window.opener;
+        if (opener !== null && isOpenedFromAmazon()) {
+            handleOpenedFromAmazon();
+        }
     };
 
     switch (location.origin) {

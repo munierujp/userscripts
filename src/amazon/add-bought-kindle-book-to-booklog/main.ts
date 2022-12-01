@@ -1,5 +1,5 @@
-import { handleAmazon } from './handleAmazon'
-import { handleBooklog } from './handleBooklog'
+import { handleAmazon } from './amazon'
+import { handleBooklog } from './booklog'
 import { Origin } from './Origin'
 
 switch (location.origin) {

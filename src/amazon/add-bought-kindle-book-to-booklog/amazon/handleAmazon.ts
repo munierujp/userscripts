@@ -1,6 +1,6 @@
+import { Message } from '../Message'
+import { Origin } from '../Origin'
 import { extractAsin } from './extractAsin'
-import { Message } from './Message'
-import { Origin } from './Origin'
 
 /**
  * Amazonの処理を実行します。
@@ -18,9 +18,10 @@ export const handleAmazon = (): void => {
     throw new Error('Failed to open new tab.')
   }
 
+  // ブクログから準備完了メッセージを受信したら、ブクログに購入完了メッセージを送信
   window.addEventListener('message', ({ data, origin }) => {
-    if (origin === Origin.Booklog && data === Message.BooklogReady) {
-      booklogTab.postMessage(Message.AmazonBought, Origin.Booklog)
+    if (origin === Origin.Booklog && data === Message.WindowReady) {
+      booklogTab.postMessage(Message.Bought, Origin.Booklog)
     }
   })
 }
