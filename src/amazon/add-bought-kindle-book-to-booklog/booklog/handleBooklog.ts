@@ -13,6 +13,7 @@ export const handleBooklog = (): void => {
     return
   }
 
+  // Amazonから購入完了メッセージを受信したら、追加ボタンをクリック
   window.addEventListener('message', ({ data, origin }) => {
     if (origin === Origin.Amazon && data === Message.Bought) {
       const addButtonElement = findAddButtonElement()
