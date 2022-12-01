@@ -1,4 +1,5 @@
 import { findAddButtonElement } from './findAddButtonElement'
+import { isOpenedFromAmazon } from './isOpenedFromAmazon'
 import { Message } from './Message'
 import { Origin } from './Origin'
 
@@ -8,7 +9,7 @@ import { Origin } from './Origin'
 export const handleBooklog = (): void => {
   const opener: Window | null = window.opener
 
-  if (opener === null || document.referrer !== 'https://www.amazon.co.jp/') {
+  if (opener === null || !isOpenedFromAmazon()) {
     return
   }
 

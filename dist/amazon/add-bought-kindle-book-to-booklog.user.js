@@ -52,9 +52,13 @@
         return document.querySelector('a.additem_button[data-status="4"]') ?? undefined;
     };
 
+    const isOpenedFromAmazon = () => {
+        return document.referrer === 'https://www.amazon.co.jp/';
+    };
+
     const handleBooklog = () => {
         const opener = window.opener;
-        if (opener === null || document.referrer !== 'https://www.amazon.co.jp/') {
+        if (opener === null || !isOpenedFromAmazon()) {
             return;
         }
         opener.postMessage(Message.WindowReady, Origin.Amazon);
