@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         古い記事のアラートを改善
 // @namespace    https://github.com/munierujp/
-// @version      0.1.2
+// @version      0.1.3
 // @description  Qiitaの古い記事のアラートにおいて、年数をより正確に表示します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -40,7 +40,7 @@
         return typeof value === 'object' &&
             value !== null &&
             value['@type'] === 'Article' &&
-            (typeof value.dateModified === 'string' || typeof value.dateModified === 'undefined');
+            (typeof value.dateModified === 'string' || value.dateModified === undefined);
     };
 
     const findArticle = () => {

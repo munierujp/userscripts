@@ -21,10 +21,10 @@ export const fetchFilePath = async (): Promise<string> => {
       const path = mediaInfoDialogElement.findFilePath()
       mediaInfoDialogElement.close()
 
-      if (path !== undefined) {
-        resolve(path)
-      } else {
+      if (path === undefined) {
         reject(new Error('Missing file path.'))
+      } else {
+        resolve(path)
       }
     })
     observer.observe(desktopElement, {

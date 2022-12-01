@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ブックマークページにフィルターボタンを追加
 // @namespace    https://github.com/munierujp/
-// @version      1.3.3
+// @version      1.3.4
 // @description  DMMブックスのブックマークページにフィルターボタンを追加します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts
@@ -109,7 +109,7 @@
         }
         static find() {
             const element = document.getElementById('main-bmk');
-            return element !== null ? new BookmarkElement(element) : undefined;
+            return element === null ? undefined : new BookmarkElement(element);
         }
         hideUndiscountedItems() {
             const listElement = this.element.querySelector('#list');
@@ -119,7 +119,7 @@
             const itemElements = Array.from(listElement.querySelectorAll('li'));
             itemElements.forEach(itemElement => {
                 const discountElement = itemElement.querySelector('.txtoff');
-                const display = discountElement !== null ? 'list-item' : 'none';
+                const display = discountElement === null ? 'none' : 'list-item';
                 itemElement.style.display = display;
             });
         }

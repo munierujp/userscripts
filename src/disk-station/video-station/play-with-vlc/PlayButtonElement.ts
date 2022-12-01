@@ -13,7 +13,7 @@ export class PlayButtonElement {
       // eslint-disable-next-line unicorn/no-array-callback-reference
       .flatMap(({ addedNodes }) => Array.from(addedNodes).filter(isHTMLElement))
       .find(element => PlayButtonElement.isPlayButtonElement(element))
-    return element !== undefined ? new PlayButtonElement(element) : undefined
+    return element === undefined ? undefined : new PlayButtonElement(element)
   }
 
   private static isPlayButtonElement (element: Element): boolean {
