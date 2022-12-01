@@ -18,6 +18,7 @@
     'use strict';
 
     const extractAsin = (url) => {
+        url = url instanceof URL ? url : new URL(url);
         return url.searchParams.get('asin') ?? undefined;
     };
 
