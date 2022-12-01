@@ -17,11 +17,6 @@
 (function () {
     'use strict';
 
-    const extractAsin = (url) => {
-        url = url instanceof URL ? url : new URL(url);
-        return url.searchParams.get('asin') ?? undefined;
-    };
-
     const Message = {
         Bought: 'bought',
         WindowReady: 'window_ready'
@@ -30,6 +25,11 @@
     const Origin = {
         Amazon: 'https://www.amazon.co.jp',
         Booklog: 'https://booklog.jp'
+    };
+
+    const extractAsin = (url) => {
+        url = url instanceof URL ? url : new URL(url);
+        return url.searchParams.get('asin') ?? undefined;
     };
 
     const handleAmazon = () => {

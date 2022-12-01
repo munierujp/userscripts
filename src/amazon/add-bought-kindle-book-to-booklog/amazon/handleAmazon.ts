@@ -1,6 +1,6 @@
+import { Message } from '../Message'
+import { Origin } from '../Origin'
 import { extractAsin } from './extractAsin'
-import { Message } from './Message'
-import { Origin } from './Origin'
 
 /**
  * Amazonの処理を実行します。

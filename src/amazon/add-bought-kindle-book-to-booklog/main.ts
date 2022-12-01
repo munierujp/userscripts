@@ -1,4 +1,4 @@
-import { handleAmazon } from './handleAmazon'
+import { handleAmazon } from './amazon'
 import { handleBooklog } from './handleBooklog'
 import { Origin } from './Origin'
 
