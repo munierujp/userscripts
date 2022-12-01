@@ -1,5 +1,5 @@
 export const Message = {
-  AmazonBought: 'amazon_bought',
+  Bought: 'bought',
   WindowReady: 'window_ready'
 } as const
 // eslint-disable-next-line @typescript-eslint/no-redeclare

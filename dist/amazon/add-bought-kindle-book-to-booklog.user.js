@@ -22,7 +22,7 @@
     };
 
     const Message = {
-        AmazonBought: 'amazon_bought',
+        Bought: 'bought',
         WindowReady: 'window_ready'
     };
 
@@ -42,7 +42,7 @@
         }
         window.addEventListener('message', ({ data, origin }) => {
             if (origin === Origin.Booklog && data === Message.WindowReady) {
-                booklogTab.postMessage(Message.AmazonBought, Origin.Booklog);
+                booklogTab.postMessage(Message.Bought, Origin.Booklog);
             }
         });
     };
@@ -58,7 +58,7 @@
         }
         opener.postMessage(Message.WindowReady, Origin.Amazon);
         window.addEventListener('message', ({ data, origin }) => {
-            if (origin === Origin.Amazon && data === Message.AmazonBought) {
+            if (origin === Origin.Amazon && data === Message.Bought) {
                 const addButtonElement = findAddButtonElement();
                 addButtonElement?.click();
             }
