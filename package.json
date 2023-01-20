@@ -21,7 +21,7 @@
     "@munierujp/eslint-config-typescript": "2.0.0",
     "@rollup/plugin-typescript": "11.0.0",
     "@tsconfig/node16": "1.0.3",
-    "@types/glob": "8.0.0",
+    "@types/glob": "8.0.1",
     "@types/node": "16.11.68",
     "dayjs": "1.11.7",
     "eslint": "8.32.0",
