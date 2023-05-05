@@ -19,7 +19,7 @@
     "node": "18.11.0"
   },
   "devDependencies": {
-    "@munierujp/eslint-config-typescript": "18.0.1",
+    "@munierujp/eslint-config-typescript": "19.0.0",
     "@rollup/plugin-typescript": "11.1.0",
     "@tsconfig/node16": "1.0.3",
     "@types/glob": "8.0.1",
