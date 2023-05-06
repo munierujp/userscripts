@@ -2,7 +2,7 @@ import type { Database } from './db'
 import type { RestaurantElement } from './elements'
 import { handleError } from './handleError'
 
-export class BlockLinksAppender {
+export class BlockButtonsAppender {
   constructor (private readonly db: Database) {}
 
   append (restaurantElements: RestaurantElement[]): void {

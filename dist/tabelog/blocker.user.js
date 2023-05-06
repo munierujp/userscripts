@@ -48,7 +48,7 @@ content: "\\f619";
       throw error;
   };
 
-  class BlockLinksAppender {
+  class BlockButtonsAppender {
       constructor(db) {
           this.db = db;
       }
@@ -150,8 +150,8 @@ content: "\\f619";
       const db = new Database();
       const restaurantHider = new RestaurantHider(db);
       restaurantHider.hide(restaurantElements).catch(handleError);
-      const blockLinksAppender = new BlockLinksAppender(db);
-      blockLinksAppender.append(restaurantElements);
+      const blockButtonsAppender = new BlockButtonsAppender(db);
+      blockButtonsAppender.append(restaurantElements);
   }
 
 })(Dexie);

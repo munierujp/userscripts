@@ -1,5 +1,5 @@
 import { appendStyle } from './appendStyle'
-import { BlockLinksAppender } from './BlockLinksAppender'
+import { BlockButtonsAppender } from './BlockLinksAppender'
 import { Database } from './db'
 import { RestaurantElement } from './elements'
 import { handleError } from './handleError'
@@ -13,6 +13,6 @@ if (restaurantElements.length > 0) {
   const db = new Database()
   const restaurantHider = new RestaurantHider(db)
   restaurantHider.hide(restaurantElements).catch(handleError)
-  const blockLinksAppender = new BlockLinksAppender(db)
-  blockLinksAppender.append(restaurantElements)
+  const blockButtonsAppender = new BlockButtonsAppender(db)
+  blockButtonsAppender.append(restaurantElements)
 }
