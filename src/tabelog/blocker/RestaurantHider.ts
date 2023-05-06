@@ -1,17 +1,16 @@
 import type { Database } from './db'
 import type { RestaurantElement } from './elements'
-import { handleError } from './handleError'
 
 export class RestaurantHider {
   constructor (private readonly db: Database) {}
 
   async hide (restaurantElements: RestaurantElement[]): Promise<void> {
-    restaurantElements.forEach(restaurantElement => {
-      this.hideRestaurant(restaurantElement).catch(handleError)
-    })
+    for (const restaurantElement of restaurantElements) {
+      await this.hideRestaurant(restaurantElement)
+    }
   }
 
-  async hideRestaurant (restaurantElement: RestaurantElement): Promise<void> {
+  private async hideRestaurant (restaurantElement: RestaurantElement): Promise<void> {
     const { id } = restaurantElement
 
     if (id === undefined) {

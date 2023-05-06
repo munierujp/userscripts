@@ -93,9 +93,9 @@
             this.db = db;
         }
         async hide(restaurantElements) {
-            restaurantElements.forEach(restaurantElement => {
-                this.hideRestaurant(restaurantElement).catch(handleError);
-            });
+            for (const restaurantElement of restaurantElements) {
+                await this.hideRestaurant(restaurantElement);
+            }
         }
         async hideRestaurant(restaurantElement) {
             const { id } = restaurantElement;
