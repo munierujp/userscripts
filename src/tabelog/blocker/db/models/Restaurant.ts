@@ -1,4 +1,4 @@
 export interface Restaurant {
-  url: string
+  id: string
   name: string
 }

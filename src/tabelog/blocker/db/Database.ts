@@ -8,7 +8,7 @@ export class Database extends Dexie {
   constructor () {
     super('munierujp-tabelog-blocker')
     this.version(1).stores({
-      restaurants: 'url'
+      restaurants: 'id'
     })
   }
 }
