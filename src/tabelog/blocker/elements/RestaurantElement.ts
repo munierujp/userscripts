@@ -9,6 +9,10 @@ export class RestaurantElement {
     return this.element.querySelector('.list-rst__rst-name-target')?.textContent ?? undefined
   }
 
+  get bookmarkElement (): HTMLElement | undefined {
+    return this.element.querySelector<HTMLElement>('.p-btn-bkm') ?? undefined
+  }
+
   append (node: Node): void {
     this.element.append(node)
   }
