@@ -1,5 +1,4 @@
 import type { Database } from './db'
-import type { Restaurant } from './db/models'
 import { handleError } from './handleError'
 
 export class BlockLinksAppender {
@@ -12,34 +11,35 @@ export class BlockLinksAppender {
   }
 
   private appendLinkElement (restaurantElement: HTMLElement): void {
+    const linkElement = this.createLinkElement(restaurantElement)
+
+    if (linkElement !== undefined) {
+      restaurantElement.append(linkElement)
+    }
+  }
+
+  private createLinkElement (restaurantElement: HTMLElement): HTMLAnchorElement | undefined {
     const id = restaurantElement.dataset.rstId
 
     if (id === undefined) {
-      return
+      return undefined
     }
 
     const name = restaurantElement.querySelector('.list-rst__rst-name-target')?.textContent ?? undefined
 
     if (name === undefined) {
-      return
+      return undefined
     }
 
-    const linkElement = this.createLinkElement({
-      id,
-      name
-    })
-    restaurantElement.append(linkElement)
-  }
-
-  private createLinkElement (restaurant: Restaurant): HTMLAnchorElement {
     const linkElement = document.createElement('a')
     linkElement.style.cursor = 'pointer'
     linkElement.textContent = 'この店舗をブロックする'
     const handleClick = async (): Promise<void> => {
-      if (window.confirm(`${restaurant.name}をブロックしますか？`)) {
+      if (window.confirm(`${name}をブロックしますか？`)) {
+        restaurantElement.style.display = 'none'
         await this.db.restaurants.add({
-          id: restaurant.id,
-          name: restaurant.name
+          id,
+          name
         })
       }
     }
