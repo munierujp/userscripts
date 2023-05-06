@@ -1,5 +1,5 @@
 import { appendStyle } from './appendStyle'
-import { BlockButtonsAppender } from './BlockLinksAppender'
+import { BlockButtonsAppender } from './BlockButtonsAppender'
 import { Database } from './db'
 import { RestaurantElement } from './elements'
 import { handleError } from './handleError'
