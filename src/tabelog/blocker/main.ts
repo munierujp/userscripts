@@ -1,3 +1,4 @@
+import { appendStyle } from './appendStyle'
 import { BlockLinksAppender } from './BlockLinksAppender'
 import { Database } from './db'
 import { RestaurantElement } from './elements'
@@ -8,6 +9,7 @@ const restaurantElements = Array.from(document.querySelectorAll<HTMLElement>('.j
   .map(element => new RestaurantElement(element))
 
 if (restaurantElements.length > 0) {
+  appendStyle()
   const db = new Database()
   const restaurantHider = new RestaurantHider(db)
   restaurantHider.hide(restaurantElements).catch(handleError)

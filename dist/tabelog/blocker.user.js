@@ -16,141 +16,142 @@
 // ==/UserScript==
 
 (function (Dexie) {
-    'use strict';
+  'use strict';
 
-    const handleError = (error) => {
-        throw error;
-    };
-
-    class BlockLinksAppender {
-        constructor(db) {
-            this.db = db;
-        }
-        append(restaurantElements) {
-            this.appendStyleElement();
-            restaurantElements.forEach(restaurantElement => {
-                this.appendBlockButtonElement(restaurantElement);
-            });
-        }
-        appendStyleElement() {
-            const styleElement = document.createElement('style');
-            styleElement.textContent = `.flexible-rstlst-main .list-rst__rst-name {
-  width: calc(100% - 60px * 3);
+  const appendStyle = () => {
+      const styleElement = document.createElement('style');
+      styleElement.textContent = `.flexible-rstlst-main .list-rst__rst-name {
+width: calc(100% - 60px * 3);
 }
 
 .list-rst__bookmark {
-  width: calc(50px * 3);
+width: calc(50px * 3);
 }
 
 @media screen and (max-width: 1260px) {
-  .flexible-rstlst-main .list-rst__bookmark {
-    width: calc(60px * 3);
-  }
+.flexible-rstlst-main .list-rst__bookmark {
+  width: calc(60px * 3);
+}
 }
 
 .p-btn-bkm__item {
-  width: calc(100% / 3);
+width: calc(100% / 3);
 }
 
 .munierujp-tabelog-blocker-block-icon::before {
-  content: "\\f619";
+content: "\\f619";
 }`;
-            document.head.append(styleElement);
-        }
-        appendBlockButtonElement(restaurantElement) {
-            const blockButtonElement = this.createBlockButtonElement(restaurantElement);
-            if (blockButtonElement !== undefined) {
-                restaurantElement.bookmarkElement?.prepend(blockButtonElement);
-            }
-        }
-        createBlockButtonElement(restaurantElement) {
-            const { id, name } = restaurantElement;
-            if (id === undefined || name === undefined) {
-                return undefined;
-            }
-            const blockButtonElement = document.createElement('div');
-            blockButtonElement.classList.add('p-btn-bkm__item', 'list-rst__bookmark-btn');
-            const buttonWrapperElement = document.createElement('div');
-            blockButtonElement.append(buttonWrapperElement);
-            const buttonElement = document.createElement('button');
-            buttonElement.classList.add('c-icon-save__target', 'munierujp-tabelog-blocker-block-icon');
-            buttonElement.textContent = 'ブロック';
-            const handleClick = async () => {
-                if (window.confirm(`${name}をブロックしますか？`)) {
-                    restaurantElement.hide();
-                    await this.db.restaurants.add({
-                        id,
-                        name
-                    });
-                }
-            };
-            buttonElement.addEventListener('click', () => {
-                handleClick().catch(handleError);
-            });
-            buttonWrapperElement.append(buttonElement);
-            return blockButtonElement;
-        }
-    }
+      document.head.append(styleElement);
+  };
 
-    class Database extends Dexie {
-        constructor() {
-            super('munierujp-tabelog-blocker');
-            this.version(1).stores({
-                restaurants: 'id'
-            });
-        }
-    }
+  const handleError = (error) => {
+      throw error;
+  };
 
-    class RestaurantElement {
-        constructor(element) {
-            this.element = element;
-        }
-        get id() {
-            return this.element.dataset.rstId;
-        }
-        get name() {
-            return this.element.querySelector('.list-rst__rst-name-target')?.textContent ?? undefined;
-        }
-        get bookmarkElement() {
-            return this.element.querySelector('.p-btn-bkm') ?? undefined;
-        }
-        append(node) {
-            this.element.append(node);
-        }
-        hide() {
-            this.element.style.display = 'none';
-        }
-    }
+  class BlockLinksAppender {
+      constructor(db) {
+          this.db = db;
+      }
+      append(restaurantElements) {
+          restaurantElements.forEach(restaurantElement => {
+              this.appendBlockButtonElement(restaurantElement);
+          });
+      }
+      appendBlockButtonElement(restaurantElement) {
+          const blockButtonElement = this.createBlockButtonElement(restaurantElement);
+          if (blockButtonElement !== undefined) {
+              restaurantElement.bookmarkElement?.prepend(blockButtonElement);
+          }
+      }
+      createBlockButtonElement(restaurantElement) {
+          const { id, name } = restaurantElement;
+          if (id === undefined || name === undefined) {
+              return undefined;
+          }
+          const blockButtonElement = document.createElement('div');
+          blockButtonElement.classList.add('p-btn-bkm__item', 'list-rst__bookmark-btn');
+          const buttonWrapperElement = document.createElement('div');
+          blockButtonElement.append(buttonWrapperElement);
+          const buttonElement = document.createElement('button');
+          buttonElement.classList.add('c-icon-save__target', 'munierujp-tabelog-blocker-block-icon');
+          buttonElement.textContent = 'ブロック';
+          const handleClick = async () => {
+              if (window.confirm(`${name}をブロックしますか？`)) {
+                  restaurantElement.hide();
+                  await this.db.restaurants.add({
+                      id,
+                      name
+                  });
+              }
+          };
+          buttonElement.addEventListener('click', () => {
+              handleClick().catch(handleError);
+          });
+          buttonWrapperElement.append(buttonElement);
+          return blockButtonElement;
+      }
+  }
 
-    class RestaurantHider {
-        constructor(db) {
-            this.db = db;
-        }
-        async hide(restaurantElements) {
-            for (const restaurantElement of restaurantElements) {
-                await this.hideRestaurant(restaurantElement);
-            }
-        }
-        async hideRestaurant(restaurantElement) {
-            const { id } = restaurantElement;
-            if (id === undefined) {
-                return;
-            }
-            const restaurant = await this.db.restaurants.get(id);
-            if (restaurant !== undefined) {
-                restaurantElement.hide();
-            }
-        }
-    }
+  class Database extends Dexie {
+      constructor() {
+          super('munierujp-tabelog-blocker');
+          this.version(1).stores({
+              restaurants: 'id'
+          });
+      }
+  }
 
-    const restaurantElements = Array.from(document.querySelectorAll('.js-rstlist-info .list-rst'))
-        .map(element => new RestaurantElement(element));
-    if (restaurantElements.length > 0) {
-        const db = new Database();
-        const restaurantHider = new RestaurantHider(db);
-        restaurantHider.hide(restaurantElements).catch(handleError);
-        const blockLinksAppender = new BlockLinksAppender(db);
-        blockLinksAppender.append(restaurantElements);
-    }
+  class RestaurantElement {
+      constructor(element) {
+          this.element = element;
+      }
+      get id() {
+          return this.element.dataset.rstId;
+      }
+      get name() {
+          return this.element.querySelector('.list-rst__rst-name-target')?.textContent ?? undefined;
+      }
+      get bookmarkElement() {
+          return this.element.querySelector('.p-btn-bkm') ?? undefined;
+      }
+      append(node) {
+          this.element.append(node);
+      }
+      hide() {
+          this.element.style.display = 'none';
+      }
+  }
+
+  class RestaurantHider {
+      constructor(db) {
+          this.db = db;
+      }
+      async hide(restaurantElements) {
+          for (const restaurantElement of restaurantElements) {
+              await this.hideRestaurant(restaurantElement);
+          }
+      }
+      async hideRestaurant(restaurantElement) {
+          const { id } = restaurantElement;
+          if (id === undefined) {
+              return;
+          }
+          const restaurant = await this.db.restaurants.get(id);
+          if (restaurant !== undefined) {
+              restaurantElement.hide();
+          }
+      }
+  }
+
+  const restaurantElements = Array.from(document.querySelectorAll('.js-rstlist-info .list-rst'))
+      .map(element => new RestaurantElement(element));
+  if (restaurantElements.length > 0) {
+      appendStyle();
+      const db = new Database();
+      const restaurantHider = new RestaurantHider(db);
+      restaurantHider.hide(restaurantElements).catch(handleError);
+      const blockLinksAppender = new BlockLinksAppender(db);
+      blockLinksAppender.append(restaurantElements);
+  }
 
 })(Dexie);
