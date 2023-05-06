@@ -25,7 +25,10 @@
 
 - [ブックマークページにフィルターボタンを追加](https://github.com/munierujp/userscripts/raw/master/dist/dmm/books/add-filter-button-on-bookmark-page.user.js)
 
-
 ## Qiita
 
 - [古い記事のアラートを改善](https://github.com/munierujp/userscripts/raw/master/dist/qiita/improve-old-article-alert.user.js)
+
+## 食べログ
+
+- [食べログブロッカー](https://github.com/munierujp/userscripts/raw/master/dist/tabelog/blocker.user.js)
