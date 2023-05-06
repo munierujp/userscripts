@@ -38,12 +38,8 @@
             }
         }
         createLinkElement(restaurantElement) {
-            const id = restaurantElement.dataset.rstId;
-            if (id === undefined) {
-                return undefined;
-            }
-            const name = restaurantElement.querySelector('.list-rst__rst-name-target')?.textContent ?? undefined;
-            if (name === undefined) {
+            const { id, name } = restaurantElement;
+            if (id === undefined || name === undefined) {
                 return undefined;
             }
             const linkElement = document.createElement('a');
@@ -51,7 +47,7 @@
             linkElement.textContent = 'この店舗をブロックする';
             const handleClick = async () => {
                 if (window.confirm(`${name}をブロックしますか？`)) {
-                    restaurantElement.style.display = 'none';
+                    restaurantElement.hide();
                     await this.db.restaurants.add({
                         id,
                         name
@@ -74,6 +70,24 @@
         }
     }
 
+    class RestaurantElement {
+        constructor(element) {
+            this.element = element;
+        }
+        get id() {
+            return this.element.dataset.rstId;
+        }
+        get name() {
+            return this.element.querySelector('.list-rst__rst-name-target')?.textContent ?? undefined;
+        }
+        append(node) {
+            this.element.append(node);
+        }
+        hide() {
+            this.element.style.display = 'none';
+        }
+    }
+
     class RestaurantHider {
         constructor(db) {
             this.db = db;
@@ -84,19 +98,20 @@
             });
         }
         async hideRestaurant(restaurantElement) {
-            const id = restaurantElement.dataset.rstId;
+            const { id } = restaurantElement;
             if (id === undefined) {
                 return;
             }
             const restaurant = await this.db.restaurants.get(id);
             if (restaurant !== undefined) {
-                restaurantElement.style.display = 'none';
+                restaurantElement.hide();
             }
         }
     }
 
     const db = new Database();
-    const restaurantElements = Array.from(document.querySelectorAll('.js-rstlist-info .list-rst'));
+    const restaurantElements = Array.from(document.querySelectorAll('.js-rstlist-info .list-rst'))
+        .map(element => new RestaurantElement(element));
     const restaurantHider = new RestaurantHider(db);
     restaurantHider.hide(restaurantElements).catch(handleError);
     const blockLinksAppender = new BlockLinksAppender(db);
