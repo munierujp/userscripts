@@ -6,29 +6,68 @@ export class BlockLinksAppender {
   constructor (private readonly db: Database) {}
 
   append (restaurantElements: RestaurantElement[]): void {
+    this.appendStyleElement()
     restaurantElements.forEach(restaurantElement => {
-      this.appendLinkElement(restaurantElement)
+      this.appendBlockButtonElement(restaurantElement)
     })
   }
 
-  private appendLinkElement (restaurantElement: RestaurantElement): void {
-    const linkElement = this.createLinkElement(restaurantElement)
+  private appendStyleElement (): void {
+    const styleElement = document.createElement('style')
+    styleElement.textContent = `.flexible-rstlst-main .list-rst__rst-name {
+  width: calc(100% - 60px * 3);
+}
 
-    if (linkElement !== undefined) {
-      restaurantElement.append(linkElement)
+.list-rst__bookmark {
+  width: calc(50px * 3);
+}
+
+@media screen and (max-width: 1260px) {
+  .flexible-rstlst-main .list-rst__bookmark {
+    width: calc(60px * 3);
+  }
+}
+
+.p-btn-bkm__item {
+  width: calc(100% / 3);
+}
+
+.munierujp-tabelog-blocker-block-icon::before {
+  content: "\\f619";
+}`
+    document.head.append(styleElement)
+  }
+
+  private appendBlockButtonElement (restaurantElement: RestaurantElement): void {
+    const blockButtonElement = this.createBlockButtonElement(restaurantElement)
+
+    if (blockButtonElement !== undefined) {
+      restaurantElement.bookmarkElement?.prepend(blockButtonElement)
     }
   }
 
-  private createLinkElement (restaurantElement: RestaurantElement): HTMLAnchorElement | undefined {
+  private createBlockButtonElement (restaurantElement: RestaurantElement): HTMLElement | undefined {
     const { id, name } = restaurantElement
 
     if (id === undefined || name === undefined) {
       return undefined
     }
 
-    const linkElement = document.createElement('a')
-    linkElement.style.cursor = 'pointer'
-    linkElement.textContent = 'この店舗をブロックする'
+    const blockButtonElement = document.createElement('div')
+    blockButtonElement.classList.add(
+      'p-btn-bkm__item',
+      'list-rst__bookmark-btn'
+    )
+
+    const buttonWrapperElement = document.createElement('div')
+    blockButtonElement.append(buttonWrapperElement)
+
+    const buttonElement = document.createElement('button')
+    buttonElement.classList.add(
+      'c-icon-save__target',
+      'munierujp-tabelog-blocker-block-icon'
+    )
+    buttonElement.textContent = 'ブロック'
     const handleClick = async (): Promise<void> => {
       if (window.confirm(`${name}をブロックしますか？`)) {
         restaurantElement.hide()
@@ -38,9 +77,10 @@ export class BlockLinksAppender {
         })
       }
     }
-    linkElement.addEventListener('click', () => {
+    buttonElement.addEventListener('click', () => {
       handleClick().catch(handleError)
     })
-    return linkElement
+    buttonWrapperElement.append(buttonElement)
+    return blockButtonElement
   }
 }

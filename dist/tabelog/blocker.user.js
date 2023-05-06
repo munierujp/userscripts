@@ -27,24 +27,54 @@
             this.db = db;
         }
         append(restaurantElements) {
+            this.appendStyleElement();
             restaurantElements.forEach(restaurantElement => {
-                this.appendLinkElement(restaurantElement);
+                this.appendBlockButtonElement(restaurantElement);
             });
         }
-        appendLinkElement(restaurantElement) {
-            const linkElement = this.createLinkElement(restaurantElement);
-            if (linkElement !== undefined) {
-                restaurantElement.append(linkElement);
+        appendStyleElement() {
+            const styleElement = document.createElement('style');
+            styleElement.textContent = `.flexible-rstlst-main .list-rst__rst-name {
+  width: calc(100% - 60px * 3);
+}
+
+.list-rst__bookmark {
+  width: calc(50px * 3);
+}
+
+@media screen and (max-width: 1260px) {
+  .flexible-rstlst-main .list-rst__bookmark {
+    width: calc(60px * 3);
+  }
+}
+
+.p-btn-bkm__item {
+  width: calc(100% / 3);
+}
+
+.munierujp-tabelog-blocker-block-icon::before {
+  content: "\\f619";
+}`;
+            document.head.append(styleElement);
+        }
+        appendBlockButtonElement(restaurantElement) {
+            const blockButtonElement = this.createBlockButtonElement(restaurantElement);
+            if (blockButtonElement !== undefined) {
+                restaurantElement.bookmarkElement?.prepend(blockButtonElement);
             }
         }
-        createLinkElement(restaurantElement) {
+        createBlockButtonElement(restaurantElement) {
             const { id, name } = restaurantElement;
             if (id === undefined || name === undefined) {
                 return undefined;
             }
-            const linkElement = document.createElement('a');
-            linkElement.style.cursor = 'pointer';
-            linkElement.textContent = 'この店舗をブロックする';
+            const blockButtonElement = document.createElement('div');
+            blockButtonElement.classList.add('p-btn-bkm__item', 'list-rst__bookmark-btn');
+            const buttonWrapperElement = document.createElement('div');
+            blockButtonElement.append(buttonWrapperElement);
+            const buttonElement = document.createElement('button');
+            buttonElement.classList.add('c-icon-save__target', 'munierujp-tabelog-blocker-block-icon');
+            buttonElement.textContent = 'ブロック';
             const handleClick = async () => {
                 if (window.confirm(`${name}をブロックしますか？`)) {
                     restaurantElement.hide();
@@ -54,10 +84,11 @@
                     });
                 }
             };
-            linkElement.addEventListener('click', () => {
+            buttonElement.addEventListener('click', () => {
                 handleClick().catch(handleError);
             });
-            return linkElement;
+            buttonWrapperElement.append(buttonElement);
+            return blockButtonElement;
         }
     }
 
@@ -79,6 +110,9 @@
         }
         get name() {
             return this.element.querySelector('.list-rst__rst-name-target')?.textContent ?? undefined;
+        }
+        get bookmarkElement() {
+            return this.element.querySelector('.p-btn-bkm') ?? undefined;
         }
         append(node) {
             this.element.append(node);
