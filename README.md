@@ -29,6 +29,10 @@
 
 - [古い記事のアラートを改善](https://github.com/munierujp/userscripts/raw/master/dist/qiita/improve-old-article-alert.user.js)
 
+## TOHOシネマズ
+
+- [利用規約に同意](https://github.com/munierujp/userscripts/raw/master/dist/toho-cinemas/agrees-to-tos.user.js)
+
 ## 食べログ
 
 - [食べログブロッカー](https://github.com/munierujp/userscripts/raw/master/dist/tabelog/blocker.user.js)
