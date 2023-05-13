@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Kindle本の購入完了時にブクログに登録
 // @namespace    https://github.com/munierujp/
-// @version      0.2.4
+// @version      0.2.5
 // @description  AmazonでKindle本の購入完了時にブクログに読書状況を積読として登録します。
 // @author       https://github.com/munierujp/
-// @homepage     https://github.com/munierujp/userscripts
-// @homepageURL  https://github.com/munierujp/userscripts
+// @homepage     https://github.com/munierujp/userscripts/tree/master/src/amazon/add-bought-kindle-book-to-booklog
+// @homepageURL  https://github.com/munierujp/userscripts/tree/master/src/amazon/add-bought-kindle-book-to-booklog
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/amazon/add-bought-kindle-book-to-booklog.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/amazon/add-bought-kindle-book-to-booklog.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues

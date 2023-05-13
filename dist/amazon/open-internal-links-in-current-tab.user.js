@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         サイト内リンクを現在のタブで開く
 // @namespace    https://github.com/munierujp/
-// @version      0.2.2
+// @version      0.2.3
 // @description  Amazonでサイト内リンクを現在のタブで開きます。
 // @author       https://github.com/munierujp/
-// @homepage     https://github.com/munierujp/userscripts
-// @homepageURL  https://github.com/munierujp/userscripts
+// @homepage     https://github.com/munierujp/userscripts/tree/master/src/amazon/open-internal-links-in-current-tab
+// @homepageURL  https://github.com/munierujp/userscripts/tree/master/src/amazon/open-internal-links-in-current-tab
 // @updateURL    https://github.com/munierujp/userscripts/raw/master/dist/amazon/open-internal-links-in-current-tab.user.js
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/amazon/open-internal-links-in-current-tab.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
@@ -21,6 +21,8 @@
     };
 
     const internalLinkElements = findInternalLinkElements();
-    internalLinkElements.forEach(element => element.removeAttribute('target'));
+    internalLinkElements.forEach(element => {
+        element.removeAttribute('target');
+    });
 
 })();
