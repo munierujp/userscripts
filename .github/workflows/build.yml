@@ -10,3 +10,5 @@ jobs:
         node-version-file: '.nvmrc'
     - run: npm ci
     - run: npm run build
+      env:
+        NODE_OPTIONS: "--max_old_space_size=4096"
