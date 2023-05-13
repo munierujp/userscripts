@@ -16,6 +16,9 @@ const config = {
   ],
   parserOptions: {
     project: './tsconfig.json'
+  },
+  rules: {
+    'unicorn/prefer-top-level-await': 'off'
   }
 }
 
