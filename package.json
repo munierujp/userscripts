@@ -38,7 +38,7 @@
     "rollup-plugin-watch": "1.0.2",
     "ts-jest": "29.1.0",
     "ts-node": "10.9.1",
-    "typescript": "5.0.4",
+    "typescript": "5.2.2",
     "userscript-metadata": "1.1.0"
   }
 }
