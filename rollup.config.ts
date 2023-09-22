@@ -1,3 +1,5 @@
+// https://qiita.com/munieru_jp/items/ce57ec8c839f4a8727be
+
 import { readFileSync } from 'node:fs'
 import typescript from '@rollup/plugin-typescript'
 import glob from 'glob'
