@@ -21,7 +21,6 @@
         All: 'すべて',
         Discounted: 'セール中'
     };
-    Object.values(ButtonLabel);
 
     const createActiveButtonElement = (label) => {
         const link = document.createElement('span');
@@ -104,6 +103,7 @@
     };
 
     class BookmarkElement {
+        element;
         constructor(element) {
             this.element = element;
         }

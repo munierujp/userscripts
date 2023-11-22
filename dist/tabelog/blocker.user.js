@@ -49,6 +49,7 @@ content: "\\f619";
   };
 
   class BlockButtonsAppender {
+      db;
       constructor(db) {
           this.db = db;
       }
@@ -93,6 +94,7 @@ content: "\\f619";
   }
 
   class Database extends Dexie {
+      restaurants;
       constructor() {
           super('munierujp-tabelog-blocker');
           this.version(1).stores({
@@ -102,6 +104,7 @@ content: "\\f619";
   }
 
   class RestaurantElement {
+      element;
       constructor(element) {
           this.element = element;
       }
@@ -123,6 +126,7 @@ content: "\\f619";
   }
 
   class RestaurantHider {
+      db;
       constructor(db) {
           this.db = db;
       }

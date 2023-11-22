@@ -46,6 +46,7 @@
     };
 
     class MediaInfoDialogElement {
+        element;
         constructor(element) {
             this.element = element;
         }
@@ -124,6 +125,7 @@
     };
 
     class PlayButtonElement {
+        element;
         constructor(element) {
             this.element = element;
         }
