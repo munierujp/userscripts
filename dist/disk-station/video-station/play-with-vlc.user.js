@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VLCで再生
 // @namespace    https://github.com/munierujp/
-// @version      1.1.6
+// @version      1.1.7
 // @description  DiskStationのVideo Stationで動画をVLCで再生します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts/tree/master/src/disk-station/video-station/play-with-vlc
@@ -46,6 +46,7 @@
     };
 
     class MediaInfoDialogElement {
+        element;
         constructor(element) {
             this.element = element;
         }
@@ -124,6 +125,7 @@
     };
 
     class PlayButtonElement {
+        element;
         constructor(element) {
             this.element = element;
         }

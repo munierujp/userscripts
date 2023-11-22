@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ブックマークページにフィルターボタンを追加
 // @namespace    https://github.com/munierujp/
-// @version      1.3.5
+// @version      1.3.6
 // @description  DMMブックスのブックマークページにフィルターボタンを追加します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts/tree/master/src/dmm/books/add-filter-button-on-bookmark-page
@@ -21,7 +21,6 @@
         All: 'すべて',
         Discounted: 'セール中'
     };
-    Object.values(ButtonLabel);
 
     const createActiveButtonElement = (label) => {
         const link = document.createElement('span');
@@ -104,6 +103,7 @@
     };
 
     class BookmarkElement {
+        element;
         constructor(element) {
             this.element = element;
         }
