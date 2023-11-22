@@ -16,14 +16,14 @@
     "test": "jest --passWithNoTests"
   },
   "engines": {
-    "node": "18.17.1"
+    "node": "18.18.2"
   },
   "devDependencies": {
     "@munierujp/eslint-config-typescript": "29.0.1",
     "@rollup/plugin-typescript": "11.1.5",
     "@tsconfig/node18": "18.2.2",
     "@types/glob": "8.0.1",
-    "@types/node": "18.17.18",
+    "@types/node": "18.18.12",
     "dayjs": "1.11.9",
     "dexie": "3.2.4",
     "eslint": "8.54.0",
