@@ -29,6 +29,11 @@
 
 - [古い記事のアラートを改善](https://github.com/munierujp/userscripts/raw/master/dist/qiita/improve-old-article-alert.user.js)
 
+## Yahoo! JAPAN
+### Yahoo!リアルタイム検索
+
+- [自動更新](https://github.com/munierujp/userscripts/raw/master/dist/yahoo-japan/realtime/autoreload.user.js)
+
 ## 食べログ
 
 - [食べログブロッカー](https://github.com/munierujp/userscripts/raw/master/dist/tabelog/blocker.user.js)
