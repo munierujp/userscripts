@@ -21,7 +21,7 @@
   "devDependencies": {
     "@munierujp/eslint-config-typescript": "29.0.1",
     "@rollup/plugin-typescript": "11.1.6",
-    "@tsconfig/node18": "18.2.2",
+    "@tsconfig/node18": "18.2.4",
     "@types/glob": "8.0.1",
     "@types/node": "20.10.8",
     "dayjs": "1.11.9",
