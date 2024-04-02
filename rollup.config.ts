@@ -7,7 +7,10 @@ import type { RollupOptions } from 'rollup'
 import cleanup from 'rollup-plugin-cleanup'
 import watch from 'rollup-plugin-watch'
 import { stringify } from 'userscript-metadata'
-import type { Metadata } from 'userscript-metadata'
+import type {
+  Metadata,
+  SingleValue
+} from 'userscript-metadata'
 
 const readMetadata = (path: string): Metadata => JSON.parse(readFileSync(path, 'utf8'))
 const rootDir = process.cwd()
@@ -18,12 +21,12 @@ const configs: RollupOptions[] = entryPaths.flatMap(entryPath => {
   const mainScriptUrl = `file://${rootDir}/${mainScriptPath}`
   const devScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.dev.user.js')
   const devify = (metadata: Metadata): Metadata => {
-    const requires: string[] = []
+    const requires: SingleValue[] = []
 
     if (typeof metadata.require === 'string') {
       requires.push(metadata.require)
     } else if (Array.isArray(metadata.require)) {
-      requires.push(...metadata.require)
+      requires.push(...metadata.require as SingleValue[])
     }
 
     requires.push(mainScriptUrl)
