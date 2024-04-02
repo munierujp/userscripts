@@ -23,6 +23,8 @@ const configs: RollupOptions[] = entryPaths.flatMap(entryPath => {
     if (typeof metadata.require === 'string') {
       requires.push(metadata.require)
     } else if (Array.isArray(metadata.require)) {
+      // TODO: fix this error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       requires.push(...metadata.require)
     }
 
