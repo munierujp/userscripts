@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         食べログブロッカー
 // @namespace    https://github.com/munierujp/
-// @version      0.1.2
+// @version      0.1.3
 // @description  食べログに店舗のブロック機能を追加します。
 // @author       https://github.com/munierujp/
 // @homepage     https://github.com/munierujp/userscripts/tree/master/src/tabelog/blocker
@@ -11,7 +11,7 @@
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        *://tabelog.com/rstLst/*
 // @match        *://tabelog.com/*/rstLst/*
-// @require      https://cdn.jsdelivr.net/npm/dexie@3.2.3/dist/dexie.min.js
+// @require      https://cdn.jsdelivr.net/npm/dexie@4.0.4/dist/dexie.min.js
 // @grant        none
 // ==/UserScript==
 
