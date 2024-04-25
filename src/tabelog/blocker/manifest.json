@@ -14,7 +14,7 @@
     "*://tabelog.com/*/rstLst/*"
   ],
   "require": [
-    "https://cdn.jsdelivr.net/npm/dexie@3.2.3/dist/dexie.min.js"
+    "https://cdn.jsdelivr.net/npm/dexie@4.0.4/dist/dexie.min.js"
   ],
   "grant": "none"
 }

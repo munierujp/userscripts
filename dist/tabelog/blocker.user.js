@@ -11,7 +11,7 @@
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        *://tabelog.com/rstLst/*
 // @match        *://tabelog.com/*/rstLst/*
-// @require      https://cdn.jsdelivr.net/npm/dexie@3.2.3/dist/dexie.min.js
+// @require      https://cdn.jsdelivr.net/npm/dexie@4.0.4/dist/dexie.min.js
 // @grant        none
 // ==/UserScript==
 
