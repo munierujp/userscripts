@@ -2,7 +2,7 @@
 
 import { readFileSync } from 'node:fs'
 import typescript from '@rollup/plugin-typescript'
-import glob from 'glob'
+import { globSync } from 'glob'
 import type { RollupOptions } from 'rollup'
 import cleanup from 'rollup-plugin-cleanup'
 import watch from 'rollup-plugin-watch'
@@ -14,7 +14,7 @@ import type {
 
 const readMetadata = (path: string): Metadata => JSON.parse(readFileSync(path, 'utf8'))
 const rootDir = process.cwd()
-const entryPaths = glob.sync('src/**/main.ts')
+const entryPaths = globSync('src/**/main.ts')
 const configs: RollupOptions[] = entryPaths.flatMap(entryPath => {
   const manifestPath = entryPath.replace(/\/main\.ts$/, '/manifest.json')
   const mainScriptPath = entryPath.replace(/^src\//, 'dist/').replace(/\/(.+)\/main\.ts$/, '/$1.user.js')
