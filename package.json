@@ -12,16 +12,17 @@
     "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:userscripts": "eslint --no-eslintrc --config .eslintrc.userscripts.js 'dist/**/*.js'",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "nup": "npm-update-package"
   },
   "engines": {
     "node": "20.12.2"
   },
   "devDependencies": {
-    "@munierujp/eslint-config-typescript": "43.0.0",
+    "@munierujp/eslint-config-typescript": "44.0.0",
     "@rollup/plugin-typescript": "11.1.6",
     "@tsconfig/node20": "20.1.4",
-    "@types/node": "20.12.7",
+    "@types/node": "20.12.8",
     "dayjs": "1.11.9",
     "dexie": "4.0.4",
     "eslint": "8.57.0",
@@ -30,6 +31,7 @@
     "glob": "10.3.12",
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
+    "npm-update-package": "^4.0.0-2",
     "rimraf": "5.0.5",
     "rollup": "4.16.4",
     "rollup-plugin-cleanup": "3.2.1",
