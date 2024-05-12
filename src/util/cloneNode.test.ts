@@ -30,7 +30,8 @@ describe('cloneNode', () => {
     assert.ok(clonedParentNode.classList.contains('before'))
     assert.ok(!clonedParentNode.classList.contains('after'))
     assert.strictEqual(clonedParentNode.children.length, 1)
-    const [clonedChildNode] = clonedParentNode.children
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const clonedChildNode = clonedParentNode.children[0]!
     assert.ok(clonedChildNode instanceof HTMLSpanElement)
     assert.strictEqual(clonedChildNode.getAttribute('id'), 'child')
     assert.ok(clonedChildNode.classList.contains('before'))
