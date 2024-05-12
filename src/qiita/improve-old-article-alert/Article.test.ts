@@ -1,13 +1,17 @@
+import assert from 'node:assert'
 import {
   describe,
-  expect,
   it
-} from '@jest/globals'
+} from 'node:test'
 import { isArticle } from './Article'
 
-describe('isArticle', () => {
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+describe('isArticle', async () => {
+  const { each } = await import('test-each')
+
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   describe('returns whether value is Article.', () => {
-    it.each([
+    const inputs: Array<[value: unknown, expected: boolean]> = [
       [
         {
           '@type': 'Article'
@@ -25,10 +29,13 @@ describe('isArticle', () => {
         {},
         false
       ]
-    ])('value=%p', (value, expected) => {
-      const actual = isArticle(value)
-
-      expect(actual).toBe(expected)
+    ]
+    each(inputs, ({ title }, [value, expected]) => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      it(title, () => {
+        const actual = isArticle(value)
+        assert.strictEqual(actual, expected)
+      })
     })
   })
 })
