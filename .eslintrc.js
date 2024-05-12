@@ -8,8 +8,7 @@
  */
 const config = {
   extends: [
-    '@munierujp/eslint-config-typescript',
-    'plugin:jest/recommended'
+    '@munierujp/eslint-config-typescript'
   ],
   parserOptions: {
     project: './tsconfig.json'
