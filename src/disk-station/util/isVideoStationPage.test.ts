@@ -1,24 +1,26 @@
+import assert from 'node:assert'
 import {
   describe,
-  expect,
   it
-} from '@jest/globals'
+} from 'node:test'
 import { isVideoStationPage } from './isVideoStationPage'
 
-describe('isVideoStationPage', () => {
-  it('returns true if `launchApp` parameter is `SYNO.SDS.VideoStation.AppInstance`', () => {
-    const url = new URL('https://example.com/?launchApp=SYNO.SDS.VideoStation.AppInstance')
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+describe('isVideoStationPage', async () => {
+  const { each } = await import('test-each')
 
-    const actual = isVideoStationPage(url)
-
-    expect(actual).toBe(true)
-  })
-
-  it('returns false if `launchApp` parameter is not `SYNO.SDS.VideoStation.AppInstance`', () => {
-    const url = new URL('https://example.com/')
-
-    const actual = isVideoStationPage(url)
-
-    expect(actual).toBe(false)
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  describe('returns whether url is video station page', () => {
+    const inputs: Array<[url: string, expected: boolean]> = [
+      ['https://example.com/?launchApp=SYNO.SDS.VideoStation.AppInstance', true],
+      ['https://example.com/', false]
+    ]
+    each(inputs, ({ title }, [url, expected]) => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      it(title, () => {
+        const actual = isVideoStationPage(new URL(url))
+        assert.strictEqual(actual, expected)
+      })
+    })
   })
 })

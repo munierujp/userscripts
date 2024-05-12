@@ -1,26 +1,28 @@
+import assert from 'node:assert'
 import {
   describe,
-  expect,
   it
-} from '@jest/globals'
+} from 'node:test'
 import { extractAsin } from './extractAsin'
 
-describe('extractAsin', () => {
-  it.each([
-    ['/dp/B0064CZ1XE', 'B0064CZ1XE'],
-    ['/foo/dp/B0064CZ1XE', 'B0064CZ1XE'],
-    ['/gp/product/B0064CZ1XE', 'B0064CZ1XE']
-  ])('returns ASIN if it exists', (path, expected) => {
-    const actual = extractAsin(path)
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+describe('extractAsin', async () => {
+  const { each } = await import('test-each')
 
-    expect(actual).toBe(expected)
-  })
-
-  it('returns undefined if ASIN does not exist', () => {
-    const path = '/'
-
-    const actual = extractAsin(path)
-
-    expect(actual).toBeUndefined()
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  describe('returns ASIN', () => {
+    const inputs: Array<[path: string, expected: string | undefined]> = [
+      ['/dp/B0064CZ1XE', 'B0064CZ1XE'],
+      ['/foo/dp/B0064CZ1XE', 'B0064CZ1XE'],
+      ['/gp/product/B0064CZ1XE', 'B0064CZ1XE'],
+      ['/', undefined]
+    ]
+    each(inputs, ({ title }, [path, expected]) => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      it(title, () => {
+        const actual = extractAsin(path)
+        assert.strictEqual(actual, expected)
+      })
+    })
   })
 })

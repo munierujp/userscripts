@@ -1,11 +1,14 @@
+import 'jsdom-global/register'
+import assert from 'node:assert'
 import {
   describe,
-  expect,
   it
-} from '@jest/globals'
+} from 'node:test'
 import { cloneNode } from './cloneNode'
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 describe('cloneNode', () => {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   it('returns cloned node', () => {
     const parentNode = document.createElement('div')
     parentNode.setAttribute('id', 'parent')
@@ -22,16 +25,15 @@ describe('cloneNode', () => {
     childNode.classList.remove('before')
     childNode.classList.add('after')
 
-    expect(clonedParentNode).toBeInstanceOf(HTMLDivElement)
-    expect(clonedParentNode.getAttribute('id')).toEqual('parent')
-    expect(clonedParentNode.classList.contains('before')).toBe(true)
-    expect(clonedParentNode.classList.contains('after')).toBe(false)
-    expect(clonedParentNode.children).toHaveLength(1)
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const clonedChildNode = clonedParentNode.children[0]!
-    expect(clonedChildNode).toBeInstanceOf(HTMLSpanElement)
-    expect(clonedChildNode.getAttribute('id')).toEqual('child')
-    expect(clonedChildNode.classList.contains('before')).toBe(true)
-    expect(clonedChildNode.classList.contains('after')).toBe(false)
+    assert.ok(clonedParentNode instanceof HTMLDivElement)
+    assert.strictEqual(clonedParentNode.getAttribute('id'), 'parent')
+    assert.ok(clonedParentNode.classList.contains('before'))
+    assert.ok(!clonedParentNode.classList.contains('after'))
+    assert.strictEqual(clonedParentNode.children.length, 1)
+    const [clonedChildNode] = clonedParentNode.children
+    assert.ok(clonedChildNode instanceof HTMLSpanElement)
+    assert.strictEqual(clonedChildNode.getAttribute('id'), 'child')
+    assert.ok(clonedChildNode.classList.contains('before'))
+    assert.ok(!clonedChildNode.classList.contains('after'))
   })
 })

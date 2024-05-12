@@ -1,25 +1,26 @@
+import assert from 'node:assert'
 import {
   describe,
-  expect,
   it
-} from '@jest/globals'
+} from 'node:test'
 import { extractAsin } from './extractAsin'
 
-describe('extractAsin', () => {
-  it('returns ASIN if it exists', () => {
-    const expected = 'B0064CZ1XE'
-    const url = new URL(`https://www.amazon.co.jp/kindle-dbs/thankYouPage?&asin=${expected}`)
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+describe('extractAsin', async () => {
+  const { each } = await import('test-each')
 
-    const actual = extractAsin(url)
-
-    expect(actual).toBe(expected)
-  })
-
-  it('returns undefined if ASIN does not exist', () => {
-    const url = new URL('https://www.amazon.co.jp/kindle-dbs/thankYouPage?')
-
-    const actual = extractAsin(url)
-
-    expect(actual).toBeUndefined()
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  describe('returns ASIN', () => {
+    const inputs: Array<[url: string, expected: string | undefined]> = [
+      ['https://www.amazon.co.jp/kindle-dbs/thankYouPage?&asin=B0064CZ1XE', 'B0064CZ1XE'],
+      ['https://www.amazon.co.jp/kindle-dbs/thankYouPage?', undefined]
+    ]
+    each(inputs, ({ title }, [url, expected]) => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      it(title, () => {
+        const actual = extractAsin(url)
+        assert.strictEqual(actual, expected)
+      })
+    })
   })
 })
