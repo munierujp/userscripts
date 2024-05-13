@@ -1,6 +1,6 @@
-import { createAllButtonElement } from './createAllButtonElement'
-import { createDiscountedButtonElement } from './createDiscountedButtonElement'
-import type { Filter } from './Filter'
+import { createAllButtonElement } from './createAllButtonElement.js'
+import { createDiscountedButtonElement } from './createDiscountedButtonElement.js'
+import type { Filter } from './Filter.js'
 
 export const createButtonListElement = (filter: Filter): HTMLUListElement => {
   const allButtonElement = createAllButtonElement(filter)

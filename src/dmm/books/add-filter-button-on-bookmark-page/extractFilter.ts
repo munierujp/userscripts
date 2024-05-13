@@ -1,5 +1,5 @@
-import { isFilter } from './Filter'
-import type { Filter } from './Filter'
+import { isFilter } from './Filter.js'
+import type { Filter } from './Filter.js'
 
 export const extractFilter = (url: URL): Filter | undefined => {
   const maybeFilter = url.searchParams.get('filter')

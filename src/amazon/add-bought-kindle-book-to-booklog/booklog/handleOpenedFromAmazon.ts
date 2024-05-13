@@ -1,6 +1,6 @@
-import { Message } from '../Message'
-import { Origin } from '../Origin'
-import { findAddButtonElement } from './findAddButtonElement'
+import { Message } from '../Message.js'
+import { Origin } from '../Origin.js'
+import { findAddButtonElement } from './findAddButtonElement.js'
 
 /**
  * Amazonから開かれた場合の処理を実行します。

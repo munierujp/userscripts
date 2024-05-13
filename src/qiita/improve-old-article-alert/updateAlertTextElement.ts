@@ -1,5 +1,5 @@
-import { differenceInYears } from '../../util/dayjs'
-import { findArticle } from './findArticle'
+import { differenceInYears } from '../../util/dayjs/differenceInYears.js'
+import { findArticle } from './findArticle.js'
 
 export const updateAlertTextElement = (alertTextElement: HTMLElement): void => {
   const article = findArticle()

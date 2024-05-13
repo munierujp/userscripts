@@ -1,4 +1,4 @@
-import type { Filter } from './Filter'
+import type { Filter } from './Filter.js'
 
 export const createUrl = (filter: Filter): URL => {
   const url = new URL(location.href)

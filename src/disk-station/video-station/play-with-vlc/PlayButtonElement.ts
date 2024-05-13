@@ -1,9 +1,7 @@
-import {
-  cloneNode,
-  isHTMLElement
-} from '../../../util'
-import { fetchFilePath } from './fetchFilePath'
-import { handleError } from './handleError'
+import { cloneNode } from '../../../util/cloneNode.js'
+import { isHTMLElement } from '../../../util/isHTMLElement.js'
+import { fetchFilePath } from './fetchFilePath.js'
+import { handleError } from './handleError.js'
 
 export class PlayButtonElement {
   constructor (private readonly element: HTMLElement) {}

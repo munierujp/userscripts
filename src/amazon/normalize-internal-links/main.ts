@@ -1,5 +1,5 @@
-import { extractAsin } from './extractAsin'
-import { findInternalLinkElements } from './findInternalLinkElements'
+import { extractAsin } from './extractAsin.js'
+import { findInternalLinkElements } from './findInternalLinkElements.js'
 
 const internalLinkElements = findInternalLinkElements()
 internalLinkElements.forEach(element => {

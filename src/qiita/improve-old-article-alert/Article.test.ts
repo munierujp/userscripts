@@ -3,7 +3,7 @@ import {
   describe,
   it
 } from 'node:test'
-import { isArticle } from './Article'
+import { isArticle } from './Article.js'
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 describe('isArticle', async () => {

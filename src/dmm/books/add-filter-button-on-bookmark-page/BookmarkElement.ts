@@ -1,5 +1,5 @@
-import { createFilterMenuElement } from './createFilterMenuElement'
-import type { Filter } from './Filter'
+import { createFilterMenuElement } from './createFilterMenuElement.js'
+import type { Filter } from './Filter.js'
 
 export class BookmarkElement {
   constructor (private readonly element: Element) {}

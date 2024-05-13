@@ -3,8 +3,8 @@ import {
   describe,
   it
 } from 'node:test'
-import { extractFilter } from './extractFilter'
-import { Filter } from './Filter'
+import { extractFilter } from './extractFilter.js'
+import { Filter } from './Filter.js'
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 describe('extractFilter', async () => {

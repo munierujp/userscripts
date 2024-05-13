@@ -1,6 +1,6 @@
-import type { Database } from './db'
-import type { RestaurantElement } from './elements'
-import { handleError } from './handleError'
+import type { Database } from './db/Database.js'
+import type { RestaurantElement } from './elements/RestaurantElement.js'
+import { handleError } from './handleError.js'
 
 export class BlockButtonsAppender {
   constructor (private readonly db: Database) {}

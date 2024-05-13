@@ -1,9 +1,9 @@
-import { appendStyle } from './appendStyle'
-import { BlockButtonsAppender } from './BlockButtonsAppender'
-import { Database } from './db'
-import { RestaurantElement } from './elements'
-import { handleError } from './handleError'
-import { RestaurantHider } from './RestaurantHider'
+import { appendStyle } from './appendStyle.js'
+import { BlockButtonsAppender } from './BlockButtonsAppender.js'
+import { Database } from './db/Database.js'
+import { RestaurantElement } from './elements/RestaurantElement.js'
+import { handleError } from './handleError.js'
+import { RestaurantHider } from './RestaurantHider.js'
 
 const restaurantElements = Array.from(document.querySelectorAll<HTMLElement>('.js-rstlist-info .list-rst'))
   .map(element => new RestaurantElement(element))

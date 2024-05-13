@@ -6,7 +6,7 @@ import {
   it
 } from 'node:test'
 import globalJsdom from 'global-jsdom'
-import { cloneNode } from './cloneNode'
+import { cloneNode } from './cloneNode.js'
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 describe('cloneNode', () => {

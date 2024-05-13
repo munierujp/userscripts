@@ -1,5 +1,5 @@
-import { handleOpenedFromAmazon } from './handleOpenedFromAmazon'
-import { isOpenedFromAmazon } from './isOpenedFromAmazon'
+import { handleOpenedFromAmazon } from './handleOpenedFromAmazon.js'
+import { isOpenedFromAmazon } from './isOpenedFromAmazon.js'
 
 /**
  * ブクログの処理を実行します。
