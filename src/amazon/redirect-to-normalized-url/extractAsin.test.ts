@@ -3,7 +3,7 @@ import {
   describe,
   it
 } from 'node:test'
-import { extractAsin } from './extractAsin'
+import { extractAsin } from './extractAsin.js'
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 describe('extractAsin', async () => {

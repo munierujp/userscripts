@@ -6,7 +6,7 @@ import {
   it
 } from 'node:test'
 import globalJsdom from 'global-jsdom'
-import { isAlertTextElement } from './isAlertTextElement'
+import { isAlertTextElement } from './isAlertTextElement.js'
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 describe('isAlertTextElement', async () => {

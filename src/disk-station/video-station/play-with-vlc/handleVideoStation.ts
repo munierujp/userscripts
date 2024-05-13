@@ -1,4 +1,4 @@
-import { PlayButtonElement } from './PlayButtonElement'
+import { PlayButtonElement } from './PlayButtonElement.js'
 
 /**
  * Video Stationの処理を実行します。

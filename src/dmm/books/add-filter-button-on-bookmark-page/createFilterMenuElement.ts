@@ -1,5 +1,5 @@
-import { createButtonListElement } from './createButtonListElement'
-import type { Filter } from './Filter'
+import { createButtonListElement } from './createButtonListElement.js'
+import type { Filter } from './Filter.js'
 
 export const createFilterMenuElement = (filter: Filter): HTMLDivElement => {
   const label = document.createElement('span')

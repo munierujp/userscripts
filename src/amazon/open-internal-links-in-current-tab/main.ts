@@ -1,4 +1,4 @@
-import { findInternalLinkElements } from './findInternalLinkElements'
+import { findInternalLinkElements } from './findInternalLinkElements.js'
 
 const internalLinkElements = findInternalLinkElements()
 internalLinkElements.forEach(element => {
