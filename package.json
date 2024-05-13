@@ -2,6 +2,7 @@
   "name": "userscripts",
   "version": "1.0.0",
   "description": "My User Scripts",
+  "type": "module",
   "private": true,
   "scripts": {
     "prebuild": "npm run clean",
