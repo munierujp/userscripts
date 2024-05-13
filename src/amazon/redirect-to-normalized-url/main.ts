@@ -1,4 +1,4 @@
-import { extractAsin } from './extractAsin'
+import { extractAsin } from './extractAsin.js'
 
 const url = location.href
 const asin = extractAsin(url)

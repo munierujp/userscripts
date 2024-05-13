@@ -4,7 +4,7 @@
 
 /**
  * @type {ConfigData}
- * @see https://eslint.org/docs/latest/use/configure/configuration-files
+ * @see https://eslint.org/docs/latest/use/configure/configuration-files-deprecated
  */
 const config = {
   extends: [
@@ -15,5 +15,4 @@ const config = {
   }
 }
 
-// eslint-disable-next-line unicorn/prefer-module
 module.exports = config

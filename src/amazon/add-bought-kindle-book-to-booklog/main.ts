@@ -1,6 +1,6 @@
-import { handleAmazon } from './amazon'
-import { handleBooklog } from './booklog'
-import { Origin } from './Origin'
+import { handleAmazon } from './amazon/handleAmazon.js'
+import { handleBooklog } from './booklog/handleBooklog.js'
+import { Origin } from './Origin.js'
 
 switch (location.origin) {
   case Origin.Amazon:

@@ -1,4 +1,4 @@
-import { isElement } from '../../../util'
+import { isElement } from '../../../util/isElement.js'
 
 const checkboxElement = document.getElementById('autoscroll')
 

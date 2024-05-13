@@ -1,5 +1,5 @@
-import { findDesktopElement } from './findDesktopElement'
-import { MediaInfoDialogElement } from './MediaInfoDialogElement'
+import { findDesktopElement } from './findDesktopElement.js'
+import { MediaInfoDialogElement } from './MediaInfoDialogElement.js'
 
 export const fetchFilePath = async (): Promise<string> => {
   return await new Promise((resolve, reject) => {

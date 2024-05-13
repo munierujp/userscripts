@@ -1,8 +1,8 @@
-import { ButtonLabel } from './ButtonLabel'
-import { createActiveButtonElement } from './createActiveButtonElement'
-import { createInactiveButtonElement } from './createInactiveButtonElement'
-import { createUrl } from './createUrl'
-import { Filter } from './Filter'
+import { ButtonLabel } from './ButtonLabel.js'
+import { createActiveButtonElement } from './createActiveButtonElement.js'
+import { createInactiveButtonElement } from './createInactiveButtonElement.js'
+import { createUrl } from './createUrl.js'
+import { Filter } from './Filter.js'
 
 export const createDiscountedButtonElement = (filter: Filter): HTMLLIElement => {
   switch (filter) {

@@ -1,5 +1,5 @@
-import { findAlertTextElement } from './findAlertTextElement'
-import { updateAlertTextElement } from './updateAlertTextElement'
+import { findAlertTextElement } from './findAlertTextElement.js'
+import { updateAlertTextElement } from './updateAlertTextElement.js'
 
 const alertTextElement = findAlertTextElement()
 

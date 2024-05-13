@@ -2,6 +2,7 @@
   "name": "userscripts",
   "version": "1.0.0",
   "description": "My User Scripts",
+  "type": "module",
   "private": true,
   "scripts": {
     "prebuild": "npm run clean",
@@ -11,7 +12,7 @@
     "predev": "npm run clean",
     "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
     "lint": "eslint '**/*.{js,ts}'",
-    "lint:userscripts": "eslint --no-eslintrc --config .eslintrc.userscripts.js 'dist/**/*.js'",
+    "lint:userscripts": "eslint --no-eslintrc --config .eslintrc.userscripts.cjs 'dist/**/*.js'",
     "test": "glob -c 'tsx --test' 'src/**/*.test.ts'"
   },
   "engines": {

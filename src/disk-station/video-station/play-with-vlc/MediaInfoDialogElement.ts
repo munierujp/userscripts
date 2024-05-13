@@ -1,6 +1,6 @@
-import { isElement } from '../../../util'
-import { findActionButtonElement } from './findActionButtonElement'
-import { findMediaInfoLinkElement } from './findMediaInfoLinkElement'
+import { isElement } from '../../../util/isElement.js'
+import { findActionButtonElement } from './findActionButtonElement.js'
+import { findMediaInfoLinkElement } from './findMediaInfoLinkElement.js'
 
 export class MediaInfoDialogElement {
   constructor (private readonly element: Element) {}

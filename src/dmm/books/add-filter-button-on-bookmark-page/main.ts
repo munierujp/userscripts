@@ -1,6 +1,6 @@
-import { BookmarkElement } from './BookmarkElement'
-import { extractFilter } from './extractFilter'
-import { Filter } from './Filter'
+import { BookmarkElement } from './BookmarkElement.js'
+import { extractFilter } from './extractFilter.js'
+import { Filter } from './Filter.js'
 
 const bookmarkElement = BookmarkElement.find()
 

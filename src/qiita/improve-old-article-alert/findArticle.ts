@@ -1,6 +1,6 @@
-import { findJsonLds } from '../../util'
-import { isArticle } from './Article'
-import type { Article } from './Article'
+import { findJsonLds } from '../../util/findJsonLds.js'
+import { isArticle } from './Article.js'
+import type { Article } from './Article.js'
 
 export const findArticle = (): Article | undefined => {
   const jsonLds = findJsonLds()
