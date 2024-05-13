@@ -1,14 +1,25 @@
-import 'jsdom-global/register'
 import assert from 'node:assert'
 import {
+  after,
+  before,
   describe,
   it
 } from 'node:test'
+import globalJsdom from 'global-jsdom'
 import { isAlertTextElement } from './isAlertTextElement'
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 describe('isAlertTextElement', async () => {
   const { each } = await import('test-each')
+  let cleanupGlobalJsdom: ReturnType<typeof globalJsdom>
+
+  before(() => {
+    cleanupGlobalJsdom = globalJsdom()
+  })
+
+  after(() => {
+    cleanupGlobalJsdom()
+  })
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   describe('returns whether value is alert text element.', () => {

@@ -1,13 +1,25 @@
-import 'jsdom-global/register'
 import assert from 'node:assert'
 import {
+  after,
+  before,
   describe,
   it
 } from 'node:test'
+import globalJsdom from 'global-jsdom'
 import { cloneNode } from './cloneNode'
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 describe('cloneNode', () => {
+  let cleanupGlobalJsdom: ReturnType<typeof globalJsdom>
+
+  before(() => {
+    cleanupGlobalJsdom = globalJsdom()
+  })
+
+  after(() => {
+    cleanupGlobalJsdom()
+  })
+
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   it('returns cloned node', () => {
     const parentNode = document.createElement('div')
