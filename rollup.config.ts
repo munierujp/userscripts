@@ -1,16 +1,20 @@
 // https://qiita.com/munieru_jp/items/ce57ec8c839f4a8727be
 
 import { readFileSync } from 'node:fs'
-import typescript from '@rollup/plugin-typescript'
+import typescriptModule from '@rollup/plugin-typescript'
 import { globSync } from 'glob'
 import type { RollupOptions } from 'rollup'
 import cleanup from 'rollup-plugin-cleanup'
-import watch from 'rollup-plugin-watch'
+import watchModule from 'rollup-plugin-watch'
 import { stringify } from 'userscript-metadata'
 import type {
   Metadata,
   SingleValue
 } from 'userscript-metadata'
+
+// NOTE: workaround until this PR is merged: https://github.com/rollup/plugins/pull/1578
+const typescript = (typescriptModule as unknown as typeof typescriptModule['default'])
+const watch = (watchModule as unknown as typeof watchModule['default'])
 
 const readMetadata = (path: string): Metadata => JSON.parse(readFileSync(path, 'utf8'))
 const rootDir = process.cwd()
