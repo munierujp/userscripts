@@ -13,7 +13,7 @@
     "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:userscripts": "eslint --no-eslintrc --config .eslintrc.userscripts.cjs 'dist/**/*.js'",
-    "test": "glob -c 'tsx --test' 'src/**/*.test.ts'"
+    "test": "glob -c 'node --test --import tsx/esm' 'src/**/*.test.ts'"
   },
   "engines": {
     "node": "20.12.2"
