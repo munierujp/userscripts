@@ -29,7 +29,7 @@
     "eslint-plugin-userscripts": "0.5.3",
     "glob": "10.3.16",
     "global-jsdom": "24.0.0",
-    "jsdom": "24.0.0",
+    "jsdom": "24.1.0",
     "rimraf": "5.0.7",
     "rollup": "4.18.0",
     "rollup-plugin-cleanup": "3.2.1",
