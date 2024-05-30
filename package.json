@@ -27,7 +27,7 @@
     "dexie": "4.0.4",
     "eslint": "8.57.0",
     "eslint-plugin-userscripts": "0.5.3",
-    "glob": "10.3.12",
+    "glob": "10.3.16",
     "global-jsdom": "24.0.0",
     "jsdom": "24.0.0",
     "rimraf": "5.0.7",
