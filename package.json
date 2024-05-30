@@ -11,7 +11,7 @@
     "clean": "rimraf dist",
     "predev": "npm run clean",
     "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
-    "lint": "eslint '**/*.{js,ts}'",
+    "lint": "eslint--ignore-path .gitignore '**/*.{js,cjs,mjs,ts,cts,mts}'",
     "lint:userscripts": "eslint --no-eslintrc --config .eslintrc.userscripts.cjs 'dist/**/*.js'",
     "test": "glob -c 'node --test --import tsx/esm' 'src/**/*.test.ts'"
   },
