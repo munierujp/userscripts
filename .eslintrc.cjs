@@ -18,7 +18,8 @@ const config = {
     'unicorn/prefer-top-level-await': 'off'
   },
   ignorePatterns: [
-    'dist/**/*.js'
+    'dist/**/*.js',
+    'scripts/**/*.js'
   ],
   overrides: [
     // https://typescript-eslint.io/troubleshooting/#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
