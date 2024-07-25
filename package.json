@@ -36,7 +36,7 @@
     "rollup-plugin-watch": "1.0.4",
     "test-each": "7.0.0",
     "tsx": "4.16.2",
-    "typescript": "5.4.5",
+    "typescript": "5.5.4",
     "userscript-metadata": "1.1.0"
   }
 }
