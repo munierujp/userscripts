@@ -23,7 +23,7 @@
     "@rollup/plugin-typescript": "11.1.6",
     "@tsconfig/node20": "20.1.4",
     "@types/node": "20.12.14",
-    "dayjs": "1.11.9",
+    "dayjs": "1.11.12",
     "dexie": "4.0.4",
     "eslint": "8.57.0",
     "eslint-plugin-userscripts": "0.5.3",
