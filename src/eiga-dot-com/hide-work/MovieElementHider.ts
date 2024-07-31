@@ -4,14 +4,14 @@ import type { MovieElement } from './elements/MovieElement.js'
 export class MovieElementHider {
   constructor (private readonly db: Database) {}
 
-  async hideElements (elements: MovieElement[]): Promise<void> {
-    for (const element of elements) {
-      await this.hideElement(element)
+  async hideElements (movieElements: MovieElement[]): Promise<void> {
+    for (const movieElement of movieElements) {
+      await this.hideElement(movieElement)
     }
   }
 
-  async hideElement (element: MovieElement): Promise<void> {
-    const { id } = element
+  async hideElement (movieElement: MovieElement): Promise<void> {
+    const { id } = movieElement
 
     if (id === undefined) {
       return
@@ -20,7 +20,7 @@ export class MovieElementHider {
     const movie = await this.db.movies.get(id)
 
     if (movie !== undefined) {
-      element.hide()
+      movieElement.hide()
     }
   }
 }
