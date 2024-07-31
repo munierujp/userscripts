@@ -2,16 +2,16 @@ import { handleError } from '../../util/handleError.js'
 import type { Database } from './db/Database.js'
 import type { MovieElement } from './elements/MovieElement.js'
 
-export class HideButtonElementAppender {
+export class HideButtonElementsAppender {
   constructor (private readonly db: Database) {}
 
-  appendHideButtonItemElements (movieElements: MovieElement[]): void {
+  append (movieElements: MovieElement[]): void {
     movieElements.forEach(movieElement => {
       this.appendHideButtonItemElement(movieElement)
     })
   }
 
-  appendHideButtonItemElement (movieElement: MovieElement): void {
+  private appendHideButtonItemElement (movieElement: MovieElement): void {
     const hideButtonElement = this.createHideButtonItemElement(movieElement)
 
     if (hideButtonElement !== undefined) {
