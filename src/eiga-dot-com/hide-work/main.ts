@@ -1,10 +1,9 @@
 import { handleError } from '../../util/handleError.js'
 import { createHideButtonItemElement } from './createHideButtonItemElement.js'
-import { MovieElement } from './elements/MovieElement.js'
+import { findMovieElements } from './findMovieElements.js'
 import { hideMovieElement } from './hideMovieElement.js'
 
-const movieElements = Array.from(document.querySelectorAll<HTMLElement>('.list-block'))
-  .map(element => new MovieElement(element))
+const movieElements = findMovieElements()
 movieElements.forEach(movieElement => {
   hideMovieElement(movieElement).catch(handleError)
   const hideButtonItemElement = createHideButtonItemElement(movieElement)
