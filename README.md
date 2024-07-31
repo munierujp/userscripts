@@ -34,6 +34,10 @@
 
 - [自動更新](https://github.com/munierujp/userscripts/raw/master/dist/yahoo-japan/realtime/autoreload.user.js)
 
+## 映画.com
+
+- [作品の非表示](https://github.com/munierujp/userscripts/raw/master/dist/eiga-dot-com/hide-work.user.js)
+
 ## 食べログ
 
 - [食べログブロッカー](https://github.com/munierujp/userscripts/raw/master/dist/tabelog/blocker.user.js)
