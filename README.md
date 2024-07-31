@@ -36,7 +36,7 @@
 
 ## 映画.com
 
-- [作品の非表示](https://github.com/munierujp/userscripts/raw/master/dist/eiga-dot-com/hide-work.user.js)
+- [作品の非表示](https://github.com/munierujp/userscripts/raw/master/dist/eiga-dot-com/hide-movie.user.js)
 
 ## 食べログ
 
