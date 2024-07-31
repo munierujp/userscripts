@@ -10,6 +10,7 @@
 // @downloadURL  https://github.com/munierujp/userscripts/raw/master/dist/eiga-dot-com/hide-movie.user.js
 // @supportURL   https://github.com/munierujp/userscripts/issues
 // @match        *://eiga.com/coming/*
+// @match        *://eiga.com/upcoming/*
 // @require      https://cdn.jsdelivr.net/npm/dexie@4.0.4/dist/dexie.min.js
 // @grant        none
 // ==/UserScript==
