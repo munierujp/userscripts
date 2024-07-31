@@ -38,6 +38,7 @@ export class HideButtonElementAppender {
       'block'
     )
     hideButtonLabelElement.textContent = '非表示'
+    hideButtonElement.append(hideButtonLabelElement)
     const handleClick = async (): Promise<void> => {
       if (window.confirm(`${title}を非表示にしますか？`)) {
         movieElement.hide()
