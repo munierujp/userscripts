@@ -1,10 +1,8 @@
 import { handleError } from '../../util/handleError.js'
-import type { Database } from './db/Database.js'
+import { database } from './db/db.js'
 import type { MovieElement } from './elements/MovieElement.js'
 
 export class HideButtonElementsAppender {
-  constructor (private readonly db: Database) {}
-
   append (movieElements: MovieElement[]): void {
     movieElements.forEach(movieElement => {
       this.appendHideButtonItemElement(movieElement)
@@ -42,7 +40,7 @@ export class HideButtonElementsAppender {
     const handleClick = async (): Promise<void> => {
       if (window.confirm(`${title}を非表示にしますか？`)) {
         movieElement.hide()
-        await this.db.movies.add({
+        await database.movies.add({
           id,
           title
         })

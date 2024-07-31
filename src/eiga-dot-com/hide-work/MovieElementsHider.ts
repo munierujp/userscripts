@@ -1,9 +1,7 @@
-import type { Database } from './db/Database.js'
+import { database } from './db/db.js'
 import type { MovieElement } from './elements/MovieElement.js'
 
 export class MovieElementsHider {
-  constructor (private readonly db: Database) {}
-
   async hide (elements: MovieElement[]): Promise<void> {
     for (const element of elements) {
       await this.hideElement(element)
@@ -17,7 +15,7 @@ export class MovieElementsHider {
       return
     }
 
-    const movie = await this.db.movies.get(id)
+    const movie = await database.movies.get(id)
 
     if (movie !== undefined) {
       element.hide()

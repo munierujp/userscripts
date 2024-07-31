@@ -1,5 +1,4 @@
 import { handleError } from '../../util/handleError.js'
-import { Database } from './db/Database.js'
 import { MovieElement } from './elements/MovieElement.js'
 import { HideButtonElementsAppender } from './HideButtonElementsAppender.js'
 import { MovieElementsHider } from './MovieElementsHider.js'
@@ -8,9 +7,8 @@ const movieElements = Array.from(document.querySelectorAll<HTMLElement>('.list-b
   .map(element => new MovieElement(element))
 
 if (movieElements.length > 0) {
-  const db = new Database()
-  const hider = new MovieElementsHider(db)
+  const hider = new MovieElementsHider()
   hider.hide(movieElements).catch(handleError)
-  const appender = new HideButtonElementsAppender(db)
+  const appender = new HideButtonElementsAppender()
   appender.append(movieElements)
 }
