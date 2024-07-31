@@ -8,7 +8,7 @@ export class Database extends DexieClass {
   movies!: Table<Movie>
 
   constructor () {
-    super('munierujp-eiga-dot-com-hide-work')
+    super('munierujp-eiga-dot-com-hide-movie')
     this.version(1).stores({
       movies: 'id'
     })
