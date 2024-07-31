@@ -1,4 +1,4 @@
-import { database } from './db/db.js'
+import { database } from './db/database.js'
 import type { MovieElement } from './elements/MovieElement.js'
 
 export class MovieElementsHider {
