@@ -1,14 +1,14 @@
-import { Dexie } from 'dexie'
+import Dexie from 'dexie'
 import type { Table } from 'dexie'
 import type { Movie } from './models/Movie.js'
 
-const DB_NAME = 'munierujp-eiga-dot-com-hide-work'
+const DexieClass = Dexie as unknown as typeof Dexie['default']
 
-export class Database extends Dexie {
+export class Database extends DexieClass {
   movies!: Table<Movie>
 
   constructor () {
-    super(DB_NAME)
+    super('munierujp-eiga-dot-com-hide-work')
     this.version(1).stores({
       movies: 'id'
     })
