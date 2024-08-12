@@ -1,6 +1,7 @@
 import { db } from './db/db.js'
 import type { RestaurantElement } from './dom/element/RestaurantElement.js'
 
+// TODO: 関数化
 export class RestaurantHider {
   async hide (restaurantElements: RestaurantElement[]): Promise<void> {
     for (const restaurantElement of restaurantElements) {

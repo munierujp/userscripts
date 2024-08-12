@@ -2,6 +2,7 @@ import { handleError } from '../../util/handleError.js'
 import { db } from './db/db.js'
 import type { RestaurantElement } from './dom/element/RestaurantElement.js'
 
+// TODO: 関数化
 export class BlockButtonsAppender {
   append (restaurantElements: RestaurantElement[]): void {
     restaurantElements.forEach(restaurantElement => {
