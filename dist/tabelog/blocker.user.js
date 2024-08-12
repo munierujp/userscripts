@@ -75,7 +75,7 @@
         }
     }
 
-    const appendStyle = () => {
+    const appendStyleElement = () => {
         const styleElement = document.createElement('style');
         styleElement.textContent = `.flexible-rstlst-main .list-rst__rst-name {
 width: calc(100% - 60px * 3);
@@ -144,7 +144,7 @@ content: "\\f619";
     const restaurantElements = Array.from(document.querySelectorAll('.js-rstlist-info .list-rst'))
         .map(element => new RestaurantElement(element));
     if (restaurantElements.length > 0) {
-        appendStyle();
+        appendStyleElement();
         const restaurantHider = new RestaurantHider();
         restaurantHider.hide(restaurantElements).catch(handleError);
         const blockButtonsAppender = new BlockButtonsAppender();
