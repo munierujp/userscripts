@@ -44,15 +44,23 @@ content: "\\f619";
       document.head.append(styleElement);
   };
 
+  const DexieClass = Dexie;
+  class Database extends DexieClass {
+      restaurants;
+      constructor() {
+          super('munierujp-tabelog-blocker');
+          this.version(1).stores({
+              restaurants: 'id'
+          });
+      }
+  }
+  const db = new Database();
+
   const handleError = (error) => {
       throw error;
   };
 
   class BlockButtonsAppender {
-      db;
-      constructor(db) {
-          this.db = db;
-      }
       append(restaurantElements) {
           restaurantElements.forEach(restaurantElement => {
               this.appendBlockButtonElement(restaurantElement);
@@ -79,7 +87,7 @@ content: "\\f619";
           const handleClick = async () => {
               if (window.confirm(`${name}をブロックしますか？`)) {
                   restaurantElement.hide();
-                  await this.db.restaurants.add({
+                  await db.restaurants.add({
                       id,
                       name
                   });
@@ -90,17 +98,6 @@ content: "\\f619";
           });
           buttonWrapperElement.append(buttonElement);
           return blockButtonElement;
-      }
-  }
-
-  const DexieClass = Dexie;
-  class Database extends DexieClass {
-      restaurants;
-      constructor() {
-          super('munierujp-tabelog-blocker');
-          this.version(1).stores({
-              restaurants: 'id'
-          });
       }
   }
 
@@ -127,10 +124,6 @@ content: "\\f619";
   }
 
   class RestaurantHider {
-      db;
-      constructor(db) {
-          this.db = db;
-      }
       async hide(restaurantElements) {
           for (const restaurantElement of restaurantElements) {
               await this.hideRestaurant(restaurantElement);
@@ -141,7 +134,7 @@ content: "\\f619";
           if (id === undefined) {
               return;
           }
-          const restaurant = await this.db.restaurants.get(id);
+          const restaurant = await db.restaurants.get(id);
           if (restaurant !== undefined) {
               restaurantElement.hide();
           }
@@ -152,10 +145,9 @@ content: "\\f619";
       .map(element => new RestaurantElement(element));
   if (restaurantElements.length > 0) {
       appendStyle();
-      const db = new Database();
-      const restaurantHider = new RestaurantHider(db);
+      const restaurantHider = new RestaurantHider();
       restaurantHider.hide(restaurantElements).catch(handleError);
-      const blockButtonsAppender = new BlockButtonsAppender(db);
+      const blockButtonsAppender = new BlockButtonsAppender();
       blockButtonsAppender.append(restaurantElements);
   }
 

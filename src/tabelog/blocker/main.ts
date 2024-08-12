@@ -1,6 +1,5 @@
 import { appendStyle } from './appendStyle.js'
 import { BlockButtonsAppender } from './BlockButtonsAppender.js'
-import { Database } from './db/Database.js'
 import { RestaurantElement } from './elements/RestaurantElement.js'
 import { handleError } from './handleError.js'
 import { RestaurantHider } from './RestaurantHider.js'
@@ -10,9 +9,8 @@ const restaurantElements = Array.from(document.querySelectorAll<HTMLElement>('.j
 
 if (restaurantElements.length > 0) {
   appendStyle()
-  const db = new Database()
-  const restaurantHider = new RestaurantHider(db)
+  const restaurantHider = new RestaurantHider()
   restaurantHider.hide(restaurantElements).catch(handleError)
-  const blockButtonsAppender = new BlockButtonsAppender(db)
+  const blockButtonsAppender = new BlockButtonsAppender()
   blockButtonsAppender.append(restaurantElements)
 }

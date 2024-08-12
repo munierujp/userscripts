@@ -1,10 +1,8 @@
-import type { Database } from './db/Database.js'
+import { db } from './db/Database.js'
 import type { RestaurantElement } from './elements/RestaurantElement.js'
 import { handleError } from './handleError.js'
 
 export class BlockButtonsAppender {
-  constructor (private readonly db: Database) {}
-
   append (restaurantElements: RestaurantElement[]): void {
     restaurantElements.forEach(restaurantElement => {
       this.appendBlockButtonElement(restaurantElement)
@@ -44,7 +42,7 @@ export class BlockButtonsAppender {
     const handleClick = async (): Promise<void> => {
       if (window.confirm(`${name}をブロックしますか？`)) {
         restaurantElement.hide()
-        await this.db.restaurants.add({
+        await db.restaurants.add({
           id,
           name
         })
