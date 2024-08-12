@@ -15,4 +15,4 @@ export class Database extends DexieClass {
   }
 }
 
-export const database = new Database()
+export const db = new Database()

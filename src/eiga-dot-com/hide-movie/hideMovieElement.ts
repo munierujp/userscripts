@@ -1,4 +1,4 @@
-import { database } from './db/database.js'
+import { db } from './db/db.js'
 import type { MovieElement } from './elements/MovieElement.js'
 
 export const hideMovieElement = async (movieElement: MovieElement): Promise<void> => {
@@ -8,7 +8,7 @@ export const hideMovieElement = async (movieElement: MovieElement): Promise<void
     return
   }
 
-  const movie = await database.movies.get(id)
+  const movie = await db.movies.get(id)
 
   if (movie !== undefined) {
     movieElement.hide()

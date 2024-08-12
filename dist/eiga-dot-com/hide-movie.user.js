@@ -32,7 +32,7 @@
             });
         }
     }
-    const database = new Database();
+    const db = new Database();
 
     const createHideButtonItemElement = (movieElement) => {
         const { id, title } = movieElement;
@@ -49,7 +49,7 @@
         const handleClick = async () => {
             if (window.confirm(`${title}を非表示にしますか？`)) {
                 movieElement.hide();
-                await database.movies.add({
+                await db.movies.add({
                     id,
                     title
                 });
@@ -94,7 +94,7 @@
         if (id === undefined) {
             return;
         }
-        const movie = await database.movies.get(id);
+        const movie = await db.movies.get(id);
         if (movie !== undefined) {
             movieElement.hide();
         }

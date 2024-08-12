@@ -1,5 +1,5 @@
 import { handleError } from '../../util/handleError.js'
-import { database } from './db/database.js'
+import { db } from './db/db.js'
 import type { MovieElement } from './elements/MovieElement.js'
 
 export const createHideButtonItemElement = (movieElement: MovieElement): HTMLLIElement | undefined => {
@@ -25,7 +25,7 @@ export const createHideButtonItemElement = (movieElement: MovieElement): HTMLLIE
   const handleClick = async (): Promise<void> => {
     if (window.confirm(`${title}を非表示にしますか？`)) {
       movieElement.hide()
-      await database.movies.add({
+      await db.movies.add({
         id,
         title
       })
