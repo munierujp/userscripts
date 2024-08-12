@@ -1,5 +1,5 @@
-import type { Database } from './db'
-import type { RestaurantElement } from './elements'
+import type { Database } from './db/Database.js'
+import type { RestaurantElement } from './elements/RestaurantElement.js'
 
 export class RestaurantHider {
   constructor (private readonly db: Database) {}

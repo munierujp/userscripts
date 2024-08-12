@@ -93,7 +93,8 @@ content: "\\f619";
       }
   }
 
-  class Database extends Dexie {
+  const DexieClass = Dexie;
+  class Database extends DexieClass {
       restaurants;
       constructor() {
           super('munierujp-tabelog-blocker');
