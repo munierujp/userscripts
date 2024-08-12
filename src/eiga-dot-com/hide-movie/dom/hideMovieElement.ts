@@ -1,5 +1,5 @@
-import { db } from './db/db.js'
-import type { MovieElement } from './dom/element/MovieElement.js'
+import { db } from '../db/db.js'
+import type { MovieElement } from './element/MovieElement.js'
 
 export const hideMovieElement = async (movieElement: MovieElement): Promise<void> => {
   const { id } = movieElement

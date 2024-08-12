@@ -1,7 +1,7 @@
 import { handleError } from '../../util/handleError.js'
 import { createHideButtonItemElement } from './dom/createHideButtonItemElement.js'
 import { findMovieElements } from './dom/findMovieElements.js'
-import { hideMovieElement } from './hideMovieElement.js'
+import { hideMovieElement } from './dom/hideMovieElement.js'
 
 const movieElements = findMovieElements()
 movieElements.forEach(movieElement => {
