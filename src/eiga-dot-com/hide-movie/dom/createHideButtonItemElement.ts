@@ -22,17 +22,16 @@ export const createHideButtonItemElement = (movieElement: MovieElement): HTMLLIE
   )
   hideButtonLabelElement.textContent = '非表示'
   hideButtonElement.append(hideButtonLabelElement)
-  const handleClick = async (): Promise<void> => {
-    if (window.confirm(`${title}を非表示にしますか？`)) {
-      movieElement.hide()
-      await db.movies.add({
-        id,
-        title
-      })
-    }
-  }
   hideButtonElement.addEventListener('click', () => {
-    handleClick().catch(handleError)
+    (async () => {
+      if (window.confirm(`${title}を非表示にしますか？`)) {
+        movieElement.hide()
+        await db.movies.add({
+          id,
+          title
+        })
+      }
+    })().catch(handleError)
   })
   hideButtonItemElement.append(hideButtonElement)
   return hideButtonItemElement
