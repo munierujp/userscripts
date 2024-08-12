@@ -4,7 +4,7 @@ import type { Movie } from './models/Movie.js'
 
 const DexieClass = Dexie as unknown as typeof Dexie['default']
 
-export class Database extends DexieClass {
+class Database extends DexieClass {
   movies!: Table<Movie>
 
   constructor () {
