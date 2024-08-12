@@ -1,6 +1,6 @@
+import { handleError } from '../../util/handleError.js'
 import { db } from './db/db.js'
 import type { RestaurantElement } from './dom/element/RestaurantElement.js'
-import { handleError } from './handleError.js'
 
 export class BlockButtonsAppender {
   append (restaurantElements: RestaurantElement[]): void {
