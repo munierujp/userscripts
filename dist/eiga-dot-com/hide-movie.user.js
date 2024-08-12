@@ -62,6 +62,13 @@
         return hideButtonItemElement;
     };
 
+    const appendHideButtonItemElement = (movieElement) => {
+        const hideButtonItemElement = createHideButtonItemElement(movieElement);
+        if (hideButtonItemElement !== undefined) {
+            movieElement.buttonListElement?.append(hideButtonItemElement);
+        }
+    };
+
     class MovieElement {
         element;
         constructor(element) {
@@ -103,10 +110,7 @@
     const movieElements = findMovieElements();
     movieElements.forEach(movieElement => {
         hideMovieElement(movieElement).catch(handleError);
-        const hideButtonItemElement = createHideButtonItemElement(movieElement);
-        if (hideButtonItemElement !== undefined) {
-            movieElement.buttonListElement?.append(hideButtonItemElement);
-        }
+        appendHideButtonItemElement(movieElement);
     });
 
 })(Dexie);
