@@ -1,6 +1,6 @@
 import { appendStyle } from './appendStyle.js'
 import { BlockButtonsAppender } from './BlockButtonsAppender.js'
-import { RestaurantElement } from './elements/RestaurantElement.js'
+import { RestaurantElement } from './dom/element/RestaurantElement.js'
 import { handleError } from './handleError.js'
 import { RestaurantHider } from './RestaurantHider.js'
 

@@ -1,5 +1,5 @@
 import { db } from './db/db.js'
-import type { RestaurantElement } from './elements/RestaurantElement.js'
+import type { RestaurantElement } from './dom/element/RestaurantElement.js'
 
 export class RestaurantHider {
   async hide (restaurantElements: RestaurantElement[]): Promise<void> {
