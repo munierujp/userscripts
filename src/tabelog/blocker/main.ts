@@ -1,6 +1,6 @@
 import { handleError } from '../../util/handleError.js'
-import { appendStyle } from './appendStyle.js'
 import { BlockButtonsAppender } from './BlockButtonsAppender.js'
+import { appendStyle } from './dom/appendStyle.js'
 import { RestaurantElement } from './dom/element/RestaurantElement.js'
 import { RestaurantHider } from './RestaurantHider.js'
 
