@@ -1,4 +1,4 @@
-import { db } from './db/Database.js'
+import { db } from './db/db.js'
 import type { RestaurantElement } from './elements/RestaurantElement.js'
 import { handleError } from './handleError.js'
 
