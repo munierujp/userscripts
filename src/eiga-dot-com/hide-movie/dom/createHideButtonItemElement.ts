@@ -1,6 +1,6 @@
-import { handleError } from '../../util/handleError.js'
-import { db } from './db/db.js'
-import type { MovieElement } from './elements/MovieElement.js'
+import { handleError } from '../../../util/handleError.js'
+import { db } from '../db/db.js'
+import type { MovieElement } from './element/MovieElement.js'
 
 export const createHideButtonItemElement = (movieElement: MovieElement): HTMLLIElement | undefined => {
   const { id, title } = movieElement
