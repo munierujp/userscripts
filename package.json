@@ -25,7 +25,7 @@
     "@types/node": "20.12.14",
     "dayjs": "1.11.9",
     "dexie": "4.0.4",
-    "eslint": "8.57.0",
+    "eslint": "8.57.1",
     "eslint-plugin-userscripts": "0.5.5",
     "glob": "11.0.0",
     "global-jsdom": "24.0.0",
