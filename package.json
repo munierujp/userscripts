@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@munierujp/eslint-config-typescript": "46.0.2",
-    "@rollup/plugin-typescript": "12.1.0",
+    "@rollup/plugin-typescript": "12.1.1",
     "@tsconfig/node20": "20.1.4",
     "@types/node": "20.12.14",
     "dayjs": "1.11.9",
