@@ -1,4 +1,4 @@
-export const appendStyle = (): void => {
+export const appendStyleElement = (): void => {
   const styleElement = document.createElement('style')
   styleElement.textContent = `.flexible-rstlst-main .list-rst__rst-name {
 width: calc(100% - 60px * 3);
