@@ -1,9 +1,8 @@
-import type { Database } from './db'
-import type { RestaurantElement } from './elements'
+import { db } from './db/db.js'
+import type { RestaurantElement } from './dom/element/RestaurantElement.js'
 
+// TODO: 関数化
 export class RestaurantHider {
-  constructor (private readonly db: Database) {}
-
   async hide (restaurantElements: RestaurantElement[]): Promise<void> {
     for (const restaurantElement of restaurantElements) {
       await this.hideRestaurant(restaurantElement)
@@ -17,7 +16,7 @@ export class RestaurantHider {
       return
     }
 
-    const restaurant = await this.db.restaurants.get(id)
+    const restaurant = await db.restaurants.get(id)
 
     if (restaurant !== undefined) {
       restaurantElement.hide()

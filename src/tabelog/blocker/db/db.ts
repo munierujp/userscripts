@@ -1,8 +1,10 @@
 import Dexie from 'dexie'
 import type { Table } from 'dexie'
-import type { Restaurant } from './models'
+import type { Restaurant } from './model/Restaurant.js'
 
-export class Database extends Dexie {
+const DexieClass = Dexie as unknown as typeof Dexie['default']
+
+class Database extends DexieClass {
   restaurants!: Table<Restaurant>
 
   constructor () {
@@ -12,3 +14,5 @@ export class Database extends Dexie {
     })
   }
 }
+
+export const db = new Database()
