@@ -16,13 +16,13 @@
     "test": "glob -c 'node --test --import tsx/esm' 'src/**/*.test.ts'"
   },
   "engines": {
-    "node": "20.12.2"
+    "node": "20.19.3"
   },
   "devDependencies": {
     "@munierujp/eslint-config-typescript": "46.0.2",
     "@rollup/plugin-typescript": "12.1.2",
     "@tsconfig/node20": "20.1.4",
-    "@types/node": "20.12.14",
+    "@types/node": "20.19.4",
     "dayjs": "1.11.9",
     "dexie": "4.0.4",
     "eslint": "8.57.1",
